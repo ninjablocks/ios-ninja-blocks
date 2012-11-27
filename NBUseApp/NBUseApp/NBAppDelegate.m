@@ -55,6 +55,7 @@
     }
     
     viewController1.deviceManager = deviceManager;
+    [deviceManager activateInterfaces];
     
     self.window.rootViewController = viewController1;
     //    [self.window makeKeyAndVisible];

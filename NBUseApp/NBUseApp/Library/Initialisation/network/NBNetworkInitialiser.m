@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBNetworkInitialiser.h"
 
 #import "NetworkConstants.h"
@@ -83,7 +85,7 @@
     {
         self.connectionData = nil;
         trialNodeId = [[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
-        NSLog(@"Activating/registering nodeId: %@", trialNodeId);
+        NBLog(kNBLogDefault, @"Activating/registering nodeId: %@", trialNodeId);
         [self activateBlock]; //await activation
         [self performSelector:@selector(registerBlock)
                    withObject:nil
@@ -103,7 +105,7 @@
     }
     else
     {
-        NSLog(@"setConnectionData: %@", _connectionData);
+        NBLog(kNBLogDefault, @"setConnectionData: %@", _connectionData);
         [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_connectionData]
                                                   forKey:kDefaultsConnectionData];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -189,7 +191,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 //    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-//    NSLog(@"received data string: %@", dataString);
+//    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
     NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments

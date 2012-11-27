@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBNetworkHandler.h"
 
 
@@ -35,9 +37,10 @@
     return self;
 }
 
+//TODO: remove.
 - (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray
 {
-    NSLog(@"send heartbeat data: %@", deviceDataArray);
+    NBLog(3, @"send heartbeat data: %@", deviceDataArray);
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/heartbeat"
                            , kBaseBlockURL, connectionData.nodeId
                            ];
@@ -62,7 +65,7 @@
         [content appendFormat:@",%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
     }
     [content appendString:@"]"];
-    NSLog(@"content = %@", content);
+    NBLog(kNBLogNetwork, @"content = %@", content);
     
     [request setValue:[NSString stringWithFormat:@"%d",
                        [content length]]
@@ -79,7 +82,7 @@
 
 - (void) reportDeviceData:(NBDevice*)deviceData
 {
-    NSLog(@"Report data: %@", deviceData);
+    NBLog(kNBLogNetwork, @"Report data: %@", deviceData);
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
                            , kBaseBlockURL, connectionData.nodeId
                            ];
@@ -96,7 +99,7 @@
     
     NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId];
     
-    NSLog(@"content = %@", content);
+    NBLog(kNBLogNetwork, @"content = %@", content);
     
     [request setValue:[NSString stringWithFormat:@"%d",
                        [content length]]
@@ -119,8 +122,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/snapshot"
                            , kBaseCameraURL, guid
                            ];
-    NSLog(@"SendSnapshot: (datalength = %d)", cameraDevice.snapshotData.length);
-    NSLog(@"%@", urlString);
+    NBLog(3, @"SendSnapshot: (datalength = %d)", cameraDevice.snapshotData.length);
+    NBLog(kNBLogNetwork, @"%@", urlString);
     
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL
@@ -129,7 +132,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:kContentTypeAppPNG
    forHTTPHeaderField:kContentTypeName];
-    NSLog(@"blockToken: %@", connectionData.blockToken);
+    NBLog(kNBLogNetwork, @"blockToken: %@", connectionData.blockToken);
     [request setValue:connectionData.blockToken
    forHTTPHeaderField:kNinjaTokenName];
     
@@ -150,17 +153,17 @@
 
 - (void) finishedRequest:(NSURLRequest*)request
 {
-    NSLog(@"Finished request");
+    NBLog(kNBLogNetwork, @"Finished request");
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     bool expectingContent = ([response expectedContentLength] > 0);
-    NSLog(@"Response length: %lld", [response expectedContentLength]);
-    NSLog(@"Response filename: %@", [response suggestedFilename]);
-    NSLog(@"Response mimetype: %@", [response MIMEType]);
-    NSLog(@"Response textEncodingName: %@", [response textEncodingName]);
-    NSLog(@"Response url: %@", [response URL]);
+    NBLog(kNBLogNetwork, @"Response length: %lld", [response expectedContentLength]);
+    NBLog(kNBLogNetwork, @"Response filename: %@", [response suggestedFilename]);
+    NBLog(kNBLogNetwork, @"Response mimetype: %@", [response MIMEType]);
+    NBLog(kNBLogNetwork, @"Response textEncodingName: %@", [response textEncodingName]);
+    NBLog(kNBLogNetwork, @"Response url: %@", [response URL]);
     if (!expectingContent)
     {
         [self finishedRequest:connection.currentRequest];
@@ -169,18 +172,18 @@
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError");
+    NBLog(kNBLogNetwork, @"didFailWithError");
     [self finishedRequest:connection.currentRequest];
 }
 - (void) connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-    NSLog(@"didCancelAuthenticationChallenge");
+    NBLog(kNBLogNetwork, @"didCancelAuthenticationChallenge");
     [self finishedRequest:connection.currentRequest];
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NSLog(@"received data string: %@", dataString);
+    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
     
     [self finishedRequest:connection.currentRequest];
 }

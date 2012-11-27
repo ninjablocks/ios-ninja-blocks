@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+
+@class NBPollingSensor;
 @interface NBDeviceHWInterface : NSObject
 {
     @protected
@@ -15,9 +17,12 @@
     bool _requestingAction;
 }
 
+- (bool) updateReading:(NBPollingSensor*)sensorDevice;
+
 @property (readonly, nonatomic) NSArray *devices;
 
 // For sensors/actuators, if requested sensing/actuation from iOS.
+// NB: must subclass setter implementations should call super setter.
 @property (assign, nonatomic) bool requestingAction;
 
 @end

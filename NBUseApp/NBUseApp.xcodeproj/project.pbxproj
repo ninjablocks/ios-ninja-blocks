@@ -26,7 +26,6 @@
 		38B774BA166444710004F620 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B774B8166444710004F620 /* CoreVideo.framework */; };
 		38B774F3166445440004F620 /* NBAccelerometerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774C3166445440004F620 /* NBAccelerometerInterface.m */; };
 		38B774F4166445440004F620 /* NBCameraInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774C5166445440004F620 /* NBCameraInterface.m */; };
-		38B774F5166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774C7166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.m */; };
 		38B774F6166445440004F620 /* NBDeviceHWInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774C9166445440004F620 /* NBDeviceHWInterface.m */; };
 		38B774F7166445440004F620 /* NBCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774CE166445440004F620 /* NBCommand.m */; };
 		38B774F8166445440004F620 /* NBDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774D0166445440004F620 /* NBDeviceManager.m */; };
@@ -46,6 +45,11 @@
 		38B77506166445440004F620 /* NetworkHelperFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774F2166445440004F620 /* NetworkHelperFunctions.m */; };
 		38B77509166446E00004F620 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38B77507166446E00004F620 /* FirstViewController.xib */; };
 		38B7750A166447A50004F620 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774BF1664452D0004F620 /* FirstViewController.m */; };
+		38B775121664552D0004F620 /* NBLocationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775111664552D0004F620 /* NBLocationInterface.m */; };
+		38B7751516645A270004F620 /* NBMotionInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751416645A260004F620 /* NBMotionInterface.m */; };
+		38B775171664684E0004F620 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B775161664684E0004F620 /* CoreLocation.framework */; };
+		38B7751A16646F420004F620 /* NBHeading.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751916646F420004F620 /* NBHeading.m */; };
+		38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751D1664728B0004F620 /* NBPollingSensor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,24 +78,22 @@
 		38B774BE1664452C0004F620 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
 		38B774BF1664452D0004F620 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		38B774C2166445440004F620 /* NBAccelerometerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBAccelerometerInterface.h; sourceTree = "<group>"; };
-		38B774C3166445440004F620 /* NBAccelerometerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBAccelerometerInterface.m; sourceTree = "<group>"; };
+		38B774C3166445440004F620 /* NBAccelerometerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBAccelerometerInterface.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774C4166445440004F620 /* NBCameraInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCameraInterface.h; sourceTree = "<group>"; };
-		38B774C5166445440004F620 /* NBCameraInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBCameraInterface.m; sourceTree = "<group>"; };
-		38B774C6166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NBDevice+DeviceHWInterfaceFunctions.h"; sourceTree = "<group>"; };
-		38B774C7166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NBDevice+DeviceHWInterfaceFunctions.m"; sourceTree = "<group>"; };
+		38B774C5166445440004F620 /* NBCameraInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBCameraInterface.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774C8166445440004F620 /* NBDeviceHWInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDeviceHWInterface.h; sourceTree = "<group>"; };
 		38B774C9166445440004F620 /* NBDeviceHWInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDeviceHWInterface.m; sourceTree = "<group>"; };
 		38B774CA166445440004F620 /* NBDeviceHWInterfaceSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDeviceHWInterfaceSubclass.h; sourceTree = "<group>"; };
 		38B774CD166445440004F620 /* NBCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCommand.h; sourceTree = "<group>"; };
 		38B774CE166445440004F620 /* NBCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBCommand.m; sourceTree = "<group>"; };
 		38B774CF166445440004F620 /* NBDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDeviceManager.h; sourceTree = "<group>"; };
-		38B774D0166445440004F620 /* NBDeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDeviceManager.m; sourceTree = "<group>"; };
+		38B774D0166445440004F620 /* NBDeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBDeviceManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774D1166445440004F620 /* NBAccelerometerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBAccelerometerState.h; sourceTree = "<group>"; };
 		38B774D2166445440004F620 /* NBAccelerometerState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBAccelerometerState.m; sourceTree = "<group>"; };
 		38B774D3166445440004F620 /* NBCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCamera.h; sourceTree = "<group>"; };
 		38B774D4166445440004F620 /* NBCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBCamera.m; sourceTree = "<group>"; };
 		38B774D5166445440004F620 /* NBDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDevice.h; sourceTree = "<group>"; };
-		38B774D6166445440004F620 /* NBDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDevice.m; sourceTree = "<group>"; };
+		38B774D6166445440004F620 /* NBDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBDevice.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774D7166445440004F620 /* NBDeviceIds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDeviceIds.h; sourceTree = "<group>"; };
 		38B774D8166445440004F620 /* NBOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBOrientation.h; sourceTree = "<group>"; };
 		38B774D9166445440004F620 /* NBOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBOrientation.m; sourceTree = "<group>"; };
@@ -110,13 +112,24 @@
 		38B774EA166445440004F620 /* NBConnectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBConnectionData.h; sourceTree = "<group>"; };
 		38B774EB166445440004F620 /* NBConnectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBConnectionData.m; sourceTree = "<group>"; };
 		38B774EC166445440004F620 /* NBNetworkCommandHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBNetworkCommandHandler.h; sourceTree = "<group>"; };
-		38B774ED166445440004F620 /* NBNetworkCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBNetworkCommandHandler.m; sourceTree = "<group>"; };
+		38B774ED166445440004F620 /* NBNetworkCommandHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBNetworkCommandHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774EE166445440004F620 /* NBNetworkHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBNetworkHandler.h; sourceTree = "<group>"; };
 		38B774EF166445440004F620 /* NBNetworkHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBNetworkHandler.m; sourceTree = "<group>"; };
 		38B774F0166445440004F620 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
 		38B774F1166445440004F620 /* NetworkHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelperFunctions.h; sourceTree = "<group>"; };
 		38B774F2166445440004F620 /* NetworkHelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelperFunctions.m; sourceTree = "<group>"; };
 		38B77508166446E00004F620 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
+		38B775101664552D0004F620 /* NBLocationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLocationInterface.h; sourceTree = "<group>"; };
+		38B775111664552D0004F620 /* NBLocationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLocationInterface.m; sourceTree = "<group>"; };
+		38B7751316645A260004F620 /* NBMotionInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMotionInterface.h; sourceTree = "<group>"; };
+		38B7751416645A260004F620 /* NBMotionInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBMotionInterface.m; sourceTree = "<group>"; };
+		38B775161664684E0004F620 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		38B7751816646F410004F620 /* NBHeading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBHeading.h; sourceTree = "<group>"; };
+		38B7751916646F420004F620 /* NBHeading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBHeading.m; sourceTree = "<group>"; };
+		38B7751C166472890004F620 /* NBPollingSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPollingSensor.h; sourceTree = "<group>"; };
+		38B7751D1664728B0004F620 /* NBPollingSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPollingSensor.m; sourceTree = "<group>"; };
+		38B7752016648F0E0004F620 /* NBPollingSensorIntervals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPollingSensorIntervals.h; sourceTree = "<group>"; };
+		38B775211665730F0004F620 /* NBDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NBDefinitions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38B775171664684E0004F620 /* CoreLocation.framework in Frameworks */,
 				38B774B9166444710004F620 /* CoreMedia.framework in Frameworks */,
 				38B774BA166444710004F620 /* CoreVideo.framework in Frameworks */,
 				38B774B61664445F0004F620 /* AVFoundation.framework in Frameworks */,
@@ -166,6 +180,7 @@
 				38B774B51664445E0004F620 /* AVFoundation.framework */,
 				38B774B7166444710004F620 /* CoreMedia.framework */,
 				38B774B8166444710004F620 /* CoreVideo.framework */,
+				38B775161664684E0004F620 /* CoreLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -205,12 +220,13 @@
 		38B774C0166445440004F620 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				38B774C1166445440004F620 /* DeviceHWInterfaces */,
-				38B774CB166445440004F620 /* Devices */,
+				38B775211665730F0004F620 /* NBDefinitions.h */,
 				38B774DC166445440004F620 /* Initialisation */,
+				38B774E7166445440004F620 /* Network */,
+				38B774CB166445440004F620 /* Devices */,
+				38B774C1166445440004F620 /* DeviceHWInterfaces */,
 				38B774E5166445440004F620 /* NBNinjaBlock.h */,
 				38B774E6166445440004F620 /* NBNinjaBlock.m */,
-				38B774E7166445440004F620 /* Network */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -218,15 +234,17 @@
 		38B774C1166445440004F620 /* DeviceHWInterfaces */ = {
 			isa = PBXGroup;
 			children = (
+				38B774C8166445440004F620 /* NBDeviceHWInterface.h */,
+				38B774C9166445440004F620 /* NBDeviceHWInterface.m */,
+				38B774CA166445440004F620 /* NBDeviceHWInterfaceSubclass.h */,
 				38B774C2166445440004F620 /* NBAccelerometerInterface.h */,
 				38B774C3166445440004F620 /* NBAccelerometerInterface.m */,
 				38B774C4166445440004F620 /* NBCameraInterface.h */,
 				38B774C5166445440004F620 /* NBCameraInterface.m */,
-				38B774C6166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.h */,
-				38B774C7166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.m */,
-				38B774C8166445440004F620 /* NBDeviceHWInterface.h */,
-				38B774C9166445440004F620 /* NBDeviceHWInterface.m */,
-				38B774CA166445440004F620 /* NBDeviceHWInterfaceSubclass.h */,
+				38B775101664552D0004F620 /* NBLocationInterface.h */,
+				38B775111664552D0004F620 /* NBLocationInterface.m */,
+				38B7751316645A260004F620 /* NBMotionInterface.h */,
+				38B7751416645A260004F620 /* NBMotionInterface.m */,
 			);
 			path = DeviceHWInterfaces;
 			sourceTree = "<group>";
@@ -235,15 +253,14 @@
 			isa = PBXGroup;
 			children = (
 				38B774CC166445440004F620 /* manager */,
+				38B7751F166489B50004F620 /* PollingSensors */,
+				38B774D5166445440004F620 /* NBDevice.h */,
+				38B774D6166445440004F620 /* NBDevice.m */,
+				38B774D7166445440004F620 /* NBDeviceIds.h */,
 				38B774D1166445440004F620 /* NBAccelerometerState.h */,
 				38B774D2166445440004F620 /* NBAccelerometerState.m */,
 				38B774D3166445440004F620 /* NBCamera.h */,
 				38B774D4166445440004F620 /* NBCamera.m */,
-				38B774D5166445440004F620 /* NBDevice.h */,
-				38B774D6166445440004F620 /* NBDevice.m */,
-				38B774D7166445440004F620 /* NBDeviceIds.h */,
-				38B774D8166445440004F620 /* NBOrientation.h */,
-				38B774D9166445440004F620 /* NBOrientation.m */,
 				38B774DA166445440004F620 /* NBPushButton.h */,
 				38B774DB166445440004F620 /* NBPushButton.m */,
 			);
@@ -306,6 +323,20 @@
 				38B774F2166445440004F620 /* NetworkHelperFunctions.m */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		38B7751F166489B50004F620 /* PollingSensors */ = {
+			isa = PBXGroup;
+			children = (
+				38B7752016648F0E0004F620 /* NBPollingSensorIntervals.h */,
+				38B7751C166472890004F620 /* NBPollingSensor.h */,
+				38B7751D1664728B0004F620 /* NBPollingSensor.m */,
+				38B774D8166445440004F620 /* NBOrientation.h */,
+				38B774D9166445440004F620 /* NBOrientation.m */,
+				38B7751816646F410004F620 /* NBHeading.h */,
+				38B7751916646F420004F620 /* NBHeading.m */,
+			);
+			name = PollingSensors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,7 +415,6 @@
 				38B774A51664430F0004F620 /* NBViewController.m in Sources */,
 				38B774F3166445440004F620 /* NBAccelerometerInterface.m in Sources */,
 				38B774F4166445440004F620 /* NBCameraInterface.m in Sources */,
-				38B774F5166445440004F620 /* NBDevice+DeviceHWInterfaceFunctions.m in Sources */,
 				38B774F6166445440004F620 /* NBDeviceHWInterface.m in Sources */,
 				38B774F7166445440004F620 /* NBCommand.m in Sources */,
 				38B774F8166445440004F620 /* NBDeviceManager.m in Sources */,
@@ -401,6 +431,10 @@
 				38B77504166445440004F620 /* NBNetworkCommandHandler.m in Sources */,
 				38B77505166445440004F620 /* NBNetworkHandler.m in Sources */,
 				38B77506166445440004F620 /* NetworkHelperFunctions.m in Sources */,
+				38B775121664552D0004F620 /* NBLocationInterface.m in Sources */,
+				38B7751516645A270004F620 /* NBMotionInterface.m in Sources */,
+				38B7751A16646F420004F620 /* NBHeading.m in Sources */,
+				38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +532,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
 				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -509,6 +544,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
 				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -533,6 +569,7 @@
 				38B774B01664430F0004F620 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

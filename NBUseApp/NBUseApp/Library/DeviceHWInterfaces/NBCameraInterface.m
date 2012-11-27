@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBCameraInterface.h"
 #import "NBDeviceHWInterfaceSubclass.h"
 
@@ -84,12 +86,12 @@
     //add output
     AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
     
-    NSLog(@"videoSettings: %@", [output videoSettings]);
+    NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
     NSDictionary *videoSetting
     = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
                                   forKey:(NSString*)kCVPixelBufferPixelFormatTypeKey];
     [output setVideoSettings:videoSetting];
-    NSLog(@"videoSettings: %@", [output videoSettings]);
+    NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
     
     [self.session addOutput:output];
     
@@ -142,7 +144,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     OSType type = CVPixelBufferGetPixelFormatType(imageBuffer);
-    NSLog(@"%lx", type);
+    NBLog(3, @"%lx", type);
     
     // Create a device-dependent RGB color space
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();

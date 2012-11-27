@@ -10,7 +10,6 @@
 #define nbTest_NBDeviceHWInterfaceSubclass_h
 
 #import "NBDeviceHWInterface.h"
-#import "NBDevice+DeviceHWInterfaceFunctions.h"
 
 @interface NBDeviceHWInterface (ForSubclassEyesOnly)
 

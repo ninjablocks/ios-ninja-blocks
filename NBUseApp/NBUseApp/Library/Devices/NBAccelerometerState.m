@@ -9,6 +9,13 @@
 #import "NBAccelerometerState.h"
 
 #import "NBDeviceIds.h"
+#import "NBAccelerometerInterface.h"
+
+@interface NBAccelerometerState ()
+
+@property (assign, nonatomic) NBAccelerometerInterface *deviceHWInterface;
+
+@end
 
 @implementation NBAccelerometerState
 

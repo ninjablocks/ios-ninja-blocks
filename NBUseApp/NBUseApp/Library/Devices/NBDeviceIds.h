@@ -17,6 +17,7 @@ typedef enum {
     , kNBOrientation            = 4
     , kNBPushButton             = 5
     , kNBTemperatureDHT22       = 9
+    , kNBNorthHeading           = 15
     , kNBLEDBoard               = 999
     , kNBLEDUser                = 1000
     , kNBWebcam                 = 1004

@@ -1,17 +1,17 @@
 //
-//  NBOrientation.m
-//  nbTest
+//  NBHeading.m
+//  NBUseApp
 //
 //  Created by jz on 27/11/12.
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBOrientation.h"
+#import "NBHeading.h"
 
 #import "NBDeviceIds.h"
 #import "NBPollingSensorIntervals.h"
 
-@implementation NBOrientation
+@implementation NBHeading
 
 - (id) init
 {
@@ -20,12 +20,12 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    self = [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBOrientation, port}
+    self = [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBNorthHeading, port}
                      initialValue:@"0"
             ];
     if (self)
     {
-        pollInterval = kPollingSensorIntervalOrientation;
+        pollInterval = kPollingSensorIntervalHeading;
     }
     return self;
 }

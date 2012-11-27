@@ -14,7 +14,8 @@
 @class NBDevice; //interface below
 @protocol NBDeviceProtocol <NSObject>
 
-- (void) didUpdateNBDevice:(NBDevice*)device;
+
+- (void) triggerSendOfDeviceData:(NBDevice*)device;
 
 @end
 
@@ -29,7 +30,7 @@ typedef struct _NBDeviceAddress {
 @class NBDeviceHWInterface;
 @interface NBDevice : NSObject
 {
-    @private
+    @protected
     NSString *_currentValue;
 }
 
@@ -44,8 +45,8 @@ typedef struct _NBDeviceAddress {
 - (void) processCommand:(NBCommand*)command;
 
 
-@property (assign, nonatomic) NBDeviceAddress address;
-@property (readonly, nonatomic) NSString *currentValue;
+@property (readonly, nonatomic) NBDeviceAddress address;
+@property (strong, nonatomic) NSString *currentValue;
 
 @property (assign, nonatomic) id<NBDeviceProtocol> deviceDelegate;
 @property (assign, nonatomic) NBDeviceHWInterface *deviceHWInterface;

@@ -30,6 +30,8 @@ typedef NSDictionary NBDeviceDictionary;
 - (id) initWithConnectionData:(NBConnectionData*)connectionData;
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface;
 
+- (void) activateInterfaces;
+
 //TODO: remove. Testing only
 - (void) triggerCameraData;
 - (void) ledData;

@@ -6,16 +6,23 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBDevice.h"
 #import "NBCommand.h"
 
 @implementation NBDevice
 
+- (id) init
+{
+    return nil;
+}
+
 - (id) initWithAddress:(NBDeviceAddress)address initialValue:(NSString*)initialValue
 {
     self = [super init];
     if (self) {
-        self.address = address;
+        _address = address;
         _currentValue = [initialValue retain];
     }
     return self;
@@ -31,10 +38,18 @@
     return [NBDevice addressKey:self.address];
 }
 
+- (void) setCurrentValue:(NSString *)currentValue
+{
+    [_currentValue release];
+    _currentValue = [currentValue retain];
+    NBLog(kNBLogReadings, @"Set %@(%@)", NSStringFromClass([self class]), self.currentValue);
+    [self.deviceDelegate triggerSendOfDeviceData:self];
+}
+
 - (void) processCommand:(NBCommand*)command
 {
     //implement in sub class
-    NSLog(@"processing of commands not implemented");
+    NBLog(kNBLogCommands, @"processing of commands not implemented");
 }
 
 - (NSString *) description

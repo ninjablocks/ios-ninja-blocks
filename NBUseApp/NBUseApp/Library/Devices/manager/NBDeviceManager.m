@@ -8,6 +8,8 @@
 
 #import "NBDeviceManager.h"
 
+#import "NBDefinitions.h"
+
 #import "NBConnectionData.h"
 
 #import "NBNetworkHandler.h"
@@ -15,9 +17,11 @@
 
 #import "NBAccelerometerInterface.h"
 #import "NBCameraInterface.h"
+#import "NBLocationInterface.h"
 
 #import "NBDevice.h"
 #import "NBDeviceIds.h"
+#import "NBPollingSensor.h"
 #import "NBCommand.h"
 
 #import "NBCamera.h" //special handling of image data
@@ -44,14 +48,24 @@
 
         NBAccelerometerInterface *accelerometerInterface = [[[NBAccelerometerInterface alloc] init] autorelease];
         [self addDeviceHWInterface:accelerometerInterface];
-        accelerometerInterface.requestingAction = true;
         
         NBCameraInterface *cameraInterface = [[[NBCameraInterface alloc] init] autorelease];
         [self addDeviceHWInterface:cameraInterface];
         
+        NBLocationInterface *locationInterface = [[[NBLocationInterface alloc] init] autorelease];
+        [self addDeviceHWInterface:locationInterface];
+        
         networkCommandHandler = [[NBNetworkCommandHandler alloc] initWithConnectionData:connectionData delegate:self];
     }
     return self;
+}
+
+- (void) activateInterfaces
+{
+    for (NBDeviceHWInterface *interface in self.interfaces)
+    {
+        [interface setRequestingAction:true];
+    }
 }
 
 - (void) jiggleTest
@@ -62,7 +76,7 @@
 
 - (void) triggerCameraData
 {
-    NSLog(@"devices: %@", self.devices);
+    NBLog(3, @"devices: %@", self.devices);
     for (NBDevice *device in self.devices.allValues)
     {
         if ([device isKindOfClass:[NBCamera class]])
@@ -71,7 +85,6 @@
         }
     }
 }
-
 
 - (void) ledData
 {
@@ -86,13 +99,13 @@
     [_interfaces addObject:interface];
     for (NBDevice *device in [interface devices])
     {
-        NSLog(@"Adding device: %@ for key: %@", device, [device addressKey]);
+        NBLog(3, @"Adding device: %@ for key: %@", device, [device addressKey]);
         [_devices setObject:device forKey:[device addressKey]];
         [device setDeviceDelegate:self];
     }
 }
 
-- (void) didUpdateNBDevice:(NBDevice*)device
+- (void) triggerSendOfDeviceData:(NBDevice*)device
 {
     //TODO: could be better, probably seperate camera network functions or even handler...
     if ([device isKindOfClass:[NBCamera class]] && ([(NSString*)device.currentValue isEqualToString:@"1"]))

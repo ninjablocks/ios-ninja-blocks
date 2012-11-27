@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBDevice.h"
+#import "NBPollingSensor.h"
 
 //TODO: have class variable that is the CMMotionManager instance.
 @interface NBAccelerometerState : NBDevice

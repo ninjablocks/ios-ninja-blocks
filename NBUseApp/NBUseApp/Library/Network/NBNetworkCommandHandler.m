@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBNetworkCommandHandler.h"
 
 #import "NetworkConstants.h"
@@ -51,7 +53,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/commands"
                            , kBaseBlockURL, connectionData.nodeId
                            ];
-    NSLog(@"%@ \n   Listening ...", urlString);
+    NBLog(kNBLogNetwork, @"%@ \n   Listening ...", urlString);
     commandRequest = [[NSMutableURLRequest alloc]
                       initWithURL:[NSURL URLWithString:urlString]];
     
@@ -69,20 +71,20 @@
 
 - (void) createDevicesFromCommands:(NSDictionary*)commands
 {
-    NSLog(@"Commands: %@", [commands description]);
+    NBLog(kNBLogCommands, @"Commands: %@", [commands description]);
     NSArray *devicesInput = [commands objectForKey:kResponseDeviceName];
     for (NSDictionary *deviceDictionary in devicesInput)
     {
         NSNumber *vendorNumber = [deviceDictionary objectForKey:kVendorIdName];
         if (![vendorNumber isKindOfClass:[NSNumber class]])
         {
-            NSLog(@"Vendor not of type number");
+            NBLog(kNBLogCommands, @"Vendor not of type number");
             break;
         }
         NSNumber *deviceIdNumber = [deviceDictionary objectForKey:kDeviceIdName];
         if (![deviceIdNumber isKindOfClass:[NSNumber class]])
         {
-            NSLog(@"DeviceId not of type number");
+            NBLog(kNBLogCommands, @"DeviceId not of type number");
             break;
         }
         NSString *port = [deviceDictionary objectForKey:kPortName];
@@ -104,12 +106,12 @@
 
 - (void) finishedRequest:(NSURLRequest*)request
 {
-    NSLog(@"Finished request");
+    NBLog(kNBLogNetwork, @"Finished request");
     if (commandRequest == request)
     {
         [commandRequest release];
         commandRequest = nil;
-        NSLog(@"Finished listening for commands.");
+        NBLog(kNBLogNetwork, @"Finished listening for commands.");
         [self listenForCommands]; //listen perpetually
     }
 }
@@ -117,11 +119,11 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     bool expectingContent = ([response expectedContentLength] > 0);
-    NSLog(@"Response length: %lld", [response expectedContentLength]);
-    NSLog(@"Response filename: %@", [response suggestedFilename]);
-    NSLog(@"Response mimetype: %@", [response MIMEType]);
-    NSLog(@"Response textEncodingName: %@", [response textEncodingName]);
-    NSLog(@"Response url: %@", [response URL]);
+    NBLog(kNBLogNetwork, @"Response length: %lld", [response expectedContentLength]);
+    NBLog(kNBLogNetwork, @"Response filename: %@", [response suggestedFilename]);
+    NBLog(kNBLogNetwork, @"Response mimetype: %@", [response MIMEType]);
+    NBLog(kNBLogNetwork, @"Response textEncodingName: %@", [response textEncodingName]);
+    NBLog(kNBLogNetwork, @"Response url: %@", [response URL]);
     if (!expectingContent)
     {
         [self finishedRequest:connection.currentRequest];
@@ -130,24 +132,24 @@
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError");
+    NBLog(kNBLogNetwork, @"didFailWithError");
     [self finishedRequest:connection.currentRequest];
 }
 - (void) connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
-    NSLog(@"didCancelAuthenticationChallenge");
+    NBLog(kNBLogNetwork, @"didCancelAuthenticationChallenge");
     [self finishedRequest:connection.currentRequest];
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NSLog(@"received data string: %@", dataString);
+    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
     NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
                                                                          error:&error
                                         ];
-    NSLog(@"received json dictionary: %@", responseDictionary);
+    NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
     //TODO: check for json errors
     [error release];
     

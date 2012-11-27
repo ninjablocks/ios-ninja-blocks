@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBDevice.h"
+#import "NBPollingSensor.h"
 
 typedef enum {
     notClear    = 0
@@ -18,7 +18,7 @@ typedef enum {
     , zNegative = 6
 } NBOrientationValue;
 
-@interface NBOrientation : NBDevice
+@interface NBOrientation : NBPollingSensor
 
 - (id) initWithPort:(NSString *)port;
 

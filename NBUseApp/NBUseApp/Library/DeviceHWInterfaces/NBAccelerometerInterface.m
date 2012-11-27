@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBAccelerometerInterface.h"
 #import "NBDeviceHWInterfaceSubclass.h"
 
@@ -23,8 +25,9 @@
     CMAcceleration currentAcceleration;
     
     NBAccelerometerState *accelerometerStateDevice;
-    NBOrientation *orientationDevice;
 }
+
+@property (strong, nonatomic) NSString *orientationValueString;
 
 @end
 
@@ -50,11 +53,30 @@
 - (void) addDevices
 {
     accelerometerStateDevice = [[NBAccelerometerState alloc] init];
+    [accelerometerStateDevice setDeviceHWInterface:self];
     [_devices addObject:accelerometerStateDevice];
     
-    orientationDevice = [[NBOrientation alloc] init];
+    NBOrientation *orientationDevice = [[NBOrientation alloc] init];
+    [orientationDevice setDeviceHWInterface:self];
     [_devices addObject:orientationDevice];
 }
+
+- (bool) updateReading:(NBPollingSensor*)sensorDevice
+{
+    bool result = false;
+    if ([sensorDevice isKindOfClass:[NBOrientation class]])
+    {
+        [self updateOrientation:(NBOrientation*)sensorDevice];
+        result = true;
+    }
+    return result;
+}
+
+- (void) updateOrientation:(NBOrientation*)orientationDevice
+{
+    [orientationDevice setCurrentValue:self.orientationValueString];
+}
+
 
 //TODO: remove. Testing only.
 - (void) fakeJiggle
@@ -81,10 +103,9 @@
             [motionOperationQueue release];
             motionOperationQueue = nil;
         }
-        _requestingAction = requestingAction;
     }
+    [super setRequestingAction:requestingAction];
 }
-
 
 - (void) processAccelerometerData:(CMAccelerometerData *)data
 {
@@ -97,8 +118,8 @@
     averageAcceleration.y = (averageAcceleration.y * 3 + currentAcceleration.y) / 4;
     averageAcceleration.z = (averageAcceleration.z * 3 + currentAcceleration.z) / 4;
     
-    [self checkJiggle];
-    [self checkOrientation];
+    [self checkJiggle]; //for event driven updating of accelerometer state device
+    [self calculateOrientationValue];
 }
 
 #define kJiggleDelta .30
@@ -109,7 +130,7 @@
         || ABS((averageAcceleration.z-currentAcceleration.z) > kJiggleDelta)
         )
     {
-        NSLog(@"did jiggle");
+        NBLog(kNBLogDefault, @"did jiggle");
         //TODO: removed for testing only
         //[accelerometerStateDevice setCurrentValue:@"1"];
     }
@@ -122,7 +143,7 @@
     return (ABS(delta1G) < kOrientationDelta);
 }
 
-- (void) checkOrientation
+- (void) calculateOrientationValue
 {
     NBOrientationValue orientationValue = 0;
     bool xIs1G = [self isAxis1G:averageAcceleration.x];
@@ -140,12 +161,7 @@
     {
         orientationValue = ((averageAcceleration.z > 0) ? zPositive : zNegative);
     }
-    NSString *orientationString = [NSString stringWithFormat:@"%d", orientationValue];
-    // only set value on change
-    if (![orientationString isEqualToString:orientationDevice.currentValue])
-    {
-        [orientationDevice setCurrentValue:orientationString];
-    }
+    self.orientationValueString = [NSString stringWithFormat:@"%d", orientationValue];
 }
 
 
