@@ -81,6 +81,9 @@
     {
         deviceIdentifier = [[UIDevice currentDevice] uniqueIdentifier];
     }
+    deviceIdentifier = [deviceIdentifier stringByReplacingOccurrencesOfString:@"-"
+                                                                   withString:@"x"
+                        ];
     if (![self hasDataForUserId:userId udid:deviceIdentifier])
     {
         self.connectionData = nil;
