@@ -100,30 +100,38 @@
     
 }
 
-- (void)setRequestingAction:(bool)requestingAction
-{
-    if (_requestingAction != requestingAction)
-    {
-        if (requestingAction)
-        {
-            [self.session startRunning];
-        }
-        _requestingAction = requestingAction;
-    }
-}
+//TODO: setup camera on requesting action, release camera when !requestingAction
+//- (void)setRequestingAction:(bool)requestingAction
+//{
+//    if (_requestingAction != requestingAction)
+//    {
+//        if (requestingAction)
+//        {
+//            [self.session startRunning];
+//        }
+//        else
+//        {
+//            [self.session stopRunning];
+//        }
+//        [super setRequestingAction:requestingAction];
+//    }
+//}
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
-    CFShow(sampleBuffer);
+    if (kNBLogVideo != kNBLogUnused)
+    {
+        CFShow(sampleBuffer);
+    }
     UIImage *capturedImage = [self imageFromSampleBuffer:sampleBuffer];
     [self receivedImage:capturedImage];
-    //NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:sampleBuffer];
+    // NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:sampleBuffer];
     
     [self.session stopRunning];
     
-    //TODO: [self.cameraDelegate receivedImage:capturedImage];
+    // TODO: [self.cameraDelegate receivedImage:capturedImage];
     
 }
 
@@ -144,7 +152,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     OSType type = CVPixelBufferGetPixelFormatType(imageBuffer);
-    NBLog(3, @"%lx", type);
+    NBLog(kNBLogVideo, @"%lx", type);
     
     // Create a device-dependent RGB color space
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -180,7 +188,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 
 - (void) getSnapshot
 {
-    [self setRequestingAction:true];
+    [self.session startRunning];
+//    [self setRequestingAction:true];
 }
 
 @end
