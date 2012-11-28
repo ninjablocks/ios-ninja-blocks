@@ -86,6 +86,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
                            , kBaseBlockURL, connectionData.nodeId
                            ];
+    NBLog(kNBLogNetwork, @"url = %@", urlString);
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL
                                                   URLWithString:urlString]] autorelease];
@@ -122,7 +123,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/snapshot"
                            , kBaseCameraURL, guid
                            ];
-    NBLog(3, @"SendSnapshot: (datalength = %d)", cameraDevice.snapshotData.length);
+    NBLog(kNBLogNetwork, @"SendSnapshot: (datalength = %d)", cameraDevice.snapshotData.length);
     NBLog(kNBLogNetwork, @"%@", urlString);
     
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
@@ -184,6 +185,19 @@
 {
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
     NBLog(kNBLogNetwork, @"received data string: %@", dataString);
+    
+    NSError *error = [[NSError alloc] init];
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:&error
+                                        ];
+    NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
+    [error release];
+
+    NSString *errorValue = [responseDictionary objectForKey:kResponseErrorKey];
+    if (((id)errorValue != [NSNull null]) && [errorValue isEqualToString:kResponseErrorValueInvalid]) {
+        NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
+    }
     
     [self finishedRequest:connection.currentRequest];
 }

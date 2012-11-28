@@ -68,32 +68,6 @@
     }
 }
 
-- (void) jiggleTest
-{
-    NBAccelerometerInterface *interface = [self.interfaces objectAtIndex:0];
-    [interface fakeJiggle];
-}
-
-- (void) triggerCameraData
-{
-    NBLog(3, @"devices: %@", self.devices);
-    for (NBDevice *device in self.devices.allValues)
-    {
-        if ([device isKindOfClass:[NBCamera class]])
-        {
-            [device setCurrentValue:@"0"];
-        }
-    }
-}
-
-- (void) ledData
-{
-    NBDevice *ledDevice = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBLEDUser, @"0"}
-                                               initialValue:@"0"];
-    [ledDevice setDeviceDelegate:self];
-    [ledDevice setCurrentValue:@"1"];
-}
-
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface
 {
     [_interfaces addObject:interface];
@@ -108,13 +82,20 @@
 - (void) triggerSendOfDeviceData:(NBDevice*)device
 {
     //TODO: could be better, probably seperate camera network functions or even handler...
-    if ([device isKindOfClass:[NBCamera class]] && ([(NSString*)device.currentValue isEqualToString:@"1"]))
+    if ([device isKindOfClass:[NBCamera class]])
     {
-        [self.networkHandler performSelector:@selector(sendSnapshot:)
-                                    onThread:[NSThread mainThread]
-                                  withObject:(NBCamera*)device
-                               waitUntilDone:false
-         ];
+        if ([(NSString*)device.currentValue isEqualToString:@"1"])
+        {
+            [self.networkHandler performSelector:@selector(sendSnapshot:)
+                                        onThread:[NSThread mainThread]
+                                      withObject:(NBCamera*)device
+                                   waitUntilDone:false
+             ];
+        }
+        else
+        {
+            [device setCurrentValue:@"1"];
+        }
     }
     else
     {
@@ -131,7 +112,34 @@
 {
     NSString *addressKey = [NBDevice addressKey:deviceCommand.address];
     NBDevice *commandedDevice = [self.devices objectForKey:addressKey];
+    NBLog(kNBLogCommands, @"Will process command %@ with device: %@", deviceCommand, commandedDevice);
     [commandedDevice processCommand:deviceCommand];
+}
+
+
+- (void) jiggleTest
+{
+    NBAccelerometerInterface *interface = [self.interfaces objectAtIndex:0];
+    [interface fakeJiggle];
+}
+- (void) triggerCameraData
+{
+    NBLog(kNBLogVideo, @"devices: %@", self.devices);
+    for (NBDevice *device in self.devices.allValues)
+    {
+        if ([device isKindOfClass:[NBCamera class]])
+        {
+            [device setCurrentValue:@"1"];
+        }
+    }
+}
+
+- (void) ledData
+{
+    NBDevice *ledDevice = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBLEDUser, @"0"}
+                                               initialValue:@"0"];
+    [ledDevice setDeviceDelegate:self];
+    [ledDevice setCurrentValue:@"1"];
 }
 
 @end

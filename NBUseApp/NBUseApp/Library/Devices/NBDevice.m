@@ -42,7 +42,7 @@
 {
     [_currentValue release];
     _currentValue = [currentValue retain];
-    NBLog(kNBLogReadings, @"Set %@(%@)", NSStringFromClass([self class]), self.currentValue);
+    NBLog(kNBLogReadings, @"Set %@   (%@)", NSStringFromClass([self class]), self.currentValue);
     [self.deviceDelegate triggerSendOfDeviceData:self];
 }
 
@@ -54,12 +54,12 @@
 
 - (NSString *) description
 {
-    NSMutableString *description = [NSMutableString stringWithFormat:@"DeviceData: %d\n", (int)self];
-    [description appendFormat:@"\tvendorId: %d\n", self.address.vendorId];
-    [description appendFormat:@"\tdeviceId: %d\n", self.address.deviceId];
-    [description appendFormat:@"\tport: %@\n", self.address.port];
+    NSMutableString *description = [NSMutableString stringWithFormat:@"DeviceData: %d", (int)self];
+    [description appendFormat:@"   vendorId: %d", self.address.vendorId];
+    [description appendFormat:@"   deviceId: %d", self.address.deviceId];
+    [description appendFormat:@"   port: %@", self.address.port];
     
-    [description appendFormat:@"\n\tvalue: %@\n", self.currentValue];
+    [description appendFormat:@"   value: %@", self.currentValue];
     return description;
 }
 

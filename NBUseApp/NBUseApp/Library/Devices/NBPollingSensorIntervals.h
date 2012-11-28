@@ -11,7 +11,7 @@
 
 
 #define kPollingSensorIntervalOrientation   10.
-#define kPollingSensorIntervalHeading       1.
+#define kPollingSensorIntervalHeading       9.
 
 
 #endif

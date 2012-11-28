@@ -16,7 +16,7 @@
 - (IBAction) touchDownPushButton:(id)sender;
 - (IBAction) touchUpPushButton:(id)sender;
 
-- (IBAction) clickedSendHeartbeat:(id)sender;
+- (IBAction) clickedCamera:(id)sender;
 - (IBAction) clickedSendData:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;

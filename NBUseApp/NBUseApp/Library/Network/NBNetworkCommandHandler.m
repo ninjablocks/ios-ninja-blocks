@@ -53,7 +53,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/commands"
                            , kBaseBlockURL, connectionData.nodeId
                            ];
-    NBLog(kNBLogNetwork, @"%@ \n   Listening ...", urlString);
+    NBLog(kNBLogNetwork, @"%@ \\n   Listening ...", urlString);
     commandRequest = [[NSMutableURLRequest alloc]
                       initWithURL:[NSURL URLWithString:urlString]];
     

@@ -61,4 +61,11 @@
 #define kResponseDeviceName @"DEVICE"
 #define kResponseNodeName   @"NODE_ID"
 
+#define kResponseResultKey   @"result"
+#define kResponseErrorKey   @"error"
+#define kResponseIdKey   @"id"
+
+#define kResponseErrorValueNone  @"none"
+#define kResponseErrorValueInvalid  @"Invalid Request"
+
 #endif

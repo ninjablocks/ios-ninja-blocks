@@ -9,18 +9,17 @@
 #ifndef NBUseApp_NBDefinitions_h
 #define NBUseApp_NBDefinitions_h
 
-#define kNBLogDefault   1
-#define kNBLogNetwork   2
-#define kNBLogCommands  3
-#define kNBLogVideo     4
-#define kNBLogReadings  5
+#define kNBLogUnused    0
 
-#define NBLog(num, formatString, ...) if ((num==kNBLogDefault)  \
-|| (num==kNBLogCommands)    \
-|| (num==kNBLogReadings)    \
-) {NSLog(formatString, ##__VA_ARGS__);}
+#define kNBLogError     1
+#define kNBLogDefault   2
+#define kNBLogNetwork   0//3
+#define kNBLogCommands  4
+#define kNBLogVideo     5
+#define kNBLogReadings  6
+#define kNBLogInit      7
 
-//|| (num==kNBLogNetwork)     \
+#define NBLog(num, formatString, ...) if (num>kNBLogUnused) {NSLog(formatString, ##__VA_ARGS__);}
 
 
 #endif

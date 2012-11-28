@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
+
 #import "NBConnectionData.h"
 
 @implementation NBConnectionData
@@ -17,6 +19,7 @@
     {
         _nodeId = [nodeId retain];
         _blockToken = [blockToken retain];
+        NBLog(kNBLogInit, @"Initialising connection data: %@", self);
     }
     return self;
 }
@@ -38,6 +41,7 @@
     {
         _nodeId = [[aDecoder decodeObjectForKey:kConnDataNodeIdKey] retain];
         _blockToken = [[aDecoder decodeObjectForKey:kConnDataBlockTokenKey] retain];
+        NBLog(kNBLogInit, @"Decoding connection data: %@", self);
     }
     return self;
 }
@@ -48,5 +52,10 @@
     [aCoder encodeObject:self.blockToken forKey:kConnDataBlockTokenKey];
 }
 
+- (NSString*) description
+{
+    NSMutableString *description = [[NSMutableString alloc] initWithFormat:@"nodeId: %@, blockToken: %@", self.nodeId, self.blockToken];
+    return description;
+}
 
 @end

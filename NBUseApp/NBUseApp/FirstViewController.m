@@ -59,33 +59,18 @@
 //                        didChangeState:false];
 }
 
-- (IBAction) clickedSendHeartbeat:(id)sender
+- (IBAction) clickedCamera:(id)sender
 {
-//    NBDevice *firstData = [[[NBDevice alloc] initWithVendorId:0
-//                                                deviceId:kNBTemperatureDHT22
-//                                                    port:@"0"
-//                                            initialValue:@"20"
-//                         ] autorelease];
-//    
-//    NBDevice *secondData = [[[NBDevice alloc] initWithVendorId:0
-//                                                 deviceId:kNBLEDUser
-//                                                     port:@"0"
-//                                             initialValue:@"ff00ff"
-//                          ] autorelease];
-//    [self.deviceManager.networkHandler sendHeartbeatWithDeviceDataArray:[NSArray arrayWithObjects:firstData, secondData, nil]];
+    NBDevice *cameraDevice = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress) {kVendorNinjaBlocks, kNBWebcam, @"0"}
+                                                initialValue:@"0"
+                            ] autorelease];
+    [self.deviceManager.networkHandler reportDeviceData:cameraDevice];
 }
 
 - (IBAction) clickedSendData:(id)sender
 {
     [self.deviceManager triggerCameraData];
     [self.deviceManager ledData];
-//    NBDevice *deviceData = [[[NBDevice alloc] initWithVendorId:0
-//                                                 deviceId:kActuatorSnapshot //kNBLEDUser
-//                                                     port:@"0"
-//                                             initialValue:@"1"  //@"ff0000"
-//                          ] autorelease];
-//
-//    [self.deviceManager.networkHandler reportDeviceData:deviceData];
 }
 
 - (void)didReceiveMemoryWarning
