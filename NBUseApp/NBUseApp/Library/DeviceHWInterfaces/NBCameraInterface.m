@@ -15,15 +15,25 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "NBCamera.h"
+#import "NBLEDDevice.h"
 
 @interface NBCameraInterface ()
-
+{
+    bool _cameraLEDToggle;
+}
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong, nonatomic) UIImage *stillImage;
 
 @property (strong, nonatomic) AVCaptureSession *session;
 
 @property (strong, nonatomic) NBCamera *camera;
+@property (strong, nonatomic) NBLEDDevice *ledDevice;
+
+@end
+
+@interface NBCameraInterface (helperFunctions)
+
++ (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer;
 
 @end
 
@@ -56,10 +66,58 @@
     self.camera = [[[NBCamera alloc] init] autorelease];
     [self.camera setDeviceHWInterface:self];
     [_devices addObject:self.camera];
+
+    self.ledDevice = [[[NBLEDDevice alloc] initWithPort:@"0"] autorelease];
+    [self.ledDevice setDeviceHWInterface:self];
+    [_devices addObject:self.ledDevice];
 }
+
+//TODO: setup camera on requesting action, release camera when !requestingAction
+- (void)setRequestingAction:(bool)requestingAction
+{
+    if (_requestingAction != requestingAction)
+    {
+        if (requestingAction)
+        {
+            [self.ledDevice setCurrentValue:@"0"];
+        }
+        else
+        {
+        }
+        [super setRequestingAction:requestingAction];
+    }
+}
+
 @end
 
-@implementation NBCameraInterface (hwFunctions)
+@implementation NBCameraInterface (LEDFunctions)
+
+- (void) setCameraLEDToggle:(bool)cameraLEDToggle
+{
+    if (_cameraLEDToggle != cameraLEDToggle)
+    {
+        AVCaptureDevice *device = [AVCaptureDevice
+                                   defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+        [self.session beginConfiguration];
+        [device lockForConfiguration:nil];
+        [device setTorchMode:(cameraLEDToggle?AVCaptureTorchModeOn:AVCaptureTorchModeOff)];
+        [device unlockForConfiguration];
+        [self.session commitConfiguration];
+
+        _cameraLEDToggle = cameraLEDToggle;
+    }
+}
+
+@end
+
+@implementation NBCameraInterface (SnapshotFunctions)
+
+- (void) getSnapshot
+{
+    [self.session startRunning];
+    //    [self setRequestingAction:true];
+}
 
 - (void) receivedImage:(UIImage*)image
 {
@@ -67,6 +125,9 @@
     [self.camera setCurrentValue:@"1"]; //trigger update
 }
 
+@end
+
+@implementation NBCameraInterface (hwFunctions)
 
 - (void) setupAVInputOutput
 {
@@ -94,28 +155,9 @@
     NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
     
     [self.session addOutput:output];
-    
-    dispatch_queue_t serial_queue = dispatch_queue_create("myQueue", NULL);
-    [output setSampleBufferDelegate:self queue:serial_queue];
-    
+        
 }
 
-//TODO: setup camera on requesting action, release camera when !requestingAction
-//- (void)setRequestingAction:(bool)requestingAction
-//{
-//    if (_requestingAction != requestingAction)
-//    {
-//        if (requestingAction)
-//        {
-//            [self.session startRunning];
-//        }
-//        else
-//        {
-//            [self.session stopRunning];
-//        }
-//        [super setRequestingAction:requestingAction];
-//    }
-//}
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -125,18 +167,27 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     {
         CFShow(sampleBuffer);
     }
-    UIImage *capturedImage = [self imageFromSampleBuffer:sampleBuffer];
+    UIImage *capturedImage = [NBCameraInterface imageFromSampleBuffer:sampleBuffer];
     [self receivedImage:capturedImage];
     // NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:sampleBuffer];
     
     [self.session stopRunning];
     
-    // TODO: [self.cameraDelegate receivedImage:capturedImage];
+//    dispatch_queue_t serial_queue = dispatch_queue_create("myQueue", NULL);
+//    [output setSampleBufferDelegate:self queue:serial_queue];
     
 }
 
+
+@end
+
+
+
+@implementation NBCameraInterface (helperFunctions)
+
+
 // Create a UIImage from sample buffer data
-- (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
++ (UIImage *) imageFromSampleBuffer:(CMSampleBufferRef) sampleBuffer
 {
     // Get a CMSampleBuffer's Core Video image buffer for the media data
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
@@ -178,18 +229,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     CGImageRelease(quartzImage);
     
     return (image);
-}
-
-@end
-
-
-
-@implementation NBCameraInterface (commandFunctions)
-
-- (void) getSnapshot
-{
-    [self.session startRunning];
-//    [self setRequestingAction:true];
 }
 
 @end
