@@ -35,11 +35,16 @@
 
 - (void) processCommand:(NBCommand *)command
 {
-    NSNumber *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
-    if ([dataValue isKindOfClass:[NSNumber class]] && ([dataValue intValue] == 1))
+    NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
+    if ([dataValue isKindOfClass:[NSString class]] && ([dataValue isEqualToString:@"1"]))
     {
         [self.deviceHWInterface getSnapshot];
     }
+//    NSNumber *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
+//    if ([dataValue isKindOfClass:[NSNumber class]] && ([dataValue intValue] == 1))
+//    {
+//        [self.deviceHWInterface getSnapshot];
+//    }
 }
 
 @end
