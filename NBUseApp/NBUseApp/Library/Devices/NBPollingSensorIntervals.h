@@ -10,8 +10,8 @@
 #define NBUseApp_NBPollingSensorIntervals_h
 
 
-#define kPollingSensorIntervalOrientation   10.
-#define kPollingSensorIntervalHeading       9.
+#define kPollingSensorIntervalOrientation   0 //10.
+#define kPollingSensorIntervalHeading       0 //9.
 
 
 #endif

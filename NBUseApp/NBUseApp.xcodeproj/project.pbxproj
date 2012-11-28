@@ -50,6 +50,7 @@
 		38B775171664684E0004F620 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B775161664684E0004F620 /* CoreLocation.framework */; };
 		38B7751A16646F420004F620 /* NBHeading.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751916646F420004F620 /* NBHeading.m */; };
 		38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751D1664728B0004F620 /* NBPollingSensor.m */; };
+		38B775241665BA140004F620 /* NBLEDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775231665BA100004F620 /* NBLEDDevice.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,8 @@
 		38B7751D1664728B0004F620 /* NBPollingSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPollingSensor.m; sourceTree = "<group>"; };
 		38B7752016648F0E0004F620 /* NBPollingSensorIntervals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPollingSensorIntervals.h; sourceTree = "<group>"; };
 		38B775211665730F0004F620 /* NBDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NBDefinitions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		38B775221665BA0D0004F620 /* NBLEDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEDDevice.h; sourceTree = "<group>"; };
+		38B775231665BA100004F620 /* NBLEDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEDDevice.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +264,8 @@
 				38B774D2166445440004F620 /* NBAccelerometerState.m */,
 				38B774D3166445440004F620 /* NBCamera.h */,
 				38B774D4166445440004F620 /* NBCamera.m */,
+				38B775221665BA0D0004F620 /* NBLEDDevice.h */,
+				38B775231665BA100004F620 /* NBLEDDevice.m */,
 				38B774DA166445440004F620 /* NBPushButton.h */,
 				38B774DB166445440004F620 /* NBPushButton.m */,
 			);
@@ -435,6 +440,7 @@
 				38B7751516645A270004F620 /* NBMotionInterface.m in Sources */,
 				38B7751A16646F420004F620 /* NBHeading.m in Sources */,
 				38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */,
+				38B775241665BA140004F620 /* NBLEDDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

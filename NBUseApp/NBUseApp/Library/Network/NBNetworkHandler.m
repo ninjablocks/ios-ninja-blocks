@@ -195,8 +195,10 @@
     [error release];
 
     NSString *errorValue = [responseDictionary objectForKey:kResponseErrorKey];
-    if (((id)errorValue != [NSNull null]) && [errorValue isEqualToString:kResponseErrorValueInvalid]) {
+    if ((id)errorValue != [NSNull null])  // && [errorValue isEqualToString:kResponseErrorValueInvalid]) {
+    {
         NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
+        NBLog(kNBLogError, @"error response for headers: %@", connection.originalRequest.allHTTPHeaderFields);
     }
     
     [self finishedRequest:connection.currentRequest];

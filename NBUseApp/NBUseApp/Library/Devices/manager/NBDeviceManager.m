@@ -73,7 +73,7 @@
     [_interfaces addObject:interface];
     for (NBDevice *device in [interface devices])
     {
-        NBLog(3, @"Adding device: %@ for key: %@", device, [device addressKey]);
+        NBLog(kNBLogDefault, @"Adding device: %@ for key: %@", device, [device addressKey]);
         [_devices setObject:device forKey:[device addressKey]];
         [device setDeviceDelegate:self];
     }
