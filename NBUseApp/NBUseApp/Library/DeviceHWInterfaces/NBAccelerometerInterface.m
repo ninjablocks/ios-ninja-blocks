@@ -81,7 +81,7 @@
 //TODO: remove. Testing only.
 - (void) fakeJiggle
 {
-    [self didJiggle];
+    [accelerometerStateDevice setCurrentValue:@"1"];
 }
 
 - (void) setRequestingAction:(bool)requestingAction
@@ -131,8 +131,7 @@
         )
     {
         NBLog(kNBLogDefault, @"did jiggle");
-        //TODO: removed for testing only
-        //[accelerometerStateDevice setCurrentValue:@"1"];
+        [accelerometerStateDevice setCurrentValue:@"1"];
     }
 }
 
