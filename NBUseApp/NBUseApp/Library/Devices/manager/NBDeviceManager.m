@@ -56,6 +56,7 @@
         [self addDeviceHWInterface:locationInterface];
         
         networkCommandHandler = [[NBNetworkCommandHandler alloc] initWithConnectionData:connectionData delegate:self];
+        
     }
     return self;
 }
@@ -66,6 +67,30 @@
     {
         [interface setRequestingAction:true];
     }
+    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
+                                              target:self
+                                            selector:@selector(heartbeatWithAllDeviceData)
+                                            userInfo:nil
+                                             repeats:true
+                       ];
+    [[NSRunLoop mainRunLoop] addTimer:devicePollTimer
+                              forMode:NSDefaultRunLoopMode
+     ];
+}
+
+- (void) heartbeatWithAllDeviceData
+{
+    for (NBDeviceHWInterface *interface in self.interfaces)
+    {
+        for (NBDevice *device in [interface devices])
+        {
+            if ([device isKindOfClass:[NBPollingSensor class]])
+            {
+                [interface updateReading:(NBPollingSensor*)device];
+            }
+        }
+    }
+    [self.networkHandler sendHeartbeatWithDeviceDataArray:[self.devices allValues]];
 }
 
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface
