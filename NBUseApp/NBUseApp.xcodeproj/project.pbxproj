@@ -259,10 +259,10 @@
 			isa = PBXGroup;
 			children = (
 				38B774CC166445440004F620 /* manager */,
-				38B7751F166489B50004F620 /* PollingSensors */,
+				38B774D7166445440004F620 /* NBDeviceIds.h */,
 				38B774D5166445440004F620 /* NBDevice.h */,
 				38B774D6166445440004F620 /* NBDevice.m */,
-				38B774D7166445440004F620 /* NBDeviceIds.h */,
+				38B7751F166489B50004F620 /* PollingSensors */,
 				38B774D1166445440004F620 /* NBAccelerometerState.h */,
 				38B774D2166445440004F620 /* NBAccelerometerState.m */,
 				38B774D3166445440004F620 /* NBCamera.h */,
