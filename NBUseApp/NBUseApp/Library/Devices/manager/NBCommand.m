@@ -21,4 +21,16 @@
     return self;
 }
 
+- (NSString *) description
+{
+    NSMutableString *description = [NSMutableString stringWithFormat:@"Command: %d", (int)self];
+    [description appendFormat:@"   vendorId: %d", self.address.vendorId];
+    [description appendFormat:@"   deviceId: %d", self.address.deviceId];
+    [description appendFormat:@"   port: %@", self.address.port];
+    
+    [description appendFormat:@"   value: %@", [self.commandData objectForKey:kCommandDataValueKey]];
+    return description;
+}
+
+
 @end
