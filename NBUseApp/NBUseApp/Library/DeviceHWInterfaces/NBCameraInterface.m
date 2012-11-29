@@ -135,25 +135,26 @@
     
     AVCaptureDevice *device = [AVCaptureDevice
                                defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    NSError *error = [[[NSError alloc] init] autorelease];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput
-                                   deviceInputWithDevice:device error:&error];
-    
-    [self.session addInput:input];
-    
-    //add output
-    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-    
-    NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
-    NSDictionary *videoSetting
-    = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
-                                  forKey:(NSString*)kCVPixelBufferPixelFormatTypeKey];
-    [output setVideoSettings:videoSetting];
-    NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
-    
-    [self.session addOutput:output];
+    if ([device hasMediaType:AVMediaTypeVideo])
+    {
+        NSError *error = [[[NSError alloc] init] autorelease];
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput
+                                       deviceInputWithDevice:device error:&error];
         
+        [self.session addInput:input];
+        
+        //add output
+        AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
+        
+        NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
+        NSDictionary *videoSetting
+        = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
+                                      forKey:(NSString*)kCVPixelBufferPixelFormatTypeKey];
+        [output setVideoSettings:videoSetting];
+        NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
+        
+        [self.session addOutput:output];
+    }
 }
 
 
