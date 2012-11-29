@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
+#import "NBDefinitions.h"
 #import "NBPollingSensor.h"
 
 #import "NBDeviceHWInterface.h"
@@ -51,6 +52,14 @@
 - (void) updateCurrentData:(NSTimer*)timer
 {
     [self.deviceHWInterface updateReading:self];
+}
+
+- (void) setCurrentValue:(NSString *)currentValue
+{
+    [_currentValue release];
+    _currentValue = [currentValue retain];
+    NBLog(kNBLogReadings, @"Set %@   (%@)", NSStringFromClass([self class]), self.currentValue);
+//    [self.deviceDelegate triggerSendOfDeviceData:self];
 }
 
 
