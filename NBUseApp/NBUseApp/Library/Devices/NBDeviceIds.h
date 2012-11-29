@@ -21,6 +21,7 @@ typedef enum {
     , kNBDIDTemperatureDHT22        = 9
     , kNBDIDSoundSensor             = 12
     , kNBDIDNorthHeading            = 15
+    , kNBDIDLocation                = 16
     , kNBDIDLEDBoard                = 999
     , kNBDIDLEDUser                 = 1000
     , kNBDIDWebcam                  = 1004
