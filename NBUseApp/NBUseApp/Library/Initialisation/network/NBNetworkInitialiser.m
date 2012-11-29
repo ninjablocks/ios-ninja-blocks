@@ -109,7 +109,10 @@
 - (void) connectWithUserId:(NSString *)userId
 {
     NSData *rawData = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsConnectionData];
-    self.connectionData = [NSKeyedUnarchiver unarchiveObjectWithData:rawData];
+    if (rawData != nil)
+    {
+        self.connectionData = [NSKeyedUnarchiver unarchiveObjectWithData:rawData];
+    }
     NSString *deviceIdentifier;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)])
     {
@@ -263,17 +266,16 @@
 {
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
     NBLog(99, @"INIT: received data string: %@", dataString);
-    NSError *error = [[NSError alloc] init];
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                       options:NSJSONReadingAllowFragments
-                                                                         error:&error
-                                        ];
-    //TODO: check for json errors
-    [error release];
-    
     
     if (activateRequest == connection.currentRequest)
     {
+        NSError *error = [[NSError alloc] init];
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                           options:NSJSONReadingAllowFragments
+                                                                             error:&error
+                                            ];
+        //TODO: check for json errors
+        [error release];
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
         if (trialNodeId != nil)
         {

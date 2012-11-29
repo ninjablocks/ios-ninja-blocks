@@ -64,7 +64,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     viewController1.deviceManager = deviceManager;
     [deviceManager activateInterfaces];
     
-    self.window.rootViewController = viewController1;
+    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:viewController1] autorelease];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+    self.window.rootViewController = self.navigationController;
     //    [self.window makeKeyAndVisible];
     
 }

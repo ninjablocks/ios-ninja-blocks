@@ -135,7 +135,7 @@
     
     AVCaptureDevice *device = [AVCaptureDevice
                                defaultDeviceWithMediaType:AVMediaTypeVideo];
-    //if ([device hasMediaType:AVMediaTypeVideo])
+    if ([device hasMediaType:AVMediaTypeVideo])
     {
         NSError *error = [[[NSError alloc] init] autorelease];
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput
