@@ -144,23 +144,23 @@
 
 - (void) calculateOrientationValue
 {
-    NBOrientationValue orientationValue = 0;
+    NSString *orientationValue = @"0";
     bool xIs1G = [self isAxis1G:averageAcceleration.x];
     bool yIs1G = [self isAxis1G:averageAcceleration.y];
     bool zIs1G = [self isAxis1G:averageAcceleration.z];
     if (xIs1G && !yIs1G && !zIs1G)
     {
-        orientationValue = ((averageAcceleration.x > 0) ? xPositive : xNegative);
+        orientationValue = ((averageAcceleration.x > 0) ? @"+x" : @"-x");
     }
     else if (!xIs1G && yIs1G && !zIs1G)
     {
-        orientationValue = ((averageAcceleration.y > 0) ? yPositive : yNegative);
+        orientationValue = ((averageAcceleration.y > 0) ? @"+y" : @"-y");
     }
     else if (!xIs1G && !yIs1G && zIs1G)
     {
-        orientationValue = ((averageAcceleration.z > 0) ? zPositive : zNegative);
+        orientationValue = ((averageAcceleration.z > 0) ? @"+z" : @"-z");
     }
-    self.orientationValueString = [NSString stringWithFormat:@"%d", orientationValue];
+    self.orientationValueString = orientationValue;
 }
 
 
