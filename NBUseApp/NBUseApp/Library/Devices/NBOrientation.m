@@ -20,14 +20,9 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    self = [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDOrientation, port}
+    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDOrientation, port}
                      initialValue:@"0"
             ];
-    if (self)
-    {
-        pollInterval = kPollingSensorIntervalOrientation;
-    }
-    return self;
 }
 
 @end

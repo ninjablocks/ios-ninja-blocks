@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBPollingSensor.h"
+#import "NBDevice.h"
 
-@interface NBOrientation : NBPollingSensor
+@interface NBOrientation : NBDevice
 
 - (id) initWithPort:(NSString *)port;
 
