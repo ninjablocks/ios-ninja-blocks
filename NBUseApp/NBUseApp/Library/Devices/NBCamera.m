@@ -28,7 +28,7 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBWebcam, port}
+    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDWebcam, port}
                      initialValue:@"0"
             ];
 }

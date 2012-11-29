@@ -20,7 +20,7 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    self = [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBNorthHeading, port}
+    self = [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDNorthHeading, port}
                      initialValue:@"0"
             ];
     if (self)

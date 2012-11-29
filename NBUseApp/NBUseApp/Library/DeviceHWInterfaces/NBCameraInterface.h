@@ -18,7 +18,7 @@
 
 - (void) getSnapshot;
 
-@property (assign, nonatomic) bool cameraLEDToggle;
+- (bool) setCameraLEDToggle:(bool)cameraLEDToggle;
 
 @end
 

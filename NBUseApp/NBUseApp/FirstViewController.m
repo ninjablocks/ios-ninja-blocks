@@ -61,7 +61,7 @@
 
 - (IBAction) clickedCamera:(id)sender
 {
-    NBDevice *cameraDevice = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress) {kVendorNinjaBlocks, kNBWebcam, @"0"}
+    NBDevice *cameraDevice = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress) {kVendorNinjaBlocks, kNBDIDWebcam, @"0"}
                                                 initialValue:@"0"
                             ] autorelease];
     [self.deviceManager.networkHandler reportDeviceData:cameraDevice];

@@ -14,7 +14,7 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBPushButton, port}
+    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDPushButton, port}
                      initialValue:@"0"
             ];
 }

@@ -18,9 +18,7 @@
 #import "NBLEDDevice.h"
 
 @interface NBCameraInterface ()
-{
-    bool _cameraLEDToggle;
-}
+
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong, nonatomic) UIImage *stillImage;
 
@@ -50,6 +48,7 @@
     self = [super init];
     if (self)
     {
+        //TODO move to when requestingAction is set to true
         [self setupAVInputOutput];
     }
     return self;
@@ -92,21 +91,21 @@
 
 @implementation NBCameraInterface (LEDFunctions)
 
-- (void) setCameraLEDToggle:(bool)cameraLEDToggle
+- (bool) setCameraLEDToggle:(bool)cameraLEDToggle
 {
-    if (_cameraLEDToggle != cameraLEDToggle)
+    bool result = false;
+    AVCaptureDevice *device = [AVCaptureDevice
+                               defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (device.torchAvailable)
     {
-        AVCaptureDevice *device = [AVCaptureDevice
-                                   defaultDeviceWithMediaType:AVMediaTypeVideo];
-
+        result = true;
         [self.session beginConfiguration];
         [device lockForConfiguration:nil];
         [device setTorchMode:(cameraLEDToggle?AVCaptureTorchModeOn:AVCaptureTorchModeOff)];
         [device unlockForConfiguration];
         [self.session commitConfiguration];
-
-        _cameraLEDToggle = cameraLEDToggle;
     }
+    return result;
 }
 
 @end
@@ -116,7 +115,6 @@
 - (void) getSnapshot
 {
     [self.session startRunning];
-    //    [self setRequestingAction:true];
 }
 
 - (void) receivedImage:(UIImage*)image

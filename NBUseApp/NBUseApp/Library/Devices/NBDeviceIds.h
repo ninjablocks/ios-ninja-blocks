@@ -12,17 +12,18 @@
 #define kVendorNinjaBlocks 0
 
 typedef enum {
-    kNBAccelerometer            = 2
-    , kNBAccelerometerState     = 3
-    , kNBOrientation            = 4
-    , kNBPushButton             = 5
-    , kNBTemperatureDHT22       = 9
-    , kNBNorthHeading           = 15
-    , kNBLEDBoard               = 999
-    , kNBLEDUser                = 1000
-    , kNBWebcam                 = 1004
-    
-    
+    kNBDIDAccelerometer             = 2
+    , kNBDIDAccelerometerState      = 3
+    , kNBDIDOrientation             = 4
+    , kNBDIDPushButton              = 5
+    , kNBDIDLightSensor             = 6 //not yet implemented
+    , kNBDIDPassiveInfrared         = 7
+    , kNBDIDTemperatureDHT22        = 9
+    , kNBDIDSoundSensor             = 12
+    , kNBDIDNorthHeading            = 15
+    , kNBDIDLEDBoard                = 999
+    , kNBDIDLEDUser                 = 1000
+    , kNBDIDWebcam                  = 1004
     
 } NBDeviceId;
 

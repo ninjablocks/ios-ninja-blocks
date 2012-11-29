@@ -136,7 +136,7 @@
 
 - (void) ledData
 {
-    NBDevice *ledDevice = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBLEDUser, @"0"}
+    NBDevice *ledDevice = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDLEDUser, @"0"}
                                                initialValue:@"0"];
     [ledDevice setDeviceDelegate:self];
     [ledDevice setCurrentValue:@"1"];

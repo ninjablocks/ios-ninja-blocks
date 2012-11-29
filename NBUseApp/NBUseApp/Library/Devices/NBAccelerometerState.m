@@ -26,7 +26,7 @@
 
 - (id) initWithPort:(NSString *)port
 {
-    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBAccelerometerState, port}
+    return [super initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDAccelerometerState, port}
                      initialValue:@"0"
             ];
 }
