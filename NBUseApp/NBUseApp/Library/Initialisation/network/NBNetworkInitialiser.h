@@ -21,6 +21,8 @@
 
 - (id) initWithDelegate:(id<NBNetworkInitDelegate>)delegate;
 
+- (void) loginWithUserName:(NSString*)userName password:(NSString*)password;
+
 - (void) connectWithUserId:(NSString *)userId;
 
 

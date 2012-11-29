@@ -18,6 +18,8 @@
 #define kNBLogVideo     5
 #define kNBLogReadings  6
 #define kNBLogInit      7
+#define kNBLogLogin     8
+
 
 #define NBLog(num, formatString, ...) if (num>kNBLogUnused) {NSLog(formatString, ##__VA_ARGS__);}
 

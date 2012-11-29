@@ -74,7 +74,11 @@ typedef enum {
     userId = self.userIdTextField.text;
     [[NSUserDefaults standardUserDefaults] setObject:userId forKey:NBDefaultsUserIdKey];
     currentState = stateRetrievingConnectionData;
-    [networkInitialiser connectWithUserId:userId];
+    
+    [networkInitialiser loginWithUserName:userId
+                                 password:self.pwordTextField.text
+     ];
+//    [networkInitialiser connectWithUserId:userId];
 }
 
 - (void)didReceiveMemoryWarning

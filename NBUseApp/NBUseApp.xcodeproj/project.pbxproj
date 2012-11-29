@@ -318,6 +318,7 @@
 		38B774E7166445440004F620 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				38B774F0166445440004F620 /* NetworkConstants.h */,
 				38B774E8166445440004F620 /* NBAuth.h */,
 				38B774E9166445440004F620 /* NBAuth.m */,
 				38B774EA166445440004F620 /* NBConnectionData.h */,
@@ -326,7 +327,6 @@
 				38B774ED166445440004F620 /* NBNetworkCommandHandler.m */,
 				38B774EE166445440004F620 /* NBNetworkHandler.h */,
 				38B774EF166445440004F620 /* NBNetworkHandler.m */,
-				38B774F0166445440004F620 /* NetworkConstants.h */,
 				38B774F1166445440004F620 /* NetworkHelperFunctions.h */,
 				38B774F2166445440004F620 /* NetworkHelperFunctions.m */,
 			);

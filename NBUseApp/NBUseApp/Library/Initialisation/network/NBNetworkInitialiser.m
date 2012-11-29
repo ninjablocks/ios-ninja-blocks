@@ -16,7 +16,7 @@
 #import "NetworkHelperFunctions.h"
 #import "NBConnectionData.h"
 
-@interface NBNetworkInitialiser ()
+@interface NBNetworkInitialiser (blockFunctions)
 
 - (void) registerBlock;
 - (void) activateBlock;
@@ -32,7 +32,11 @@
 
     NSString *trialNodeId;
     
+    NSMutableURLRequest *loginRequest;
+
     NSMutableURLRequest *activateRequest;
+    NSMutableURLRequest *registerBlockRequest;
+    
 }
 
 
@@ -43,6 +47,37 @@
         self.delegate = delegate;
     }
     return self;
+}
+
+- (void) loginWithUserName:(NSString*)userName password:(NSString*)password
+{
+    bool awaitingLogin = (loginRequest != nil);
+    if (!awaitingLogin)
+    {
+        NBLog(kNBLogLogin, @"BEFORE: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
+        NSString *urlString = kLoginURL;
+        
+        loginRequest = [[NSMutableURLRequest alloc]
+                           initWithURL:[NSURL
+                                        URLWithString:urlString]];
+        
+        [loginRequest setHTTPMethod:@"POST"];
+        [loginRequest setValue:kContentTypeAppJson
+               forHTTPHeaderField:kContentTypeName];
+        
+        NSString *loginData = [NetworkHelperFunctions jsonifyNames:@[@"email", @"password", @"rememberme", @"redirect"]
+                                                            values:@[userName, password, @"false", @""]
+                               ];
+        
+        [loginRequest setValue:[NSString stringWithFormat:@"%d", loginData.length]
+       forHTTPHeaderField:@"Content-length"];
+        
+        [loginRequest setHTTPBody:[loginData dataUsingEncoding:NSUTF8StringEncoding]];
+
+        [[[NSURLConnection alloc]
+          initWithRequest:loginRequest
+          delegate:self] autorelease];
+    }
 }
 
 
@@ -90,7 +125,7 @@
     if (![self hasDataForUserId:userId udid:deviceIdentifier])
     {
         self.connectionData = nil;
-        trialNodeId = [[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
+        trialNodeId = [[NSString alloc] initWithString:deviceIdentifier]; //[[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
         NBLog(kNBLogDefault, @"Activating/registering nodeId: %@", trialNodeId);
         [self activateBlock]; //await activation
         [self performSelector:@selector(registerBlock)
@@ -119,6 +154,11 @@
     }
 }
 
+@end
+
+
+@implementation NBNetworkInitialiser (blockFunctions)
+
 - (void) activateBlock
 {
     bool awaitingActivation = (activateRequest != nil);
@@ -143,27 +183,28 @@
 
 - (void) registerBlock
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@?%@=%@", kBaseBlockURL
-                           , kAPIAccessTokenName, kAPIAccessToken];
-    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
+//    NSString *urlString = [NSString stringWithFormat:@"%@?%@=%@", kBaseBlockURL
+//                           , kAPIAccessTokenName, kAPIAccessToken];
+    NSString *urlString = [NSString stringWithFormat:@"%@", kBaseBlockURL];
+    registerBlockRequest = [[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL
-                                                  URLWithString:urlString]] autorelease];
+                                                  URLWithString:urlString]];
     
-    [request setHTTPMethod:@"POST"];
-    [request setValue:kContentTypeAppJson
+    [registerBlockRequest setHTTPMethod:@"POST"];
+    [registerBlockRequest setValue:kContentTypeAppJson
    forHTTPHeaderField:kContentTypeName];
     
     NSString *content = [NetworkHelperFunctions jsonifyName:kNodeIdName value:trialNodeId];
     
-    [request setValue:[NSString stringWithFormat:@"%d",
+    [registerBlockRequest setValue:[NSString stringWithFormat:@"%d",
                        [content length]]
    forHTTPHeaderField:@"Content-length"];
     
-    [request setHTTPBody:[content
+    [registerBlockRequest setHTTPBody:[content
                           dataUsingEncoding:NSUTF8StringEncoding]];
     
     [[[NSURLConnection alloc]
-      initWithRequest:request
+      initWithRequest:registerBlockRequest
       delegate:self] autorelease];
 }
 
@@ -174,10 +215,34 @@
         [activateRequest release];
         activateRequest = nil;
     }
+    else if (loginRequest == request)
+    {
+        NBLog(kNBLogLogin, @"AFTER: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
+        [loginRequest release];
+        loginRequest = nil;
+        [self performSelector:@selector(connectWithUserId:)
+                     onThread:[NSThread mainThread]
+                   withObject:@""
+                waitUntilDone:false
+         ];
+    }
+    else if (registerBlockRequest == request)
+    {
+        [registerBlockRequest release];
+        registerBlockRequest = nil;
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    if (loginRequest == connection.currentRequest)
+    {
+        NBLog(99, @"INIT: received login response: %@", response.URL);
+    }
+    if (registerBlockRequest == connection.currentRequest)
+    {
+        NBLog(99, @"INIT: received register response: %@", response.URL);
+    }
     bool expectingContent = ([response expectedContentLength] > 0);
     if (!expectingContent)
     {
@@ -196,8 +261,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-//    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-//    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
+    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NBLog(99, @"INIT: received data string: %@", dataString);
     NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
@@ -205,6 +270,8 @@
                                         ];
     //TODO: check for json errors
     [error release];
+    
+    
     if (activateRequest == connection.currentRequest)
     {
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];

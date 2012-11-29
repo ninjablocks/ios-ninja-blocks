@@ -15,6 +15,8 @@
 
 #define kNodeIdName @"nodeid"
 
+#define kLoginURL   @"https://staging.ninja.is/signin"
+
 //TODO: replace APIAccessToken with OAuth
 #ifdef MARCUS
 #define kAPIAccessToken @"bae38593-fc2b-497c-bef0-27605a026197"
