@@ -12,6 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "NBHeading.h"
+#import "NBLocation.h"
 
 @interface NBLocationInterface ()
 {
@@ -39,6 +40,7 @@
 - (void) dealloc
 {
     [locationManager stopUpdatingHeading];
+    [locationManager stopUpdatingLocation];
     [locationManager release];
     [super dealloc];
 }
@@ -49,6 +51,9 @@
     NBHeading *headingDevice = [[[NBHeading alloc] init] autorelease];
     [headingDevice setDeviceHWInterface:self];
     [_devices addObject:headingDevice];
+    NBLocation *location = [[[NBLocation alloc] init] autorelease];
+    [location setDeviceHWInterface:self];
+    [_devices addObject:location];
 }
 
 - (void)setRequestingAction:(bool)requestingAction
@@ -60,11 +65,13 @@
             if ([CLLocationManager headingAvailable])
             {
                 [locationManager startUpdatingHeading];
+                [locationManager startUpdatingLocation];
             }
         }
         else
         {
             [locationManager stopUpdatingHeading];
+            [locationManager stopUpdatingLocation];
         }
     }
     [super setRequestingAction:requestingAction];
@@ -76,6 +83,10 @@
     if ([sensorDevice isKindOfClass:[NBHeading class]])
     {
         result = [self updateHeading:(NBHeading*)sensorDevice];
+    }
+    else if ([sensorDevice isKindOfClass:[NBLocation class]])
+    {
+        result = [self updateLocation:(NBLocation*)sensorDevice];
     }
     return result;
 }
@@ -91,6 +102,20 @@
         [headingDevice setCurrentValue:[NSString stringWithFormat:@"%f", direction]];
         result = true;
     }
+    return result;
+}
+
+- (bool) updateLocation:(NBLocation*)locationDevice
+{
+    bool result = false;
+    NSString *locationString = @"0, 0";
+    if ([CLLocationManager locationServicesEnabled])
+    {
+        CLLocationCoordinate2D coordinate = locationManager.location.coordinate;
+        locationString = [NSString stringWithFormat:@"%f, %f", coordinate.latitude, coordinate.longitude];
+        result = true;
+    }
+    [locationDevice setCurrentValue:locationString];
     return result;
 }
 

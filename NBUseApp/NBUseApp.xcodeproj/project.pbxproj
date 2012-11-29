@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3840C16B1666EE290088AD4A /* NBLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3840C16A1666EE290088AD4A /* NBLocation.m */; };
 		38B7748C1664430F0004F620 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748B1664430F0004F620 /* UIKit.framework */; };
 		38B7748E1664430F0004F620 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748D1664430F0004F620 /* Foundation.framework */; };
 		38B774901664430F0004F620 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748F1664430F0004F620 /* CoreGraphics.framework */; };
@@ -54,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3840C1691666EE290088AD4A /* NBLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLocation.h; sourceTree = "<group>"; };
+		3840C16A1666EE290088AD4A /* NBLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLocation.m; sourceTree = "<group>"; };
 		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38B7748B1664430F0004F620 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		38B7748D1664430F0004F620 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -340,6 +343,8 @@
 				38B774D9166445440004F620 /* NBOrientation.m */,
 				38B7751816646F410004F620 /* NBHeading.h */,
 				38B7751916646F420004F620 /* NBHeading.m */,
+				3840C1691666EE290088AD4A /* NBLocation.h */,
+				3840C16A1666EE290088AD4A /* NBLocation.m */,
 			);
 			name = PollingSensors;
 			sourceTree = "<group>";
@@ -441,6 +446,7 @@
 				38B7751A16646F420004F620 /* NBHeading.m in Sources */,
 				38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */,
 				38B775241665BA140004F620 /* NBLEDDevice.m in Sources */,
+				3840C16B1666EE290088AD4A /* NBLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
