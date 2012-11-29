@@ -55,13 +55,16 @@
     if ((userId.length > 0) && (nodeId != nil))
     {
         NSRange udidRange = [nodeId rangeOfString:udid options:NSBackwardsSearch];
-        int storedUserIdLength = udidRange.location - [kNodeIdSeparator length];
-        if (storedUserIdLength > 0) // has valid format
+        if (udidRange.location != NSNotFound)
         {
-            NSString *storedUserId = [nodeId substringToIndex:storedUserIdLength];
-            if ([storedUserId isEqualToString:userId])
+            int storedUserIdLength = udidRange.location - [kNodeIdSeparator length];
+            if (storedUserIdLength > 0) // has valid format
             {
-                result = true;
+                NSString *storedUserId = [nodeId substringToIndex:storedUserIdLength];
+                if ([storedUserId isEqualToString:userId])
+                {
+                    result = true;
+                }
             }
         }
     }
