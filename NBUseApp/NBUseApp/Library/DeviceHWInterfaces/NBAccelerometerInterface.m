@@ -142,9 +142,10 @@
     return (ABS(delta1G) < kOrientationDelta);
 }
 
+#define kNoFixedOrientation @"0"
 - (void) calculateOrientationValue
 {
-    NSString *orientationValue = @"0";
+    NSString *orientationValue = kNoFixedOrientation; //default value
     bool xIs1G = [self isAxis1G:averageAcceleration.x];
     bool yIs1G = [self isAxis1G:averageAcceleration.y];
     bool zIs1G = [self isAxis1G:averageAcceleration.z];
@@ -163,5 +164,21 @@
     self.orientationValueString = orientationValue;
 }
 
+- (void) setOrientationValueString:(NSString *)orientationValueString
+{
+    if ((![orientationValueString isEqualToString:kNoFixedOrientation])
+        && (![_orientationValueString isEqualToString:orientationValueString]))
+    {
+        [_orientationValueString release];
+        _orientationValueString = [orientationValueString retain];
+        for (NBDevice *device in self.devices)
+        {
+            if ([device isKindOfClass:[NBOrientation class]])
+            {
+                [device setCurrentValue:_orientationValueString];
+            }
+        }
+    }
+}
 
 @end
