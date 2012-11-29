@@ -135,7 +135,7 @@
     
     AVCaptureDevice *device = [AVCaptureDevice
                                defaultDeviceWithMediaType:AVMediaTypeVideo];
-    if ([device hasMediaType:AVMediaTypeVideo])
+    //if ([device hasMediaType:AVMediaTypeVideo])
     {
         NSError *error = [[[NSError alloc] init] autorelease];
         AVCaptureDeviceInput *input = [AVCaptureDeviceInput
@@ -154,6 +154,10 @@
         NBLog(kNBLogVideo, @"videoSettings: %@", [output videoSettings]);
         
         [self.session addOutput:output];
+        
+        dispatch_queue_t serial_queue = dispatch_queue_create("myQueue", NULL);
+        [output setSampleBufferDelegate:self queue:serial_queue];
+
     }
 }
 
@@ -171,10 +175,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:sampleBuffer];
     
     [self.session stopRunning];
-    
-//    dispatch_queue_t serial_queue = dispatch_queue_create("myQueue", NULL);
-//    [output setSampleBufferDelegate:self queue:serial_queue];
-    
+        
 }
 
 
