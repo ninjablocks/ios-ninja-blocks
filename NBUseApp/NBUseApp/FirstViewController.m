@@ -76,6 +76,7 @@
 
 - (IBAction) clickedCamera:(id)sender
 {
+    // Testing only.
     NBDevice *cameraDevice = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress) {kVendorNinjaBlocks, kNBDIDWebcam, @"0"}
                                                 initialValue:@"1"
                             ] autorelease];
@@ -84,6 +85,7 @@
 
 - (IBAction) clickedSendData:(id)sender
 {
+    // Testing only.
     [self.deviceManager triggerCameraData];
     [self.deviceManager ledData];
 }

@@ -45,6 +45,17 @@ typedef struct _NBDeviceAddress {
 - (void) processCommand:(NBCommand*)command;
 
 
+// Used in NB settings view controller for display.
+@property (strong, nonatomic) NSString *deviceName;
+
+// Set from NB device/hw interface.
+// Used in NB settings view controller for display.
+@property (assign, nonatomic) bool available;
+
+// Set from NBSettingsViewController
+// Used in NB settings view controller for display.
+@property (assign, nonatomic) bool active;
+
 @property (readonly, nonatomic) NBDeviceAddress address;
 @property (strong, nonatomic) NSString *currentValue;
 
