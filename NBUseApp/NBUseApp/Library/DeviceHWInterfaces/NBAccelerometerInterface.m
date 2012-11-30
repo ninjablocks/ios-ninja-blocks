@@ -39,6 +39,7 @@
     self = [super init];
     if (self)
     {
+        self.interfaceName = @"Accelerometer";
         motionManager = [[CMMotionManager alloc] init];
     }
     return self;

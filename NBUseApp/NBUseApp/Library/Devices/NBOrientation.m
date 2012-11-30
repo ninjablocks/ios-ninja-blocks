@@ -25,4 +25,9 @@
             ];
 }
 
+- (NSString*)deviceName
+{
+    return @"Orientation";
+}
+
 @end

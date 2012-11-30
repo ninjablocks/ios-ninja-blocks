@@ -31,6 +31,8 @@
     self = [super init];
     if (self)
     {
+        self.interfaceName = @"Location";
+
         locationManager = [[CLLocationManager alloc] init];
         //[locationManager setDelegate:self];
     }

@@ -21,6 +21,11 @@
 
 @implementation NBPollingSensor
 
+- (NSString*)deviceName
+{
+    return @"Unnamed Sensor";
+}
+
 - (void) startPolling
 {
     if (pollingTimer != nil)

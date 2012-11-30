@@ -31,4 +31,9 @@
             ];
 }
 
+- (NSString*)deviceName
+{
+    return @"Jiggle";
+}
+
 @end

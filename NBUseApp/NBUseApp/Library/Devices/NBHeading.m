@@ -30,4 +30,9 @@
     return self;
 }
 
+- (NSString*)deviceName
+{
+    return @"Heading";
+}
+
 @end

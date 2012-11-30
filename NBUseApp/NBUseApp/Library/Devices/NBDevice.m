@@ -28,6 +28,11 @@
     return self;
 }
 
+- (NSString*)deviceName
+{
+    return @"Unnamed Device";
+}
+
 + (NSString *) addressKey:(NBDeviceAddress)address
 {
     return [NSString stringWithFormat:@"%d_%d_%@", address.vendorId, address.deviceId, address.port];

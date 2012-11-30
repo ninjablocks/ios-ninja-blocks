@@ -48,6 +48,8 @@
     self = [super init];
     if (self)
     {
+        self.interfaceName = @"AudioVideo";
+
         //TODO move to when requestingAction is set to true
         [self setupAVInputOutput];
     }

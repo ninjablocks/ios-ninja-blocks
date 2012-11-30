@@ -32,6 +32,11 @@
             ];
 }
 
+- (NSString*)deviceName
+{
+    return @"LED";
+}
+
 - (void) processCommand:(NBCommand *)command
 {
     NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];

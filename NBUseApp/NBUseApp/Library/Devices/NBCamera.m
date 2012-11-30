@@ -33,6 +33,11 @@
             ];
 }
 
+- (NSString*)deviceName
+{
+    return @"Camera";
+}
+
 - (void) processCommand:(NBCommand *)command
 {
     NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
