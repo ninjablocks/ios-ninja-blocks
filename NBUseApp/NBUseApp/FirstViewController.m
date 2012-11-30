@@ -15,6 +15,8 @@
 #import "NBDevice.h"
 #import "NBDeviceIds.h"
 
+#import "NBSettingsViewController.h"
+
 @interface FirstViewController () {
 
 }
@@ -27,8 +29,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"First", @"First");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.title = NSLocalizedString(@"Ninja Blocks", @"Ninja Blocks");
     }
     return self;
 }
@@ -37,13 +38,27 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
+    UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                                     target:self
+                                                                                     action:@selector(didClickSettings:)
+                                        ] autorelease];
+    self.navigationItem.rightBarButtonItem = settingsButton;
 }
 
 //TODO: remove. Testing only
 - (IBAction) clickedJiggleTest:(id)sender
 {
     [self.deviceManager jiggleTest];
+}
+
+- (void) didClickSettings:(id)sender
+{
+    NBSettingsViewController *settingsViewController = [[[NBSettingsViewController alloc] initWithNibName:@"NBSettingsViewController"
+                                                                                                  bundle:nil
+                                                        ] autorelease];
+    [self.navigationController pushViewController:settingsViewController
+                                         animated:true
+     ];
 }
 
 - (IBAction) touchDownPushButton:(id)sender
