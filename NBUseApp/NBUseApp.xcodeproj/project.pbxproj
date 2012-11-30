@@ -52,6 +52,8 @@
 		38B7751A16646F420004F620 /* NBHeading.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751916646F420004F620 /* NBHeading.m */; };
 		38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751D1664728B0004F620 /* NBPollingSensor.m */; };
 		38B775241665BA140004F620 /* NBLEDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775231665BA100004F620 /* NBLEDDevice.m */; };
+		38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */; };
+		38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +138,9 @@
 		38B775211665730F0004F620 /* NBDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NBDefinitions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38B775221665BA0D0004F620 /* NBLEDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEDDevice.h; sourceTree = "<group>"; };
 		38B775231665BA100004F620 /* NBLEDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEDDevice.m; sourceTree = "<group>"; };
+		38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettingsViewController.h; path = Settings/NBSettingsViewController.h; sourceTree = "<group>"; };
+		38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettingsViewController.m; path = Settings/NBSettingsViewController.m; sourceTree = "<group>"; };
+		38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBSettingsViewController.xib; path = Settings/NBSettingsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +236,7 @@
 				38B774E7166445440004F620 /* Network */,
 				38B774CB166445440004F620 /* Devices */,
 				38B774C1166445440004F620 /* DeviceHWInterfaces */,
+				38D16DEA16682E52000BD7D8 /* Settings */,
 				38B774E5166445440004F620 /* NBNinjaBlock.h */,
 				38B774E6166445440004F620 /* NBNinjaBlock.m */,
 			);
@@ -349,6 +355,16 @@
 			name = PollingSensors;
 			sourceTree = "<group>";
 		};
+		38D16DEA16682E52000BD7D8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */,
+				38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */,
+				38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -409,6 +425,7 @@
 				38B774AB1664430F0004F620 /* NBViewController_iPad.xib in Resources */,
 				38B77500166445440004F620 /* InitialisationViewController.xib in Resources */,
 				38B77509166446E00004F620 /* FirstViewController.xib in Resources */,
+				38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +464,7 @@
 				38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */,
 				38B775241665BA140004F620 /* NBLEDDevice.m in Sources */,
 				3840C16B1666EE290088AD4A /* NBLocation.m in Sources */,
+				38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
