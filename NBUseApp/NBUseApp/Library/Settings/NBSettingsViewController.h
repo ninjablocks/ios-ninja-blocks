@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NBSettingsViewController : UIViewController
+@interface NBSettingsViewController : UITableViewController
 
 @end
