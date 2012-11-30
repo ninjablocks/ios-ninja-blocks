@@ -51,8 +51,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void) didFinishInitialisationWithData:(NBConnectionData*)connectionData
 {
-    NBDeviceManager *deviceManager = [[NBDeviceManager alloc] initWithConnectionData:connectionData];
-    
+    NBDeviceManager *deviceManager = [NBDeviceManager sharedManagerWithConnectionData:connectionData];
     
     FirstViewController *viewController1;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

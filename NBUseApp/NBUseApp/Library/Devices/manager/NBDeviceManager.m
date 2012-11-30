@@ -35,7 +35,63 @@
 
 @end
 
+static NBDeviceManager *sharedDeviceManager = nil;
+
 @implementation NBDeviceManager
+
+// May be nil. Can only create shared instance with NBConnectionData
++ (id) sharedManager
+{
+    return sharedDeviceManager;
+}
+
++ (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData
+{
+    if (sharedDeviceManager == nil) {
+        static dispatch_once_t pred;        // Lock
+        dispatch_once(&pred, ^{             // This code is called at most once per app
+            sharedDeviceManager = [[super allocWithZone:NULL] initWithConnectionData:connectionData];
+        });
+    }
+    return sharedDeviceManager;
+}
+
++ (id)allocWithZone:(NSZone *)zone
+{
+    return [[self sharedManager] retain];
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+- (id)retain
+{
+    return self;
+}
+
+- (NSUInteger)retainCount
+
+{
+    return NSUIntegerMax;  //denotes an object that cannot be released
+}
+
+- (oneway void)release
+{
+    //do nothing
+}
+
+- (id)autorelease
+{
+    return self;
+}
+
+
+- (id) init
+{
+    return nil;
+}
 
 - (id) initWithConnectionData:(NBConnectionData*)connectionData
 {

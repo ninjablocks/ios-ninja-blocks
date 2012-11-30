@@ -27,7 +27,9 @@ typedef NSDictionary NBDeviceDictionary;
 @class NBDeviceHWInterface;
 @interface NBDeviceManager : NSObject <NBDeviceProtocol, NBNetworkCommandHandlerDelegate>
 
-- (id) initWithConnectionData:(NBConnectionData*)connectionData;
++ (id) sharedManager;
++ (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData;
+
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface;
 
 - (void) activateInterfaces;
@@ -35,6 +37,7 @@ typedef NSDictionary NBDeviceDictionary;
 //TODO: remove. Testing only
 - (void) triggerCameraData;
 - (void) ledData;
+
 
 @property (strong, nonatomic) NBNetworkHandler *networkHandler;
 
