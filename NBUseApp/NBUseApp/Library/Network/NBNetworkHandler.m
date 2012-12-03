@@ -23,6 +23,8 @@
 @interface NBNetworkHandler ()
 {
     NBConnectionData *connectionData;
+    NSMutableURLRequest *heartbeatRequest;
+    int bytesExpected;
 }
 @end
 
@@ -40,44 +42,47 @@
 //TODO: remove.
 - (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray
 {
-    NBLog(3, @"send heartbeat data: %@", deviceDataArray);
-    NSString *urlString = [NSString stringWithFormat:@"%@/%@/heartbeat"
-                           , kBaseBlockURL, connectionData.nodeId
-                           ];
-    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
-                                     initWithURL:[NSURL
-                                                  URLWithString:urlString]] autorelease];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue:kContentTypeAppJson
-   forHTTPHeaderField:kContentTypeName];
-    
-    [request setValue:connectionData.blockToken
-   forHTTPHeaderField:kNinjaTokenName];
-    
-    NSMutableString *content = [NSMutableString stringWithString:@"["];
-    int i = 0;
-    NBDevice *deviceData = [deviceDataArray objectAtIndex:i];
-    [content appendFormat:@"%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
-    for (i=1; i<[deviceDataArray count]; i++)
+    bool awaitingHeartbeatResponse = (heartbeatRequest != nil);
+    if (!awaitingHeartbeatResponse)
     {
-        deviceData = [deviceDataArray objectAtIndex:i];
-        [content appendFormat:@",%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+        
+        NBLog(3, @"send heartbeat data: %@", deviceDataArray);
+        NSString *urlString = [NSString stringWithFormat:@"%@/%@/heartbeat"
+                               , kBaseBlockURL, connectionData.nodeId
+                               ];
+        heartbeatRequest = [[NSMutableURLRequest alloc]
+                             initWithURL:[NSURL URLWithString:urlString]];
+        
+        [heartbeatRequest setHTTPMethod:@"POST"];
+        [heartbeatRequest setValue:kContentTypeAppJson
+       forHTTPHeaderField:kContentTypeName];
+        
+        [heartbeatRequest setValue:connectionData.blockToken
+       forHTTPHeaderField:kNinjaTokenName];
+        
+        NSMutableString *content = [NSMutableString stringWithString:@"["];
+        int i = 0;
+        NBDevice *deviceData = [deviceDataArray objectAtIndex:i];
+        [content appendFormat:@"%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+        for (i=1; i<[deviceDataArray count]; i++)
+        {
+            deviceData = [deviceDataArray objectAtIndex:i];
+            [content appendFormat:@",%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+        }
+        [content appendString:@"]"];
+        NBLog(kNBLogNetwork, @"content = %@", content);
+        
+        [heartbeatRequest setValue:[NSString stringWithFormat:@"%d",
+                           [content length]]
+       forHTTPHeaderField:@"Content-length"];
+        
+        [heartbeatRequest setHTTPBody:[content
+                              dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [[[NSURLConnection alloc]
+          initWithRequest:heartbeatRequest
+          delegate:self] autorelease];
     }
-    [content appendString:@"]"];
-    NBLog(kNBLogNetwork, @"content = %@", content);
-    
-    [request setValue:[NSString stringWithFormat:@"%d",
-                       [content length]]
-   forHTTPHeaderField:@"Content-length"];
-    
-    [request setHTTPBody:[content
-                          dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [[[NSURLConnection alloc]
-      initWithRequest:request
-      delegate:self] autorelease];
-    
 }
 
 - (void) reportDeviceData:(NBDevice*)deviceData
@@ -155,17 +160,22 @@
 - (void) finishedRequest:(NSURLRequest*)request
 {
     NBLog(kNBLogNetwork, @"Finished request");
+    if (request == heartbeatRequest)
+    {
+        [heartbeatRequest release];
+        heartbeatRequest = nil;
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    bool expectingContent = ([response expectedContentLength] > 0);
+    bytesExpected = [response expectedContentLength];
     NBLog(kNBLogNetwork, @"Response length: %lld", [response expectedContentLength]);
     NBLog(kNBLogNetwork, @"Response filename: %@", [response suggestedFilename]);
     NBLog(kNBLogNetwork, @"Response mimetype: %@", [response MIMEType]);
     NBLog(kNBLogNetwork, @"Response textEncodingName: %@", [response textEncodingName]);
     NBLog(kNBLogNetwork, @"Response url: %@", [response URL]);
-    if (!expectingContent)
+    if (bytesExpected <= 0)
     {
         [self finishedRequest:connection.currentRequest];
     }
@@ -183,8 +193,9 @@
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    bytesExpected -= [data length];
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
+    NBLog(kNBLogNetwork, @"NTW: received data string: %@", dataString);
     
     NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
@@ -194,14 +205,15 @@
     NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
     [error release];
 
-    NSString *errorValue = [responseDictionary objectForKey:kResponseErrorKey];
-    if ((id)errorValue != [NSNull null])  // && [errorValue isEqualToString:kResponseErrorValueInvalid]) {
+    if ([NetworkHelperFunctions hasErrorWithJsonData:data])
     {
         NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
         NBLog(kNBLogError, @"error response for headers: %@", connection.originalRequest.allHTTPHeaderFields);
     }
-    
-    [self finishedRequest:connection.currentRequest];
+    else if (bytesExpected <= 0)
+    {
+        [self finishedRequest:connection.currentRequest];
+    }
 }
 
 
