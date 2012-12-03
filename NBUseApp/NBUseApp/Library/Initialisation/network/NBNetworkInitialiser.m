@@ -334,9 +334,9 @@
         [validationRequest setValue:self.connectionData.blockToken
        forHTTPHeaderField:kNinjaTokenName];
 
-        NBDevice *deviceData = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){0,0,@"0"}
+        NBDevice *deviceData = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress){0,0,@"0"}
                                                     initialValue:@"0"
-                                ];
+                                ] autorelease];
         NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:self.connectionData.nodeId];
         
         NBLog(kNBLogNetwork, @"content = %@", content);

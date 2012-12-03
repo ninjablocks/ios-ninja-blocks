@@ -54,7 +54,7 @@
 
 - (NSString*) description
 {
-    NSMutableString *description = [[NSMutableString alloc] initWithFormat:@"nodeId: %@, blockToken: %@", self.nodeId, self.blockToken];
+    NSMutableString *description = [[[NSMutableString alloc] initWithFormat:@"nodeId: %@, blockToken: %@", self.nodeId, self.blockToken] autorelease];
     return description;
 }
 

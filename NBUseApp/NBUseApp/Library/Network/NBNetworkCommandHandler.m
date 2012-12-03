@@ -92,12 +92,12 @@
         NSString *dataValue = [deviceDictionary objectForKey:kDataName];
         
         
-        NBCommand *command = [[NBCommand alloc] initWithAddress:
+        NBCommand *command = [[[NBCommand alloc] initWithAddress:
                                    (NBDeviceAddress){[vendorNumber intValue]
                                        , [deviceIdNumber intValue]
                                        , port}
                                                        dataValue:dataValue
-                                   ];
+                                   ] autorelease];
         [self.delegate didReceiveCommand:command];
     }
 }

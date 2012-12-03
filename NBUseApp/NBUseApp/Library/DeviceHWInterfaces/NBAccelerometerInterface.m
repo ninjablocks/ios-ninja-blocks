@@ -57,7 +57,7 @@
     [accelerometerStateDevice setDeviceHWInterface:self];
     [_devices addObject:accelerometerStateDevice];
     
-    NBOrientation *orientationDevice = [[NBOrientation alloc] init];
+    NBOrientation *orientationDevice = [[[NBOrientation alloc] init] autorelease];
     [orientationDevice setDeviceHWInterface:self];
     [_devices addObject:orientationDevice];
 }
