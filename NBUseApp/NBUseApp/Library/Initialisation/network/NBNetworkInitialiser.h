@@ -12,8 +12,11 @@
 @class NBConnectionData;
 @protocol NBNetworkInitDelegate <NSObject>
 
-//- (
-- (void) didSetConnectionData:(NBConnectionData*)connectionData;
+- (void) didFailLogin;
+- (void) didFailActivation;
+- (void) didFailValidation;
+
+- (void) didValidateConnectionData:(NBConnectionData*)connectionData;
 
 @end
 
@@ -23,10 +26,8 @@
 
 - (void) loginWithUserName:(NSString*)userName password:(NSString*)password;
 
-- (void) connectWithUserId:(NSString *)userId;
 
-
-@property (assign, nonatomic) id<NBNetworkInitDelegate> delegate;
+@property (assign, nonatomic) id<NBNetworkInitDelegate, NSObject> delegate;
 @property (strong, nonatomic) NBConnectionData *connectionData;
 
 @end

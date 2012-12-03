@@ -16,13 +16,21 @@
 #import "NetworkHelperFunctions.h"
 #import "NBConnectionData.h"
 
+@interface NBNetworkInitialiser (validationFunctions)
+
+- (void) validateConnectionData;
+
+@end
+
 @interface NBNetworkInitialiser (blockFunctions)
 
 - (void) registerBlock;
 - (void) activateBlock;
 
+- (void) didFailActivation;
 
 @end
+
 
 #define kDefaultsConnectionData @"kDefaultsConnectionDataKey"
 
@@ -33,9 +41,13 @@
     NSString *trialNodeId;
     
     NSMutableURLRequest *loginRequest;
+    bool failedLogin;
 
     NSMutableURLRequest *activateRequest;
     NSMutableURLRequest *registerBlockRequest;
+    NSMutableURLRequest *validationRequest;
+    
+    int bytesExpected;
     
 }
 
@@ -83,30 +95,29 @@
 
 #define kNodeIdSeparator @"xxx"
 
-- (bool) hasDataForUserId:(NSString*)userId udid:(NSString*)udid
+- (bool) hasDataForUdid:(NSString*)udid
 {
     bool result = false;
     NSString *nodeId = self.connectionData.nodeId;
-    if ((userId.length > 0) && (nodeId != nil))
+    if ((nodeId != nil) && [nodeId isEqualToString:udid])
     {
-        NSRange udidRange = [nodeId rangeOfString:udid options:NSBackwardsSearch];
-        if (udidRange.location != NSNotFound)
-        {
-            int storedUserIdLength = udidRange.location - [kNodeIdSeparator length];
-            if (storedUserIdLength > 0) // has valid format
-            {
-                NSString *storedUserId = [nodeId substringToIndex:storedUserIdLength];
-                if ([storedUserId isEqualToString:userId])
-                {
-                    result = true;
-                }
-            }
-        }
+        result = true;
     }
     return result;
 }
 
-- (void) connectWithUserId:(NSString *)userId
+- (bool) hasStoredConnectionData
+{
+    bool result = false;
+    NSData *rawData = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsConnectionData];
+    if (rawData != nil)
+    {
+        result = true;
+    }
+    return result;
+}
+
+- (void) didLoginSuccessfully
 {
     NSData *rawData = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsConnectionData];
     if (rawData != nil)
@@ -125,7 +136,7 @@
     deviceIdentifier = [deviceIdentifier stringByReplacingOccurrencesOfString:@"-"
                                                                    withString:@"x"
                         ];
-    if (![self hasDataForUserId:userId udid:deviceIdentifier])
+    if (![self hasDataForUdid:deviceIdentifier])
     {
         self.connectionData = nil;
         trialNodeId = [[NSString alloc] initWithString:deviceIdentifier]; //[[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
@@ -153,12 +164,197 @@
         [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_connectionData]
                                                   forKey:kDefaultsConnectionData];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self.delegate didSetConnectionData:_connectionData];
+        
+        //maybe TODO... [self validateConnectionData];
+        [self.delegate didValidateConnectionData:_connectionData];
     }
 }
 
 @end
 
+@implementation NBNetworkInitialiser (commenRequestFunctions)
+
+- (void) finishedRequest:(NSURLRequest*)request
+{
+    NBLog(kNBLogLogin, @"INIT: finished (bytesExpected = %d)", bytesExpected);
+    if (activateRequest == request)
+    {
+        NBLog(kNBLogLogin, @"activation");
+        [activateRequest release];
+        activateRequest = nil;
+    }
+    else if (loginRequest == request)
+    {
+        NBLog(kNBLogLogin, @"AFTER: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
+        [loginRequest release];
+        loginRequest = nil;
+    }
+    else if (registerBlockRequest == request)
+    {
+        NBLog(kNBLogLogin, @"registration");
+        [registerBlockRequest release];
+        registerBlockRequest = nil;
+    }
+    else if (validationRequest == request)
+    {
+        NBLog(kNBLogLogin, @"validation");
+        [validationRequest release];
+        validationRequest = nil;
+    }
+    NBLog(kNBLogLogin, @"INIT: finished finished");
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    if (loginRequest == connection.currentRequest)
+    {
+        NBLog(kNBLogLogin, @"INIT: received login response: %@", response.URL);
+    }
+    else if (registerBlockRequest == connection.currentRequest)
+    {
+        NBLog(kNBLogLogin, @"INIT: received register response: %@", response.URL);
+    }
+    else if (validationRequest == connection.currentRequest)
+    {
+        NBLog(kNBLogLogin, @"INIT: received validation response: %@", response.URL);
+    }
+    bytesExpected = [response expectedContentLength];
+    if (bytesExpected == 0)
+    {
+        [self finishedRequest:connection.currentRequest];
+    }
+}
+
+- (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [self finishedRequest:connection.currentRequest];
+}
+- (void) connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    [self finishedRequest:connection.currentRequest];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    bytesExpected -= [data length];
+    bool notExpectingMoreData = (bytesExpected <= 0);
+    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NBLog(kNBLogLogin, @"INIT: received data string: %@", dataString);
+    if (loginRequest == connection.currentRequest)
+    {
+        NBLog(kNBLogLogin, @"login request");
+        if ([NetworkHelperFunctions hasSuccessWithJsonData:data])
+        {
+            [self performSelector:@selector(didLoginSuccessfully)
+                         onThread:[NSThread mainThread]
+                       withObject:nil
+                    waitUntilDone:false
+             ];
+        }
+        else if (notExpectingMoreData)
+        {
+            [self.delegate didFailLogin];
+        }
+    }
+    else if (activateRequest == connection.currentRequest)
+    {
+        NBLog(kNBLogLogin, @"activate request");
+        NSError *error = [[NSError alloc] init];
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                           options:NSJSONReadingAllowFragments
+                                                                             error:&error
+                                            ];
+        [error release];
+        NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
+        NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
+        if ((trialNodeId != nil) && (blockToken != nil))
+        {
+            self.connectionData = [[[NBConnectionData alloc] initWithNodeId:trialNodeId blockToken:blockToken] autorelease];
+        }
+        else if (resultNumber != nil)
+        {
+            if ([NetworkHelperFunctions hasErrorWithJsonData:data])
+            {
+                [self didFailActivation];
+            }
+        }
+        else if (bytesExpected <= 0)
+        {
+            [self didFailActivation];
+        }
+    }
+    else if ((validationRequest == connection.currentRequest) && notExpectingMoreData)
+    {
+        NBLog(kNBLogLogin, @"validation request");
+        [self performSelectorOnMainThread:@selector(reportValidationResultWithData:)
+                               withObject:data
+                            waitUntilDone:true
+         ];
+    }
+    
+    if (notExpectingMoreData)
+    {
+        [self finishedRequest:connection.currentRequest];
+    }
+}
+
+- (void) reportValidationResultWithData:(NSData*)data
+{
+    if ([NetworkHelperFunctions hasErrorWithJsonData:data])
+    {
+        [self.delegate didValidateConnectionData:self.connectionData];
+    }
+    else
+    {
+        [self.delegate didFailValidation];
+    }
+}
+
+@end
+
+@implementation NBNetworkInitialiser (validationFunctions)
+
+- (void) validateConnectionData
+{
+    bool awaitingValidation = (validationRequest != nil);
+    if (!awaitingValidation)
+    {
+        NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
+                               , kBaseBlockURL, self.connectionData.nodeId
+                               ];
+        NBLog(kNBLogNetwork, @"url = %@", urlString);
+        validationRequest = [[[NSMutableURLRequest alloc]
+                                         initWithURL:[NSURL
+                                                      URLWithString:urlString]] autorelease];
+        
+        [validationRequest setHTTPMethod:@"POST"];
+        [validationRequest setValue:kContentTypeAppJson
+       forHTTPHeaderField:kContentTypeName];
+        
+        [validationRequest setValue:self.connectionData.blockToken
+       forHTTPHeaderField:kNinjaTokenName];
+
+        NBDevice *deviceData = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){0,0,@"0"}
+                                                    initialValue:@"0"
+                                ];
+        NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:self.connectionData.nodeId];
+        
+        NBLog(kNBLogNetwork, @"content = %@", content);
+        
+        [validationRequest setValue:[NSString stringWithFormat:@"%d",
+                           [content length]]
+       forHTTPHeaderField:@"Content-length"];
+        
+        [validationRequest setHTTPBody:[content
+                              dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [[[NSURLConnection alloc]
+          initWithRequest:validationRequest
+          delegate:self] autorelease];
+    }
+}
+
+@end
 
 @implementation NBNetworkInitialiser (blockFunctions)
 
@@ -211,79 +407,13 @@
       delegate:self] autorelease];
 }
 
-- (void) finishedRequest:(NSURLRequest*)request
+- (void) didFailActivation
 {
-    if (activateRequest == request)
-    {
-        [activateRequest release];
-        activateRequest = nil;
-    }
-    else if (loginRequest == request)
-    {
-        NBLog(kNBLogLogin, @"AFTER: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
-        [loginRequest release];
-        loginRequest = nil;
-        [self performSelector:@selector(connectWithUserId:)
-                     onThread:[NSThread mainThread]
-                   withObject:@""
-                waitUntilDone:false
-         ];
-    }
-    else if (registerBlockRequest == request)
-    {
-        [registerBlockRequest release];
-        registerBlockRequest = nil;
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    if (loginRequest == connection.currentRequest)
-    {
-        NBLog(99, @"INIT: received login response: %@", response.URL);
-    }
-    if (registerBlockRequest == connection.currentRequest)
-    {
-        NBLog(99, @"INIT: received register response: %@", response.URL);
-    }
-    bool expectingContent = ([response expectedContentLength] > 0);
-    if (!expectingContent)
-    {
-        [self finishedRequest:connection.currentRequest];
-    }
-}
-
-- (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [self finishedRequest:connection.currentRequest];
-}
-- (void) connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-    [self finishedRequest:connection.currentRequest];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NBLog(99, @"INIT: received data string: %@", dataString);
+    //TODO: unregister block then re-register
+    [self setConnectionData:nil];
     
-    if (activateRequest == connection.currentRequest)
-    {
-        NSError *error = [[NSError alloc] init];
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                           options:NSJSONReadingAllowFragments
-                                                                             error:&error
-                                            ];
-        //TODO: check for json errors
-        [error release];
-        NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
-        if (trialNodeId != nil)
-        {
-            self.connectionData = [[[NBConnectionData alloc] initWithNodeId:trialNodeId blockToken:blockToken] autorelease];
-        }
-    }
-
-    [self finishedRequest:connection.currentRequest];
+    [self.delegate didFailActivation];
 }
+
 
 @end
