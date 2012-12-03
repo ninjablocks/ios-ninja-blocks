@@ -70,4 +70,9 @@
 #define kResponseErrorValueNone  @"none"
 #define kResponseErrorValueInvalid  @"Invalid Request"
 
+#define kResponseResultSuccess  1
+#define kResponseResultFailure  0
+
+#define kResponseIdAuthError    401
+
 #endif
