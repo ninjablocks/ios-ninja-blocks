@@ -123,15 +123,15 @@ static NBDeviceManager *sharedDeviceManager = nil;
     {
         [interface setRequestingAction:true];
     }
-//    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
-//                                              target:self
-//                                            selector:@selector(heartbeatWithAllDeviceData)
-//                                            userInfo:nil
-//                                             repeats:true
-//                       ];
-//    [[NSRunLoop mainRunLoop] addTimer:devicePollTimer
-//                              forMode:NSDefaultRunLoopMode
-//     ];
+    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
+                                              target:self
+                                            selector:@selector(heartbeatWithAllDeviceData)
+                                            userInfo:nil
+                                             repeats:true
+                       ];
+    [[NSRunLoop mainRunLoop] addTimer:devicePollTimer
+                              forMode:NSDefaultRunLoopMode
+     ];
 }
 
 - (void) heartbeatWithAllDeviceData

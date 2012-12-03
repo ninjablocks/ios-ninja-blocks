@@ -39,7 +39,7 @@
     return self;
 }
 
-//TODO: remove.
+//TODO: remove. ?
 - (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray
 {
     bool awaitingHeartbeatResponse = (heartbeatRequest != nil);
@@ -165,6 +165,7 @@
         [heartbeatRequest release];
         heartbeatRequest = nil;
     }
+    NBLog(kNBLogNetwork, @"Finished finished");
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -186,24 +187,26 @@
     NBLog(kNBLogNetwork, @"didFailWithError");
     [self finishedRequest:connection.currentRequest];
 }
+
 - (void) connection:(NSURLConnection *)connection didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     NBLog(kNBLogNetwork, @"didCancelAuthenticationChallenge");
     [self finishedRequest:connection.currentRequest];
 }
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    NBLog(kNBLogNetwork, @"NTW: received data");
     bytesExpected -= [data length];
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NBLog(kNBLogNetwork, @"NTW: received data string: %@", dataString);
+    NBLog(kNBLogNetwork, @"NTW: string: %@", dataString);
     
-    NSError *error = [[NSError alloc] init];
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                       options:NSJSONReadingAllowFragments
-                                                                         error:&error
-                                        ];
+    NSDictionary *responseDictionary = nil;
+    responseDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                         options:NSJSONReadingAllowFragments
+                                                           error:nil
+                          ];
     NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
-    [error release];
 
     if ([NetworkHelperFunctions hasErrorWithJsonData:data])
     {
