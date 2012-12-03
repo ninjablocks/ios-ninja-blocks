@@ -21,6 +21,7 @@
 {
     NSMutableURLRequest *commandRequest;
     NBConnectionData *connectionData;
+    int bytesExpected;
 }
 
 @end
@@ -118,13 +119,13 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    bool expectingContent = ([response expectedContentLength] > 0);
+    bytesExpected = [response expectedContentLength];
     NBLog(kNBLogNetwork, @"Response length: %lld", [response expectedContentLength]);
     NBLog(kNBLogNetwork, @"Response filename: %@", [response suggestedFilename]);
     NBLog(kNBLogNetwork, @"Response mimetype: %@", [response MIMEType]);
     NBLog(kNBLogNetwork, @"Response textEncodingName: %@", [response textEncodingName]);
     NBLog(kNBLogNetwork, @"Response url: %@", [response URL]);
-    if (!expectingContent)
+    if (bytesExpected <= 0)
     {
         [self finishedRequest:connection.currentRequest];
     }
@@ -142,8 +143,9 @@
 }
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    bytesExpected -= [data length];
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NBLog(kNBLogNetwork, @"received data string: %@", dataString);
+    NBLog(kNBLogNetwork, @"CMD: received data string: %@", dataString);
     NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
@@ -153,10 +155,13 @@
     //TODO: check for json errors
     [error release];
     
-    if (commandRequest == connection.currentRequest)
+    if ((commandRequest == connection.currentRequest) && (responseDictionary != nil))
     {
         [self createDevicesFromCommands:responseDictionary];
     }
-    [self finishedRequest:connection.currentRequest];
+    else if (bytesExpected <= 0)
+    {
+        [self finishedRequest:connection.currentRequest];
+    }
 }
 @end
