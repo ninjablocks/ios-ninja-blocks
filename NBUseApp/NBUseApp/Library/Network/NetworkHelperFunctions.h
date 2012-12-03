@@ -15,6 +15,7 @@
 
 @interface NetworkHelperFunctions : NSObject
 
+// constructing json strings
 + (NSString *) guidWithAddress:(NBDeviceAddress)deviceAddress nodeId:(NSString *)nodeId;
 
 + (NSString *) jsonifyDeviceData:(NBDevice*)deviceData withNodeId:(NSString*)nodeId;
@@ -24,5 +25,10 @@
 + (NSString *) jsonifyInnerName:(NSString*)name value:(id)value;
 + (NSString *) jsonifyNames:(NSArray*)names values:(NSArray*)values;
 
+
+// interpreting json data
++ (bool) hasSuccessWithJsonData:(NSData*)jsonResponse;
++ (bool) hasErrorWithJsonData:(NSData*)jsonResponse;
++ (bool) hasAuthenticationErrorWithJsonData:(NSData*)jsonResponse;
 
 @end

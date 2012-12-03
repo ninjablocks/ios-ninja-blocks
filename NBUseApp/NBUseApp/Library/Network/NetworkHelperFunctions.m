@@ -15,6 +15,45 @@
 
 @implementation NetworkHelperFunctions
 
++ (bool) hasSuccessWithJsonData:(NSData*)jsonResponse
+{
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonResponse
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:nil
+                                        ];
+    NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
+    return ((resultNumber != nil) && [resultNumber integerValue] == kResponseResultSuccess);
+}
+
++ (bool) hasErrorWithJsonData:(NSData*)jsonResponse
+{
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonResponse
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:nil
+                                        ];
+    NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
+    return ((resultNumber != nil) && [resultNumber integerValue] == kResponseResultFailure);
+}
+
++ (bool) hasAuthenticationErrorWithJsonData:(NSData*)jsonResponse
+{
+    bool hasAuthenticationError = false;
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonResponse
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:nil
+                                        ];
+    NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
+    if ([resultNumber integerValue] == kResponseResultFailure)
+    {
+        NSNumber *idNumber = [responseDictionary objectForKey:kResponseIdKey];
+        if ([idNumber integerValue] == kResponseIdAuthError)
+        {
+            hasAuthenticationError = true;
+        }
+    }
+    return hasAuthenticationError;
+}
+
 + (NSString *) guidWithAddress:(NBDeviceAddress)deviceAddress nodeId:(NSString *)nodeId
 {
     return [NSString stringWithFormat:@"%@_%@_%d_%d",
