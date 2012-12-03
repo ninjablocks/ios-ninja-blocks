@@ -10,8 +10,10 @@
 
 
 typedef enum {
-    stateNoConnectionData
+    stateInit
+    , stateLogin
     , stateRetrievingConnectionData
+    , stateValidatingConnectionData
     , stateValidConnectionData
 } ConnectionState;
 
@@ -35,7 +37,7 @@ typedef enum {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        currentState = stateNoConnectionData;
+        currentState = stateInit;
         networkInitialiser = [[NBNetworkInitialiser alloc] initWithDelegate:self];
     }
     return self;
@@ -47,7 +49,7 @@ typedef enum {
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
     [self.connectButton addTarget:self
                            action:@selector(connect)
                  forControlEvents:UIControlEventTouchUpInside
@@ -59,8 +61,20 @@ typedef enum {
     }
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 - (IBAction) didClickClearUserData:(id)sender
+{
+    currentState = stateInit;
+    [self clearConnectionData];
+}
+
+- (void) clearConnectionData
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:NBDefaultsUserIdKey];
     [networkInitialiser setConnectionData:nil];
@@ -78,33 +92,42 @@ typedef enum {
     [networkInitialiser loginWithUserName:userId
                                  password:self.pwordTextField.text
      ];
-//    [networkInitialiser connectWithUserId:userId];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void) didSetConnectionData:(NBConnectionData*)connectionData
+- (void) retryAlertingUserWithMessage:(NSString*)msg
 {
     self.connectButton.enabled = true;
-    if (connectionData != nil)
-    {
-        currentState = stateValidConnectionData;
-        [self.delegate didFinishInitialisationWithData:connectionData];
-    }
-    else
-    {
-        currentState = stateNoConnectionData;
-        [[UIAlertView alloc] initWithTitle:@"NinjaBlock Connection"
-                                   message:[NSString stringWithFormat:@"Could not get valid token for userId %@", userId]
-                                  delegate:nil
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles:nil
-         ];
-    }
+    currentState = stateInit;
+    [self clearConnectionData];
+    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:@"NinjaBlock Connection"
+                                                        message:msg
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ] autorelease];
+    [alertView show];
+}
+
+- (void) didFailLogin
+{
+    [self retryAlertingUserWithMessage:@"Invalid username and/or password."];
+}
+
+- (void) didFailActivation
+{
+    [self retryAlertingUserWithMessage:@"Failed to activate block."];
+}
+
+- (void) didFailValidation
+{
+    [self retryAlertingUserWithMessage:@"Failed to validate token."];
+}
+
+- (void) didValidateConnectionData:(NBConnectionData*)connectionData
+{
+    self.connectButton.enabled = true;
+    currentState = stateValidConnectionData;
+    [self.delegate didFinishInitialisationWithData:connectionData];
 }
 
 @end
