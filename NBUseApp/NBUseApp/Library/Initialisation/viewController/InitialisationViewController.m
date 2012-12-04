@@ -59,19 +59,27 @@ typedef enum {
     if (userId != nil) {
         self.userIdTextField.text = userId;
     }
+    [networkInitialiser performSelectorOnMainThread:@selector(restoreConnectionData)
+                                         withObject:nil
+                                      waitUntilDone:false
+     ];
 }
 
-- (void)didReceiveMemoryWarning
+- (void) didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-- (IBAction) didClickClearUserData:(id)sender
+- (void) clearUserData
 {
     currentState = stateInit;
     [self clearConnectionData];
+}
+
+- (IBAction) didClickClearUserData:(id)sender
+{
+    [self clearUserData];
 }
 
 - (void) clearConnectionData
