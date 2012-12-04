@@ -61,6 +61,14 @@
      ];
 }
 
+- (IBAction) clickedFakeAuthError:(id)sender
+{
+    NBDevice *ledDevice = [[[NBDevice alloc] initWithAddress:(NBDeviceAddress) {kVendorNinjaBlocks, kNBDIDLEDUser, @"0"}
+                                                   initialValue:@"1"
+                               ] autorelease];
+    [self.deviceManager.networkHandler reportBadAuthData:ledDevice];
+}
+
 - (IBAction) touchDownPushButton:(id)sender
 {
 //    NSInteger buttonTag = ((UIButton*)sender).tag;

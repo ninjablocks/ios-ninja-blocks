@@ -19,6 +19,8 @@
 - (IBAction) clickedCamera:(id)sender;
 - (IBAction) clickedSendData:(id)sender;
 
+- (IBAction) clickedFakeAuthError:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (strong, nonatomic) NBDeviceManager *deviceManager;
