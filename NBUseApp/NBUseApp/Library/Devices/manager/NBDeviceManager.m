@@ -47,12 +47,11 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 + (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData
 {
-    if (sharedDeviceManager == nil) {
-        static dispatch_once_t pred;        // Lock
-        dispatch_once(&pred, ^{             // This code is called at most once per app
-            sharedDeviceManager = [[super allocWithZone:NULL] initWithConnectionData:connectionData];
-        });
+    if (sharedDeviceManager != nil)
+    {
+        [sharedDeviceManager release];
     }
+    sharedDeviceManager = [[super allocWithZone:NULL] initWithConnectionData:connectionData];
     return sharedDeviceManager;
 }
 
@@ -101,7 +100,8 @@ static NBDeviceManager *sharedDeviceManager = nil;
         _devices = [[NSMutableDictionary alloc] init];
         
         self.networkHandler = [[[NBNetworkHandler alloc] initWithConnectionData:connectionData] autorelease];
-
+        [self.networkHandler setDelegate:self];
+        
         NBAccelerometerInterface *accelerometerInterface = [[[NBAccelerometerInterface alloc] init] autorelease];
         [self addDeviceHWInterface:accelerometerInterface];
         
@@ -115,6 +115,27 @@ static NBDeviceManager *sharedDeviceManager = nil;
         
     }
     return self;
+}
+
+- (void) dealloc
+{
+    self.networkHandler = nil;
+    self.interfaces = nil;
+    self.devices = nil;
+    [networkCommandHandler release];
+    networkCommandHandler = nil;
+    self.delegate = nil;
+    [super dealloc];
+}
+
+- (void) didReceiveAuthenticationError
+{
+    [self.networkHandler setDelegate:nil];
+    self.networkHandler = nil;
+    [networkCommandHandler setDelegate:nil];
+    [networkCommandHandler release];
+    networkCommandHandler = nil;
+    [self.delegate didReceiveAuthenticationError:self];
 }
 
 - (void) activateInterfaces
