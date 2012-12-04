@@ -146,14 +146,12 @@
     bytesExpected -= [data length];
     NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
     NBLog(kNBLogNetwork, @"CMD: received data string: %@", dataString);
-    NSError *error = [[NSError alloc] init];
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                        options:NSJSONReadingAllowFragments
-                                                                         error:&error
+                                                                         error:nil
                                         ];
     NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
     //TODO: check for json errors
-    [error release];
     
     if ((commandRequest == connection.currentRequest) && (responseDictionary != nil))
     {

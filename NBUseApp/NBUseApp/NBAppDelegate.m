@@ -35,7 +35,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    
+    [self showInitialisationViewController:false];
+    return YES;
+}
+
+- (void) showInitialisationViewController:(bool)resetData
+{
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.initViewController = [[[InitialisationViewController alloc] initWithNibName:@"InitialisationViewController" bundle:nil] autorelease];
     } else {
@@ -43,16 +48,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     self.initViewController.delegate = self;
+
+    if (resetData)
+    {
+        [self.initViewController clearUserData];
+    }
     
     self.window.rootViewController = self.initViewController;
     [self.window makeKeyAndVisible];
-    return YES;
 }
 
 - (void) didFinishInitialisationWithData:(NBConnectionData*)connectionData
 {
     NBDeviceManager *deviceManager = [NBDeviceManager sharedManagerWithConnectionData:connectionData];
-    
+    [deviceManager setDelegate:self];
     FirstViewController *viewController1;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
@@ -68,6 +77,18 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.window.rootViewController = self.navigationController;
     //    [self.window makeKeyAndVisible];
     
+}
+
+- (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager
+{
+    UIAlertView *authAlert = [[[UIAlertView alloc] initWithTitle:@"Authentication Failure"
+                                                        message:@"Please login again."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil
+                              ] autorelease];
+    [authAlert show];
+    [self showInitialisationViewController:true];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

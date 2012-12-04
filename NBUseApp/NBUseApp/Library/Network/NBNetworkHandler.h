@@ -11,6 +11,12 @@
 
 #import "ConnectionConstants.h"
 
+@protocol NBNetworkDelegate <NSObject>
+
+- (void) didReceiveAuthenticationError;
+
+@end
+
 @class NBDevice;
 @class NBConnectionData;
 @class NBCamera;
@@ -19,10 +25,12 @@
 - (id) initWithConnectionData:(NBConnectionData*)connectionData;
 
 - (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray;
-
 - (void) reportDeviceData:(NBDevice*)deviceData;
 
 - (void) sendSnapshot:(NBCamera*)cameraDevice;
+
+
+@property (assign, nonatomic) id<NBNetworkDelegate> delegate;
 
 @end
 

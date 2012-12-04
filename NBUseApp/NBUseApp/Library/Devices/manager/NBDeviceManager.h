@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "NBNetworkHandler.h"
 #import "NBNetworkCommandHandler.h"
 #import "NBDevice.h"
 
@@ -15,8 +16,10 @@
 typedef NSArray NBDeviceHWInterfaceArray;
 typedef NSDictionary NBDeviceDictionary;
 
+@class NBDeviceManager;
 @protocol NBDeviceManagerDelegate <NSObject>
 
+- (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager;
 
 @end
 
@@ -25,7 +28,7 @@ typedef NSDictionary NBDeviceDictionary;
 
 @class NBConnectionData;
 @class NBDeviceHWInterface;
-@interface NBDeviceManager : NSObject <NBDeviceProtocol, NBNetworkCommandHandlerDelegate>
+@interface NBDeviceManager : NSObject <NBDeviceProtocol, NBNetworkCommandHandlerDelegate, NBNetworkDelegate>
 
 + (id) sharedManager;
 + (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData;
@@ -43,5 +46,7 @@ typedef NSDictionary NBDeviceDictionary;
 
 @property (strong, nonatomic) NBDeviceHWInterfaceArray *interfaces;
 @property (strong, nonatomic) NBDeviceDictionary *devices;
+
+@property (assign, nonatomic) id<NBDeviceManagerDelegate> delegate;
 
 @end

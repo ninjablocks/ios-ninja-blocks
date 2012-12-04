@@ -26,6 +26,8 @@
 
 - (void) loginWithUserName:(NSString*)userName password:(NSString*)password;
 
+- (bool) restoreConnectionData;
+
 
 @property (assign, nonatomic) id<NBNetworkInitDelegate, NSObject> delegate;
 @property (strong, nonatomic) NBConnectionData *connectionData;

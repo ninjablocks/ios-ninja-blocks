@@ -85,6 +85,40 @@
     }
 }
 
+- (void) reportBadAuthData:(NBDevice*)deviceData
+{
+    NBLog(kNBLogNetwork, @"Report data: %@", deviceData);
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
+                           , kBaseBlockURL, connectionData.nodeId
+                           ];
+    NBLog(kNBLogNetwork, @"url = %@", urlString);
+    NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
+                                     initWithURL:[NSURL
+                                                  URLWithString:urlString]] autorelease];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:kContentTypeAppJson
+   forHTTPHeaderField:kContentTypeName];
+    
+    [request setValue:@"TESTbadTokenTEST"//connectionData.blockToken
+   forHTTPHeaderField:kNinjaTokenName];
+    
+    NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId];
+    
+    NBLog(kNBLogNetwork, @"content = %@", content);
+    
+    [request setValue:[NSString stringWithFormat:@"%d",
+                       [content length]]
+   forHTTPHeaderField:@"Content-length"];
+    
+    [request setHTTPBody:[content
+                          dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [[[NSURLConnection alloc]
+      initWithRequest:request
+      delegate:self] autorelease];
+}
+
 - (void) reportDeviceData:(NBDevice*)deviceData
 {
     NBLog(kNBLogNetwork, @"Report data: %@", deviceData);
@@ -210,8 +244,14 @@
 
     if ([NetworkHelperFunctions hasErrorWithJsonData:data])
     {
-        NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
-        NBLog(kNBLogError, @"error response for headers: %@", connection.originalRequest.allHTTPHeaderFields);
+        if ([NetworkHelperFunctions hasAuthenticationErrorWithJsonData:data])
+        {
+            [self.delegate didReceiveAuthenticationError];
+        }
+        else {
+            NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
+            NBLog(kNBLogError, @"error response for headers: %@", connection.originalRequest.allHTTPHeaderFields);
+        }
     }
     else if (bytesExpected <= 0)
     {

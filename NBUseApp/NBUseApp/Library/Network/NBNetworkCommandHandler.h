@@ -16,6 +16,7 @@
 @protocol NBNetworkCommandHandlerDelegate <NSObject>
 
 - (void) didReceiveCommand:(NBCommand*)deviceCommand;
+- (void) didReceiveAuthenticationError;
 
 @end
 

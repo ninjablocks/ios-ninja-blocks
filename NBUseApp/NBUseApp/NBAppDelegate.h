@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "InitialisationViewController.h"
+#import "NBDeviceManager.h"
 
-@interface NBAppDelegate : UIResponder <UIApplicationDelegate, InitialisationDelegate>
+@interface NBAppDelegate : UIResponder <UIApplicationDelegate, InitialisationDelegate, NBDeviceManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
