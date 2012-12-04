@@ -13,10 +13,10 @@
 
 + (NSString*) reuseIdentifier;
 
+@property (strong, nonatomic) NBDevice *device;
+
 @property (strong, nonatomic) IBOutlet UISwitch *activitySwitch;
 @property (strong, nonatomic) IBOutlet UILabel *deviceNameLabel;
-
-- (void) setupWithDevice:(NBDevice*)device;
 
 
 @end

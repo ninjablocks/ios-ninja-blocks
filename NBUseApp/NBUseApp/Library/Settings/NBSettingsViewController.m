@@ -83,14 +83,12 @@
          ];
         cell = self.deviceCell;
         self.deviceCell = nil;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     NBDeviceHWInterface *interface = [[deviceManager interfaces] objectAtIndex:indexPath.section];
     NBDevice *device = [[interface devices] objectAtIndex:indexPath.row];
 
-    [cell setupWithDevice:device];
-    //TODO: disable
-    //TODO: add toggle to change active/inactive
-    
+    [cell setDevice:device];
     return cell;
 }
 
