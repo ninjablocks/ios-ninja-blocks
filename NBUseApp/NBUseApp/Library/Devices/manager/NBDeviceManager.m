@@ -146,7 +146,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     }
     NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
                                               target:self
-                                            selector:@selector(heartbeatWithAllDeviceData)
+                                            selector:@selector(sendAllDeviceData)
                                             userInfo:nil
                                              repeats:true
                        ];
@@ -155,7 +155,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
      ];
 }
 
-- (void) heartbeatWithAllDeviceData
+- (void) sendAllDeviceData
 {
     for (NBDeviceHWInterface *interface in self.interfaces)
     {
@@ -167,7 +167,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
             }
         }
     }
-    [self.networkHandler sendHeartbeatWithDeviceDataArray:[self.devices allValues]];
+    [self.networkHandler sendAllWithDeviceDataArray:[self.devices allValues]];
 }
 
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface

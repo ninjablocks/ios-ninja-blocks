@@ -24,7 +24,7 @@
 
 - (id) initWithConnectionData:(NBConnectionData*)connectionData;
 
-- (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray;
+- (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray;
 - (void) reportDeviceData:(NBDevice*)deviceData;
 
 - (void) sendSnapshot:(NBCamera*)cameraDevice;

@@ -23,7 +23,7 @@
 @interface NBNetworkHandler ()
 {
     NBConnectionData *connectionData;
-    NSMutableURLRequest *heartbeatRequest;
+    NSMutableURLRequest *sendAllRequest;
     int bytesExpected;
 }
 @end
@@ -40,24 +40,24 @@
 }
 
 //TODO: remove. ?
-- (void) sendHeartbeatWithDeviceDataArray:(NSArray*)deviceDataArray
+- (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray
 {
-    bool awaitingHeartbeatResponse = (heartbeatRequest != nil);
-    if (!awaitingHeartbeatResponse)
+    bool awaitingSendAllResponse = (sendAllRequest != nil);
+    if (!awaitingSendAllResponse)
     {
         
-        NBLog(3, @"send heartbeat data: %@", deviceDataArray);
-        NSString *urlString = [NSString stringWithFormat:@"%@/%@/heartbeat"
+        NBLog(3, @"send all data: %@", deviceDataArray);
+        NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
                                , kBaseBlockURL, connectionData.nodeId
                                ];
-        heartbeatRequest = [[NSMutableURLRequest alloc]
+        sendAllRequest = [[NSMutableURLRequest alloc]
                              initWithURL:[NSURL URLWithString:urlString]];
         
-        [heartbeatRequest setHTTPMethod:@"POST"];
-        [heartbeatRequest setValue:kContentTypeAppJson
+        [sendAllRequest setHTTPMethod:@"POST"];
+        [sendAllRequest setValue:kContentTypeAppJson
        forHTTPHeaderField:kContentTypeName];
         
-        [heartbeatRequest setValue:connectionData.blockToken
+        [sendAllRequest setValue:connectionData.blockToken
        forHTTPHeaderField:kNinjaTokenName];
         
         NSMutableString *content = [NSMutableString stringWithString:@"["];
@@ -72,15 +72,15 @@
         [content appendString:@"]"];
         NBLog(kNBLogNetwork, @"content = %@", content);
         
-        [heartbeatRequest setValue:[NSString stringWithFormat:@"%d",
+        [sendAllRequest setValue:[NSString stringWithFormat:@"%d",
                            [content length]]
        forHTTPHeaderField:@"Content-length"];
         
-        [heartbeatRequest setHTTPBody:[content
+        [sendAllRequest setHTTPBody:[content
                               dataUsingEncoding:NSUTF8StringEncoding]];
         
         [[[NSURLConnection alloc]
-          initWithRequest:heartbeatRequest
+          initWithRequest:sendAllRequest
           delegate:self] autorelease];
     }
 }
@@ -194,10 +194,10 @@
 - (void) finishedRequest:(NSURLRequest*)request
 {
     NBLog(kNBLogNetwork, @"Finished request");
-    if (request == heartbeatRequest)
+    if (request == sendAllRequest)
     {
-        [heartbeatRequest release];
-        heartbeatRequest = nil;
+        [sendAllRequest release];
+        sendAllRequest = nil;
     }
     NBLog(kNBLogNetwork, @"Finished finished");
 }
