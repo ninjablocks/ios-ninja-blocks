@@ -19,6 +19,7 @@
 
 @interface InitialisationViewController : UIViewController <NBNetworkInitDelegate>
 
+- (void) clearUserData;
 
 - (IBAction) didClickClearUserData:(id)sender;
 

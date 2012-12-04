@@ -106,12 +106,13 @@
     return result;
 }
 
-- (bool) hasStoredConnectionData
+- (bool) restoreConnectionData
 {
     bool result = false;
     NSData *rawData = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsConnectionData];
     if (rawData != nil)
     {
+        self.connectionData = [NSKeyedUnarchiver unarchiveObjectWithData:rawData];
         result = true;
     }
     return result;
@@ -119,11 +120,7 @@
 
 - (void) didLoginSuccessfully
 {
-    NSData *rawData = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsConnectionData];
-    if (rawData != nil)
-    {
-        self.connectionData = [NSKeyedUnarchiver unarchiveObjectWithData:rawData];
-    }
+    [self restoreConnectionData];
     NSString *deviceIdentifier;
     if ([[UIDevice currentDevice] respondsToSelector:@selector(identifierForVendor)])
     {
@@ -259,12 +256,10 @@
     else if (activateRequest == connection.currentRequest)
     {
         NBLog(kNBLogLogin, @"activate request");
-        NSError *error = [[NSError alloc] init];
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
                                                                            options:NSJSONReadingAllowFragments
-                                                                             error:&error
+                                                                             error:nil
                                             ];
-        [error release];
         NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
         if ((trialNodeId != nil) && (blockToken != nil))
