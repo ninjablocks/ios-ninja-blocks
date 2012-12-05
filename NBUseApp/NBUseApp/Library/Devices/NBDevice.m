@@ -45,11 +45,21 @@
 
 - (void) setCurrentValue:(NSString *)currentValue
 {
+    bool significantChange = [self isChangeSignificantWithValue:currentValue];
     [_currentValue release];
     _currentValue = [currentValue retain];
     NBLog(kNBLogReadings, @"Set %@   (%@)", NSStringFromClass([self class]), self.currentValue);
-    [self.deviceDelegate triggerSendOfDeviceData:self];
+    if (significantChange)
+    {
+        [self.deviceDelegate didChangeSignificantly:self];
+    }
 }
+
+- (bool) isChangeSignificantWithValue:(NSString*)value
+{
+    return false;
+}
+
 
 - (void) processCommand:(NBCommand*)command
 {
