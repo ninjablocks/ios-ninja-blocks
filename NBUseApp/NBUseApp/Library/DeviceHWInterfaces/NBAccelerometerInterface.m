@@ -62,6 +62,13 @@
     [_devices addObject:orientationDevice];
 }
 
+- (void) updateDeviceAvailabilityFromHardware
+{
+    bool accelerometerAvailable = [motionManager isAccelerometerAvailable];
+    [self updateDevicesOfClass:[NBAccelerometerState class] withAvailability:accelerometerAvailable];
+    [self updateDevicesOfClass:[NBOrientation class] withAvailability:accelerometerAvailable];
+}
+
 - (bool) updateReading:(NBPollingSensor*)sensorDevice
 {
     bool result = false;

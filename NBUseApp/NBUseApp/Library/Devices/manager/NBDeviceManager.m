@@ -111,6 +111,8 @@ static NBDeviceManager *sharedDeviceManager = nil;
         NBLocationInterface *locationInterface = [[[NBLocationInterface alloc] init] autorelease];
         [self addDeviceHWInterface:locationInterface];
         
+        [self initialiseInterfaces];
+        
         networkCommandHandler = [[NBNetworkCommandHandler alloc] initWithConnectionData:connectionData delegate:self];
         
     }
@@ -126,6 +128,14 @@ static NBDeviceManager *sharedDeviceManager = nil;
     networkCommandHandler = nil;
     self.delegate = nil;
     [super dealloc];
+}
+
+- (void) initialiseInterfaces
+{
+    for (NBDeviceHWInterface *interface in self.interfaces)
+    {
+        [interface updateDeviceAvailabilityFromHardware];
+    }
 }
 
 - (void) didReceiveAuthenticationError

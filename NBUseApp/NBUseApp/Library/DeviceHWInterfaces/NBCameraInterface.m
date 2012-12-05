@@ -72,6 +72,13 @@
     [self.ledDevice setDeviceHWInterface:self];
     [_devices addObject:self.ledDevice];
 }
+- (void) updateDeviceAvailabilityFromHardware
+{
+    AVCaptureDevice *device = [AVCaptureDevice
+                               defaultDeviceWithMediaType:AVMediaTypeVideo];
+    [self updateDevicesOfClass:[NBCamera class] withAvailability:[device hasMediaType:AVMediaTypeVideo]];
+    [self updateDevicesOfClass:[NBLEDDevice class] withAvailability:[device isTorchAvailable]];
+}
 
 //TODO: setup camera on requesting action, release camera when !requestingAction
 - (void)setRequestingAction:(bool)requestingAction

@@ -40,7 +40,7 @@
     [self.activitySwitch setOn:(self.device.available && self.device.active)];
     [self.activitySwitch setEnabled:self.device.available];
     [self.activitySwitch addTarget:self
-                            action:@selector(changedDeviceActivity)
+                            action:@selector(changedDeviceActivity:)
                   forControlEvents:UIControlEventValueChanged
      ];
 }

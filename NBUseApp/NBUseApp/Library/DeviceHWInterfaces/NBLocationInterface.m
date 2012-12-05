@@ -58,6 +58,13 @@
     [_devices addObject:location];
 }
 
+- (void) updateDeviceAvailabilityFromHardware
+{
+    bool locationAvailable = [CLLocationManager locationServicesEnabled];
+    [self updateDevicesOfClass:[NBLocation class] withAvailability:locationAvailable];
+    [self updateDevicesOfClass:[NBHeading class] withAvailability:[CLLocationManager headingAvailable]];
+}
+
 - (void)setRequestingAction:(bool)requestingAction
 {
     if (_requestingAction != requestingAction)
@@ -82,13 +89,16 @@
 - (bool) updateReading:(NBPollingSensor*)sensorDevice
 {
     bool result = false;
-    if ([sensorDevice isKindOfClass:[NBHeading class]])
+    if (sensorDevice.active)
     {
-        result = [self updateHeading:(NBHeading*)sensorDevice];
-    }
-    else if ([sensorDevice isKindOfClass:[NBLocation class]])
-    {
-        result = [self updateLocation:(NBLocation*)sensorDevice];
+        if ([sensorDevice isKindOfClass:[NBHeading class]])
+        {
+            result = [self updateHeading:(NBHeading*)sensorDevice];
+        }
+        else if ([sensorDevice isKindOfClass:[NBLocation class]])
+        {
+            result = [self updateLocation:(NBLocation*)sensorDevice];
+        }
     }
     return result;
 }
