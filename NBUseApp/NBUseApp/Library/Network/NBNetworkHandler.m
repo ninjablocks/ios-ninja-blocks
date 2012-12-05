@@ -43,7 +43,10 @@
 - (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray
 {
     bool awaitingSendAllResponse = (sendAllRequest != nil);
-    if (!awaitingSendAllResponse)
+    if (!awaitingSendAllResponse
+        && (deviceDataArray != nil)
+        && ([deviceDataArray count] > 0)
+        )
     {
         
         NBLog(3, @"send all data: %@", deviceDataArray);

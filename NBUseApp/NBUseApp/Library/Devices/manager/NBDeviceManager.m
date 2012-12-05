@@ -161,7 +161,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     }
     NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
                                               target:self
-                                            selector:@selector(sendAllDeviceData)
+                                            selector:@selector(sendAllActiveDeviceData)
                                             userInfo:nil
                                              repeats:true
                        ];
@@ -170,7 +170,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
      ];
 }
 
-- (void) sendAllDeviceData
+- (void) sendAllActiveDeviceData
 {
     for (NBDeviceHWInterface *interface in self.interfaces)
     {
@@ -182,7 +182,16 @@ static NBDeviceManager *sharedDeviceManager = nil;
             }
         }
     }
-    [self.networkHandler sendAllWithDeviceDataArray:[self.devices allValues]];
+    
+    NSMutableArray *devicesToSend = [NSMutableArray arrayWithCapacity:[[self.devices allValues] count]];
+    for (NBDevice *device in [self.devices allValues])
+    {
+        if (device.available && device.active)
+        {
+            [devicesToSend addObject:device];
+        }
+    }
+    [self.networkHandler sendAllWithDeviceDataArray:devicesToSend];
 }
 
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface
