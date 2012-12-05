@@ -17,6 +17,9 @@
 
 - (void) triggerSendOfDeviceData:(NBDevice*)device;
 
+- (void) didDisactivateDevice:(NBDevice*)device;
+- (void) didUnavailDevice:(NBDevice*)device;
+
 @end
 
 

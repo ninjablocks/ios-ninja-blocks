@@ -119,6 +119,11 @@ static NBDeviceManager *sharedDeviceManager = nil;
     return self;
 }
 
+- (void) willEnterForeground
+{
+    [self initialiseInterfaces];
+}
+
 - (void) dealloc
 {
     self.networkHandler = nil;
@@ -217,6 +222,16 @@ static NBDeviceManager *sharedDeviceManager = nil;
                                waitUntilDone:false
          ];
     }
+}
+
+- (void) didDisactivateDevice:(NBDevice*)device
+{
+    [self.networkHandler unplugDevice:device];
+}
+
+- (void) didUnavailDevice:(NBDevice*)device
+{
+    [self.networkHandler unplugDevice:device];
 }
 
 

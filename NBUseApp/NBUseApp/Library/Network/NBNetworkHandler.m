@@ -153,6 +153,11 @@
       delegate:self] autorelease];
 }
 
+- (void) unplugDevice:(NBDevice*)device
+{
+    //TODO: after this is finished - https://www.pivotaltracker.com/projects/689341#!/stories/40193843
+}
+
 - (void) sendSnapshot:(NBCamera*)cameraDevice
 {
     NSString *guid = [NetworkHelperFunctions guidWithAddress:cameraDevice.address //device id is

@@ -33,6 +33,8 @@ typedef NSDictionary NBDeviceDictionary;
 + (id) sharedManager;
 + (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData;
 
+- (void) willEnterForeground;
+
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface;
 
 - (void) activateInterfaces;

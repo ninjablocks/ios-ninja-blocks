@@ -27,6 +27,8 @@
 - (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray;
 - (void) reportDeviceData:(NBDevice*)deviceData;
 
+- (void) unplugDevice:(NBDevice*)device;
+
 - (void) sendSnapshot:(NBCamera*)cameraDevice;
 
 

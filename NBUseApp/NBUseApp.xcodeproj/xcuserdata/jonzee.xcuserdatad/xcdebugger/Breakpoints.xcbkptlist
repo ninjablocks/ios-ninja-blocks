@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "NBUseApp/Library/Devices/manager/NBDeviceManager.m"
-         timestampString = "376371596.165451"
+         timestampString = "376373017.805931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "124"
-         endingLineNumber = "124"
+         startingLineNumber = "129"
+         endingLineNumber = "129"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
