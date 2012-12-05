@@ -15,6 +15,7 @@
 
 //Create and add specific NBDevice subclass objects to _devices
 - (void) addDevices;
+- (void) updateDevicesOfClass:(Class)deviceClass withAvailability:(bool)available;
 
 @end
 
