@@ -30,6 +30,12 @@
     return self;
 }
 
+- (bool) isChangeSignificantWithValue:(NSString*)value
+{
+    //TODO: compare currentValue to value, and return if greater than threshold
+    return false;
+}
+
 - (NSString*)deviceName
 {
     return @"Heading";

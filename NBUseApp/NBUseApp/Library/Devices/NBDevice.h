@@ -15,7 +15,7 @@
 @protocol NBDeviceProtocol <NSObject>
 
 
-- (void) triggerSendOfDeviceData:(NBDevice*)device;
+- (void) didChangeSignificantly:(NBDevice*)device;
 
 - (void) didDisactivateDevice:(NBDevice*)device;
 - (void) didUnavailDevice:(NBDevice*)device;
@@ -35,13 +35,12 @@ typedef struct _NBDeviceAddress {
 {
     @protected
     NSString *_currentValue;
+    bool _changedSignificantly;
 }
 
 + (NSString *) addressKey:(NBDeviceAddress)address;
 
 - (id) initWithAddress:(NBDeviceAddress)address initialValue:(NSString*)initialValue;
-
-//- (bool) isActive;
 
 - (NSString *) addressKey;
 
@@ -58,6 +57,7 @@ typedef struct _NBDeviceAddress {
 // Set from NBSettingsViewController
 // Used in NB settings view controller for display.
 @property (assign, nonatomic) bool active;
+
 
 @property (readonly, nonatomic) NBDeviceAddress address;
 @property (strong, nonatomic) NSString *currentValue;

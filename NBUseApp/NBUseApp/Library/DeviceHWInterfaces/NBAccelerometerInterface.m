@@ -174,6 +174,7 @@
 
 - (void) setOrientationValueString:(NSString *)orientationValueString
 {
+    //only set value when changed to different discrete value (eg, +x, -y, ...)
     if ((![orientationValueString isEqualToString:kNoFixedOrientation])
         && (![_orientationValueString isEqualToString:orientationValueString]))
     {
