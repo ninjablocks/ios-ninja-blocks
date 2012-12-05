@@ -10,6 +10,7 @@
 		3840C16B1666EE290088AD4A /* NBLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3840C16A1666EE290088AD4A /* NBLocation.m */; };
 		38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */; };
 		38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */; };
+		38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0C3B8167006A4005CB957 /* NBSettings.m */; };
 		38B7748C1664430F0004F620 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748B1664430F0004F620 /* UIKit.framework */; };
 		38B7748E1664430F0004F620 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748D1664430F0004F620 /* Foundation.framework */; };
 		38B774901664430F0004F620 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748F1664430F0004F620 /* CoreGraphics.framework */; };
@@ -64,6 +65,8 @@
 		38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBDeviceSettingsTableViewCell.xib; path = Settings/NBDeviceSettingsTableViewCell.xib; sourceTree = "<group>"; };
 		38438A6C1668723F00B7991A /* NBDeviceSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDeviceSettingsTableViewCell.h; path = Settings/NBDeviceSettingsTableViewCell.h; sourceTree = "<group>"; };
 		38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDeviceSettingsTableViewCell.m; path = Settings/NBDeviceSettingsTableViewCell.m; sourceTree = "<group>"; };
+		38B0C3B7167006A4005CB957 /* NBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettings.h; path = Settings/NBSettings.h; sourceTree = "<group>"; };
+		38B0C3B8167006A4005CB957 /* NBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettings.m; path = Settings/NBSettings.m; sourceTree = "<group>"; };
 		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38B7748B1664430F0004F620 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		38B7748D1664430F0004F620 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -363,6 +366,8 @@
 		38D16DEA16682E52000BD7D8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				38B0C3B7167006A4005CB957 /* NBSettings.h */,
+				38B0C3B8167006A4005CB957 /* NBSettings.m */,
 				38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */,
 				38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */,
 				38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */,
@@ -475,6 +480,7 @@
 				3840C16B1666EE290088AD4A /* NBLocation.m in Sources */,
 				38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */,
 				38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */,
+				38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 
 #import "NBNetworkInitialiser.h"
 
-
+@class NBConnectionData;
 @protocol InitialisationDelegate <NSObject>
 
 - (void) didFinishInitialisationWithData:(NBConnectionData*)connectionData;
