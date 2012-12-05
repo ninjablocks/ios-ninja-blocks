@@ -196,32 +196,13 @@ static NBDeviceManager *sharedDeviceManager = nil;
     }
 }
 
-- (void) triggerSendOfDeviceData:(NBDevice*)device
+- (void) didChangeSignificantly:(NBDevice*)device
 {
-    //TODO: could be better, probably seperate camera network functions or even handler...
-    if ([device isKindOfClass:[NBCamera class]])
-    {
-        if ([(NSString*)device.currentValue isEqualToString:@"1"])
-        {
-            [self.networkHandler performSelector:@selector(sendSnapshot:)
-                                        onThread:[NSThread mainThread]
-                                      withObject:(NBCamera*)device
-                                   waitUntilDone:false
-             ];
-        }
-        else
-        {
-            [device setCurrentValue:@"1"];
-        }
-    }
-    else
-    {
-        [self.networkHandler performSelector:@selector(reportDeviceData:)
-                                    onThread:[NSThread mainThread]
-                                  withObject:device
-                               waitUntilDone:false
-         ];
-    }
+    [self.networkHandler performSelector:@selector(reportDeviceData:)
+                                onThread:[NSThread mainThread]
+                              withObject:device
+                           waitUntilDone:false
+     ];
 }
 
 - (void) didDisactivateDevice:(NBDevice*)device
