@@ -15,6 +15,8 @@
 #import "NBNetworkHandler.h"
 #import "NBNetworkCommandHandler.h"
 
+#import "NBSettings.h"
+
 #import "NBAccelerometerInterface.h"
 #import "NBCameraInterface.h"
 #import "NBLocationInterface.h"
@@ -52,6 +54,8 @@ static NBDeviceManager *sharedDeviceManager = nil;
         [sharedDeviceManager release];
     }
     sharedDeviceManager = [[super allocWithZone:NULL] initWithConnectionData:connectionData];
+    sharedDeviceManager.settings = [[[NBSettings alloc] init] autorelease];
+
     return sharedDeviceManager;
 }
 
@@ -231,9 +235,9 @@ static NBDeviceManager *sharedDeviceManager = nil;
     }
 }
 
-- (void) didUnavailDevice:(NBDevice*)device
+- (void) saveSettings
 {
-    [self.networkHandler unplugDevice:device];
+    [self.settings saveSettings];
 }
 
 

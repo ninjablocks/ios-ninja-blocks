@@ -28,6 +28,8 @@ typedef NSDictionary NBDeviceDictionary;
 
 @class NBConnectionData;
 @class NBDeviceHWInterface;
+
+@class NBSettings;
 @interface NBDeviceManager : NSObject <NBDeviceProtocol, NBNetworkCommandHandlerDelegate, NBNetworkDelegate>
 
 + (id) sharedManager;
@@ -43,6 +45,7 @@ typedef NSDictionary NBDeviceDictionary;
 - (void) triggerCameraData;
 - (void) ledData;
 
+- (void) saveSettings;
 
 @property (strong, nonatomic) NBNetworkHandler *networkHandler;
 
@@ -50,5 +53,7 @@ typedef NSDictionary NBDeviceDictionary;
 @property (strong, nonatomic) NBDeviceDictionary *devices;
 
 @property (assign, nonatomic) id<NBDeviceManagerDelegate> delegate;
+
+@property (strong, nonatomic) NBSettings *settings;
 
 @end

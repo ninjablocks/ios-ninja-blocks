@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class NBDevice;
 @interface NBSettings : NSObject
+
+- (void) didUpdateSettingDevice:(NBDevice*)device;
+
+- (void) saveSettings;
 
 @end
