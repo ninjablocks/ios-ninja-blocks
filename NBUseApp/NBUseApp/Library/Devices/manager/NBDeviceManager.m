@@ -214,9 +214,21 @@ static NBDeviceManager *sharedDeviceManager = nil;
      ];
 }
 
-- (void) didDisactivateDevice:(NBDevice*)device
+- (void) didChangeActiveStateForDevice:(NBDevice*)device;
 {
-    [self.networkHandler unplugDevice:device];
+    [self.settings didUpdateSettingDevice:device];
+}
+
+- (void) didChangeAvailableForDevice:(NBDevice*)device;
+{
+    if (device.available)
+    {
+        [self.networkHandler plugDevice:device];
+    }
+    else
+    {
+        [self.networkHandler unplugDevice:device];
+    }
 }
 
 - (void) didUnavailDevice:(NBDevice*)device

@@ -49,7 +49,7 @@
         )
     {
         
-        NBLog(3, @"send all data: %@", deviceDataArray);
+        NBLog(kNBLogNetwork, @"send all data: %@", deviceDataArray);
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
                                , kBaseBlockURL, connectionData.nodeId
                                ];
@@ -159,6 +159,10 @@
 - (void) unplugDevice:(NBDevice*)device
 {
     //TODO: after this is finished - https://www.pivotaltracker.com/projects/689341#!/stories/40193843
+}
+- (void) plugDevice:(NBDevice*)device
+{
+    //TODO: send data command of 0 ?
 }
 
 - (void) sendSnapshot:(NBCamera*)cameraDevice

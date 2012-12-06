@@ -28,6 +28,7 @@
 - (void) reportDeviceData:(NBDevice*)deviceData;
 
 - (void) unplugDevice:(NBDevice*)device;
+- (void) plugDevice:(NBDevice*)device;
 
 - (void) sendSnapshot:(NBCamera*)cameraDevice;
 

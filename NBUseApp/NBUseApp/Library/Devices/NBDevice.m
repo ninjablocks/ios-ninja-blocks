@@ -60,6 +60,16 @@
     return false;
 }
 
+- (void) setActive:(bool)active
+{
+    _active = active;
+    [self.deviceDelegate didChangeActiveStateForDevice:self];
+}
+- (void) setAvailable:(bool)available
+{
+    _available = available;
+    [self.deviceDelegate didChangeAvailableForDevice:self];
+}
 
 - (void) processCommand:(NBCommand*)command
 {

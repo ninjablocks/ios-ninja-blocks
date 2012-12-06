@@ -17,8 +17,8 @@
 
 - (void) didChangeSignificantly:(NBDevice*)device;
 
-- (void) didDisactivateDevice:(NBDevice*)device;
-- (void) didUnavailDevice:(NBDevice*)device;
+- (void) didChangeActiveStateForDevice:(NBDevice*)device;
+- (void) didChangeAvailableForDevice:(NBDevice*)device;
 
 @end
 
