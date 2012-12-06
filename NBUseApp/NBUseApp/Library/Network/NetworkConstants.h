@@ -15,6 +15,7 @@
 
 #define kNodeIdName @"nodeid"
 
+#define kBaseURL    @"https://staging.ninja.is"
 #define kLoginURL   @"https://staging.ninja.is/signin"
 
 //TODO: replace APIAccessToken with OAuth
@@ -62,6 +63,9 @@
 #define kBlockTokenKey      @"token"
 #define kResponseDeviceName @"DEVICE"
 #define kResponseNodeName   @"NODE_ID"
+
+#define kResponseLoginData  @"data"
+#define kResponseCookieKey  @"ninja.sid"
 
 #define kResponseResultKey   @"result"
 #define kResponseErrorKey   @"error"

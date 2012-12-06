@@ -92,6 +92,25 @@
     }
 }
 
+- (void) storeCookieFromDataDictionary:(NSDictionary*)dataDictionary
+{
+    NSString *ninjaKey = [dataDictionary objectForKey:kResponseCookieKey];
+    if (ninjaKey != nil)
+    {
+        NSDictionary *ninjaCookieProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               @".ninja.is", NSHTTPCookieDomain,
+                                               @"/", NSHTTPCookiePath,
+                                               kResponseCookieKey, NSHTTPCookieName,
+                                               ninjaKey, NSHTTPCookieValue,
+                                               [NSNumber numberWithBool:true], NSHTTPCookieSecure,
+                                               nil];
+        NSLog(@"attempted NinjaProperties: %@", ninjaCookieProperties);
+        NSHTTPCookie *ninjaCookie = [NSHTTPCookie cookieWithProperties:ninjaCookieProperties];
+        NSLog(@"ninjaCookie: %@", ninjaCookie);
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:ninjaCookie];
+    }
+}
+
 
 #define kNodeIdSeparator @"xxx"
 
@@ -205,7 +224,7 @@
 {
     if (loginRequest == connection.currentRequest)
     {
-        NBLog(kNBLogLogin, @"INIT: received login response: %@", response.URL);
+        NBLog(kNBLogLogin, @"INIT: received login response: %@", response);
     }
     else if (registerBlockRequest == connection.currentRequest)
     {
@@ -235,13 +254,19 @@
 {
     bytesExpected -= [data length];
     bool notExpectingMoreData = (bytesExpected <= 0);
-    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    NBLog(kNBLogLogin, @"INIT: received data string: %@", dataString);
+//    NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+//    NBLog(kNBLogLogin, @"INIT: received data string: %@", dataString);
+    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingAllowFragments
+                                                                         error:nil
+                                        ];
+    NBLog(kNBLogLogin, @"INIT: received data: %@", responseDictionary);
     if (loginRequest == connection.currentRequest)
     {
-        NBLog(kNBLogLogin, @"login request");
+        NBLog(kNBLogLogin, @"original login request: %@", connection.originalRequest);
         if ([NetworkHelperFunctions hasSuccessWithJsonData:data])
         {
+            //[self storeCookieFromDataDictionary:[responseDictionary objectForKey:kResponseLoginData]];
             [self performSelector:@selector(didLoginSuccessfully)
                          onThread:[NSThread mainThread]
                        withObject:nil
@@ -256,10 +281,6 @@
     else if (activateRequest == connection.currentRequest)
     {
         NBLog(kNBLogLogin, @"activate request");
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                                           options:NSJSONReadingAllowFragments
-                                                                             error:nil
-                                            ];
         NSNumber *resultNumber = [responseDictionary objectForKey:kResponseResultKey];
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
         if ((trialNodeId != nil) && (blockToken != nil))
@@ -355,6 +376,8 @@
 
 - (void) activateBlock
 {
+    NBLog(kNBLogLogin, @"ACTIVATE: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
+
     bool awaitingActivation = (activateRequest != nil);
     if (!awaitingActivation)
     {
