@@ -17,6 +17,7 @@ typedef enum {
 //    , kNBDIDAccelerometer           = 206
 //    , kNBDIDOrientation             = 207
 //    , kNBDIDAccelerometerState      = 208
+//    , kNBDIDHIDDevice               = 216
 //    , kNBDIDNorthHeading            = 221
 //    , kNBDIDLocation                = 222
 //    , kNBDIDLEDUser                 = 1000
@@ -35,7 +36,7 @@ typedef enum {
     , kNBDIDRF433                   = 11 //not implemented
     , kNBDIDSoundSensor             = 12
     , kNBDIDTemperatureLC           = 13 //not implemented
-    , kNBDIDHIDDevice               = 14 //not implemented
+    , kNBDIDHIDDevice               = 14
     , kNBDIDRFIDReader              = 15 //not implemented
     , kNBDIDServo                   = 16 //not implemented
     , kNBDIDNorthHeading            = 15
