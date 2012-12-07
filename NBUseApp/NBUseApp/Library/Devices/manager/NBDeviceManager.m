@@ -20,6 +20,7 @@
 #import "NBAccelerometerInterface.h"
 #import "NBCameraInterface.h"
 #import "NBLocationInterface.h"
+#import "NBGestureInterface.h"
 
 #import "NBDevice.h"
 #import "NBDeviceIds.h"
@@ -114,6 +115,11 @@ static NBDeviceManager *sharedDeviceManager = nil;
         
         NBLocationInterface *locationInterface = [[[NBLocationInterface alloc] init] autorelease];
         [self addDeviceHWInterface:locationInterface];
+        
+        NBGestureInterface *gestureInterface = [[[NBGestureInterface alloc] initWithAccelerometerInterface:accelerometerInterface]
+                                                autorelease];
+        [self addDeviceHWInterface:gestureInterface];
+        
         
         [self initialiseInterfaces];
         
