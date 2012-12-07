@@ -57,6 +57,8 @@
 		38B775241665BA140004F620 /* NBLEDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775231665BA100004F620 /* NBLEDDevice.m */; };
 		38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */; };
 		38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */; };
+		38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F6D21716717BC700EB00BE /* NBGestureDevice.m */; };
+		38F6D21C167196A900EB00BE /* NBGestureInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F6D21B167196A900EB00BE /* NBGestureInterface.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -149,6 +151,10 @@
 		38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettingsViewController.h; path = Settings/NBSettingsViewController.h; sourceTree = "<group>"; };
 		38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettingsViewController.m; path = Settings/NBSettingsViewController.m; sourceTree = "<group>"; };
 		38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBSettingsViewController.xib; path = Settings/NBSettingsViewController.xib; sourceTree = "<group>"; };
+		38F6D21616717BC600EB00BE /* NBGestureDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGestureDevice.h; path = HighLevel/NBGestureDevice.h; sourceTree = "<group>"; };
+		38F6D21716717BC700EB00BE /* NBGestureDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBGestureDevice.m; path = HighLevel/NBGestureDevice.m; sourceTree = "<group>"; };
+		38F6D21A167196A900EB00BE /* NBGestureInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGestureInterface.h; path = HighLevel/NBGestureInterface.h; sourceTree = "<group>"; };
+		38F6D21B167196A900EB00BE /* NBGestureInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBGestureInterface.m; path = HighLevel/NBGestureInterface.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +260,7 @@
 		38B774C1166445440004F620 /* DeviceHWInterfaces */ = {
 			isa = PBXGroup;
 			children = (
+				38F6D219167194BF00EB00BE /* HighLevel */,
 				38B774C8166445440004F620 /* NBDeviceHWInterface.h */,
 				38B774C9166445440004F620 /* NBDeviceHWInterface.m */,
 				38B774CA166445440004F620 /* NBDeviceHWInterfaceSubclass.h */,
@@ -287,6 +294,7 @@
 				38B774D9166445440004F620 /* NBOrientation.m */,
 				38B774DA166445440004F620 /* NBPushButton.h */,
 				38B774DB166445440004F620 /* NBPushButton.m */,
+				38F6D21416717B6500EB00BE /* HighLevel */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -376,6 +384,24 @@
 				38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		38F6D21416717B6500EB00BE /* HighLevel */ = {
+			isa = PBXGroup;
+			children = (
+				38F6D21616717BC600EB00BE /* NBGestureDevice.h */,
+				38F6D21716717BC700EB00BE /* NBGestureDevice.m */,
+			);
+			name = HighLevel;
+			sourceTree = "<group>";
+		};
+		38F6D219167194BF00EB00BE /* HighLevel */ = {
+			isa = PBXGroup;
+			children = (
+				38F6D21A167196A900EB00BE /* NBGestureInterface.h */,
+				38F6D21B167196A900EB00BE /* NBGestureInterface.m */,
+			);
+			name = HighLevel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -481,6 +507,8 @@
 				38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */,
 				38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */,
 				38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */,
+				38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */,
+				38F6D21C167196A900EB00BE /* NBGestureInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
