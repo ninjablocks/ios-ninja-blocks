@@ -59,8 +59,6 @@
                       initWithURL:[NSURL URLWithString:urlString]];
     
     [commandRequest setHTTPMethod:@"GET"];
-    [commandRequest setValue:kContentTypeAppJson
-          forHTTPHeaderField:kContentTypeName];
     
     [commandRequest setValue:connectionData.blockToken
           forHTTPHeaderField:kNinjaTokenName];

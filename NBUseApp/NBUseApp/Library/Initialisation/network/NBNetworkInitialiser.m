@@ -389,8 +389,6 @@
                                         URLWithString:urlString]];
         
         [activateRequest setHTTPMethod:@"GET"];
-        [activateRequest setValue:kContentTypeAppJson
-               forHTTPHeaderField:kContentTypeName];
         
         [[[NSURLConnection alloc]
           initWithRequest:activateRequest
