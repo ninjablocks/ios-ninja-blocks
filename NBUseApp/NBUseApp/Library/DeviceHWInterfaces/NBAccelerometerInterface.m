@@ -62,9 +62,14 @@
     [_devices addObject:orientationDevice];
 }
 
+- (bool) isAccelerometerHardwareAvailable
+{
+    return [motionManager isAccelerometerAvailable];
+}
+
 - (void) updateDeviceAvailabilityFromHardware
 {
-    bool accelerometerAvailable = [motionManager isAccelerometerAvailable];
+    bool accelerometerAvailable = [self isAccelerometerHardwareAvailable];
     [self updateDevicesOfClass:[NBAccelerometerState class] withAvailability:accelerometerAvailable];
     [self updateDevicesOfClass:[NBOrientation class] withAvailability:accelerometerAvailable];
 }
@@ -99,7 +104,7 @@
         if (requestingAction)
         {
             motionOperationQueue = [[NSOperationQueue alloc] init];
-            [motionManager setAccelerometerUpdateInterval:0.2];
+            [motionManager setAccelerometerUpdateInterval:0.1];
             [motionManager startAccelerometerUpdatesToQueue:motionOperationQueue
                                                 withHandler:^( CMAccelerometerData* data, NSError* error) {
                                                     [self processAccelerometerData:data];
@@ -125,6 +130,10 @@
     averageAcceleration.x = (averageAcceleration.x * 3 + currentAcceleration.x) / 4;
     averageAcceleration.y = (averageAcceleration.y * 3 + currentAcceleration.y) / 4;
     averageAcceleration.z = (averageAcceleration.z * 3 + currentAcceleration.z) / 4;
+    
+    [self.delegate didReceiveAcceleration:currentAcceleration
+                              withAverage:averageAcceleration
+     ];
     
     [self checkJiggle]; //for event driven updating of accelerometer state device
     [self calculateOrientationValue];

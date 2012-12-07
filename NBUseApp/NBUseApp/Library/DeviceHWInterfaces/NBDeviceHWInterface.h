@@ -21,6 +21,8 @@
 
 - (bool) updateReading:(NBPollingSensor*)sensorDevice;
 
+
+
 @property (strong, nonatomic) NSString *interfaceName;
 @property (readonly, nonatomic) NSArray *devices;
 

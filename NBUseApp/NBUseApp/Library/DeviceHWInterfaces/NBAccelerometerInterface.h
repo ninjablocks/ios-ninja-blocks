@@ -8,6 +8,21 @@
 
 #import "NBDeviceHWInterface.h"
 
+#import <CoreMotion/CoreMotion.h>
+
+#define kNotificationAccelerometer
+
+@protocol NBAccelerometerDelegate <NSObject>
+
+- (void) didReceiveAcceleration:(CMAcceleration)acceleration
+                    withAverage:(CMAcceleration)avgAcceleration;
+
+@end
+
 @interface NBAccelerometerInterface : NBDeviceHWInterface
+
+- (bool) isAccelerometerHardwareAvailable;
+
+@property (assign, nonatomic) id<NBAccelerometerDelegate> delegate;
 
 @end
