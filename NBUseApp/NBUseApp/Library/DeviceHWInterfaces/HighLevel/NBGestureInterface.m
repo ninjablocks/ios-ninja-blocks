@@ -15,9 +15,57 @@
 
 #import "NBAccelerometerInterface.h"
 
+
+typedef enum {noAxis=0
+    , xAxis=1
+    , xAxisNeg = -1
+    , yAxis=2
+    , yAxisNeg = -2
+    , zAxis=3
+    , zAxisNeg = -3
+} AccAxis;
+typedef enum {opLT=-1, opNear=0, opGT=1} Operator;
+
+typedef struct {
+    AccAxis gestureAxis;
+    int operator;
+    double value;
+    double timeout;
+}GestureState;
+unsigned int const stateLength = 4;
+
+#define kOperatorNearThreshold 0.2
+
+typedef enum {
+    failed = -1
+    , notFailed = 0
+    , passed = 1
+}
+GestureStateResult;
+
+#define kGestureResultX     @"xp"
+#define kGestureResultY     @"yp"
+#define kGestureResultZ     @"zp"
+#define kGestureResultXNeg  @"xn"
+#define kGestureResultYNeg  @"yn"
+#define kGestureResultZNeg  @"zn"
+#define kGestureResultNone  @"NN"
+
+unsigned int const pulseGestureLength = 3;
+GestureState pulseGesture[pulseGestureLength] = {
+    {noAxis, opLT, -1.4, 1}
+    , {noAxis, opGT, -0.8, 1}
+    , {noAxis, opLT, -1.4, 1}
+};
+
 @implementation NBGestureInterface
 {
     NBAccelerometerInterface *accelerometerInterface;
+
+    NSUInteger gestureState;
+    AccAxis currentGestureAxis;
+    NSDate *pulseGestureStateChange;
+    
 }
 
 - (id) init
@@ -32,6 +80,8 @@
     {
         accelerometerInterface = [interface retain];
         [accelerometerInterface setDelegate:self];
+        gestureState = 0;
+        currentGestureAxis = noAxis;
     }
     return self;
 }
@@ -55,50 +105,30 @@
     [self updateDevicesOfClass:[NBGestureDevice class] withAvailability:hardwareAvailable];
 }
 
-unsigned int const stateLength = 4;
-enum {axisIndex, gtIndex, thresholdIndex, deltaTimeIndex};
 
-enum {xAxis, yAxis, zAxis};
-int const gt = 1, lt = 0;
-
-typedef struct {
-    int axis;
-    bool gtCheck;
-    double threshold;
-    double timeout;
-}GestureState;
-
-typedef enum {
-    failed = -1
-    , notFailed = 0
-    , passed = 1
-}
-GestureStateResult;
-
-unsigned int const pulseGestureLength = 4;
-GestureState pulseGesture[pulseGestureLength] = {
-    {zAxis, gt, -1.2, 0}
-    , {zAxis, lt, -1.4, 1}
-    , {zAxis, gt, -0.8, 1}
-    , {zAxis, lt, -1.4, 1}
-};
-NSUInteger pulseState = 0;
-NSDate *pulseGestureStateChange;
-NSString *pulseString = @"z";
 
 
 - (GestureStateResult) passedState:(GestureState)state
                   withAcceleration:(CMAcceleration)acceleration
                         firstState:(bool)firstState
+                              axis:(AccAxis)gestureAxis
 {
     bool result = notFailed;
     if (!firstState && (-[pulseGestureStateChange timeIntervalSinceNow] > state.timeout))
     {
+        NBLog(kNBLogGestures, @" - Failed in time (%f < %f)"
+              , -[pulseGestureStateChange timeIntervalSinceNow], state.timeout
+              );
         return failed;
     }
-
+    bool reversed = (gestureAxis < 0);
+    if (reversed)
+    {
+        gestureAxis = -gestureAxis;
+    }
     double reading = 0;
-    switch (state.axis)
+    AccAxis axis = ((state.gestureAxis!=noAxis) ? state.gestureAxis : gestureAxis);
+    switch (axis)
     {
         case xAxis:
             reading = acceleration.x;
@@ -109,46 +139,131 @@ NSString *pulseString = @"z";
         case zAxis:
             reading = acceleration.z;
             break;
+        default:
+            reading = -999.; //axis set to parameter if noAxis
+            break;
     }
-    if (state.gtCheck?(reading>state.threshold):(reading<state.threshold))
+    Operator operator = (reversed?-state.operator:state.operator);
+    double value = (reversed?-state.value:state.value);
+    bool compareResult = false;
+    switch (operator)
     {
-        NBLog(kNBLogGestures, @"Passed (%f %c %f) in time (%f < %f)"
-              , reading, (state.gtCheck?'>':'<'), state.threshold
+        case opLT:
+            compareResult = reading < value;
+            break;
+        case opNear:
+            compareResult = ABS(reading-value) < kOperatorNearThreshold;
+            break;
+        case opGT:
+            compareResult = reading > value;
+            break;
+    }
+    if (compareResult)
+    {
+        NBLog(kNBLogGestures, @"Passed (%f %d %f) in time (%f < %f)"
+              , reading, operator, state.value
               , -[pulseGestureStateChange timeIntervalSinceNow], state.timeout
               );
         result = passed;
+        [pulseGestureStateChange release];
         pulseGestureStateChange = [[NSDate alloc] init];
     }
     return result;
 }
 
+- (AccAxis) findFirstPassAxis:(CMAcceleration)acceleration
+{
+    AccAxis passAxis = noAxis;
+    const int axisCount = 6;
+    AccAxis axes[axisCount] = {xAxis, yAxis, zAxis, xAxisNeg, yAxisNeg, zAxisNeg};
+    GestureStateResult stateResult;
+    for (int i=0; i<axisCount; i++)
+    {
+        stateResult = [self passedState:pulseGesture[gestureState]
+                       withAcceleration:acceleration
+                             firstState:true
+                                   axis:axes[i]
+                       ];
+        if (stateResult == passed)
+        {
+            passAxis = axes[i];
+            break;
+        }
+    }
+    return passAxis;
+}
+
 - (void) didReceiveAcceleration:(CMAcceleration)acceleration withAverage:(CMAcceleration)avgAcceleration
 {
-    GestureStateResult result = [self passedState:pulseGesture[pulseState]
-                                 withAcceleration:acceleration
-                                       firstState:(pulseState == 0)
-                                 ];
+    GestureStateResult result = notFailed;
+    if (currentGestureAxis == noAxis)
+    {
+        gestureState = 0;
+        currentGestureAxis = [self findFirstPassAxis:acceleration];
+        if (currentGestureAxis != noAxis)
+        {
+            result = passed;
+            NBLog(kNBLogGestures, @"Passed First Axis: %d", currentGestureAxis);
+        }
+    }
+    else
+    {
+        result = [self passedState:pulseGesture[gestureState]
+                  withAcceleration:acceleration
+                        firstState:false
+                              axis:currentGestureAxis
+                  ];
+    }
     if (result == passed)
     {
-        pulseState++;
-        if (pulseState == pulseGestureLength)
+        gestureState++;
+        if (gestureState == pulseGestureLength)
         {
-            pulseState = 0;
-            [self reportGesture:pulseString];
+            NSString *gestureString;
+            switch (currentGestureAxis)
+            {
+                case xAxis:
+                    gestureString = kGestureResultX;
+                    break;
+                case yAxis:
+                    gestureString = kGestureResultY;
+                    break;
+                case zAxis:
+                    gestureString = kGestureResultZ;
+                    break;
+                case xAxisNeg:
+                    gestureString = kGestureResultXNeg;
+                    break;
+                case yAxisNeg:
+                    gestureString = kGestureResultYNeg;
+                    break;
+                case zAxisNeg:
+                    gestureString = kGestureResultZNeg;
+                    break;
+                case noAxis:
+                    gestureString = kGestureResultNone;
+                    break;
+
+            }
+            [self reportGesture:gestureString];
+            
+            gestureState = 0;
+            currentGestureAxis = noAxis;
         }
     }
     else if (result == failed)
     {
         NBLog(kNBLogGestures, @"RESET");
-        pulseState = 0;
+        gestureState = 0;
+        currentGestureAxis = noAxis;
     }
 }
 
-- (void) reportGesture:(NSString*)gesture
+- (void) reportGesture:(NSString*)gestureString
 {
     for (NBDevice *device in self.devices)
     {
-        [device setCurrentValue:pulseString];
+        [device setCurrentValue:gestureString];
     }
 }
 

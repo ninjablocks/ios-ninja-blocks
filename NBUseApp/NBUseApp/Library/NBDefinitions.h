@@ -20,7 +20,7 @@
 //#define kNBLogInit      7
 //#define kNBLogLogin     8
 //#define kNBLogSettings  9
-//#define kNBLogGestures  10
+#define kNBLogGestures  10
 
 #define kNBLogError     0
 #define kNBLogDefault   0
@@ -31,7 +31,7 @@
 #define kNBLogInit      0
 #define kNBLogLogin     0
 #define kNBLogSettings  0
-#define kNBLogGestures  0
+//#define kNBLogGestures  0
 
 
 #define NBLog(num, formatString, ...) if (num>kNBLogUnused) {NSLog(formatString, ##__VA_ARGS__);}
