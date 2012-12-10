@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		382961BF16757CBF00CC5512 /* CommsLights.xib in Resources */ = {isa = PBXBuildFile; fileRef = 382961BE16757CBF00CC5512 /* CommsLights.xib */; };
+		382961C6167589AE00CC5512 /* logo_to_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 382961C4167589AE00CC5512 /* logo_to_print.png */; };
 		3840C16B1666EE290088AD4A /* NBLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3840C16A1666EE290088AD4A /* NBLocation.m */; };
 		38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */; };
 		38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */; };
@@ -62,6 +64,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		382961BE16757CBF00CC5512 /* CommsLights.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommsLights.xib; sourceTree = "<group>"; };
+		382961C4167589AE00CC5512 /* logo_to_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_to_print.png; path = assets/logo_to_print.png; sourceTree = "<group>"; };
 		3840C1691666EE290088AD4A /* NBLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLocation.h; sourceTree = "<group>"; };
 		3840C16A1666EE290088AD4A /* NBLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLocation.m; sourceTree = "<group>"; };
 		38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBDeviceSettingsTableViewCell.xib; path = Settings/NBDeviceSettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -177,6 +181,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		382961C11675884200CC5512 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				382961C4167589AE00CC5512 /* logo_to_print.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
 		38B7747C1664430F0004F620 = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +230,7 @@
 				38B7749B1664430F0004F620 /* NBAppDelegate.m */,
 				38B774A31664430F0004F620 /* NBViewController.h */,
 				38B774A41664430F0004F620 /* NBViewController.m */,
+				382961BE16757CBF00CC5512 /* CommsLights.xib */,
 				38B774A61664430F0004F620 /* NBViewController_iPhone.xib */,
 				38B774A91664430F0004F620 /* NBViewController_iPad.xib */,
 				38B774BE1664452C0004F620 /* FirstViewController.h */,
@@ -231,6 +244,7 @@
 		38B774921664430F0004F620 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				382961C11675884200CC5512 /* assets */,
 				38B774931664430F0004F620 /* NBUseApp-Info.plist */,
 				38B774941664430F0004F620 /* InfoPlist.strings */,
 				38B774971664430F0004F620 /* main.m */,
@@ -466,6 +480,8 @@
 				38B77509166446E00004F620 /* FirstViewController.xib in Resources */,
 				38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */,
 				38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */,
+				382961BF16757CBF00CC5512 /* CommsLights.xib in Resources */,
+				382961C6167589AE00CC5512 /* logo_to_print.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
