@@ -14,6 +14,8 @@
 @protocol NBNetworkDelegate <NSObject>
 
 - (void) didReceiveAuthenticationError;
+- (void) didSendDeviceData;
+- (void) didReceiveData;
 
 @end
 

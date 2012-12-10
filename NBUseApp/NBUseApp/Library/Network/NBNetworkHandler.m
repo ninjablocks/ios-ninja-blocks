@@ -85,6 +85,7 @@
         [[[NSURLConnection alloc]
           initWithRequest:sendAllRequest
           delegate:self] autorelease];
+        [self.delegate didSendDeviceData];
     }
 }
 
@@ -155,6 +156,7 @@
     [[[NSURLConnection alloc]
       initWithRequest:request
       delegate:self] autorelease];
+    [self.delegate didSendDeviceData];
 }
 
 - (void) unplugDevice:(NBDevice*)device
@@ -197,6 +199,7 @@
     [[[NSURLConnection alloc]
       initWithRequest:request
       delegate:self] autorelease];
+    [self.delegate didSendDeviceData];
 }
 
 @end
@@ -270,6 +273,7 @@
     {
         [self finishedRequest:connection.currentRequest];
     }
+    [self.delegate didReceiveData];
 }
 
 
