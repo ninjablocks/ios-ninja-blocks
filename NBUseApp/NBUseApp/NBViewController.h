@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NBViewController : UIViewController
+#import "NBDeviceManager.h"
+
+@interface NBViewController : UIViewController <NBDeviceManagerDataDelegate>
+
+
+@property (strong, nonatomic) NBDeviceManager *deviceManager;
+
+@property (strong, nonatomic) IBOutlet UIView *viewComms;
+
+@property (strong, nonatomic) IBOutlet UIView *viewCommsSend;
+@property (strong, nonatomic) IBOutlet UIView *viewCommsReceive;
+
+@property (strong, nonatomic) IBOutlet UIView *viewCommsCommandReceive;
 
 @end
