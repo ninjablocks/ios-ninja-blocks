@@ -11,7 +11,8 @@
 #import "InitialisationViewController.h"
 #import "NBDeviceManager.h"
 
-#import "FirstViewController.h"
+//#import "FirstViewController.h"
+#import "NBViewController.h"
 
 #import "NBNetworkHandler.h"
 
@@ -62,17 +63,23 @@ void uncaughtExceptionHandler(NSException *exception) {
 {
     NBDeviceManager *deviceManager = [NBDeviceManager sharedManagerWithConnectionData:connectionData];
     [deviceManager setDelegate:self];
-    FirstViewController *viewController1;
+    NBViewController *viewController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
+        viewController = [[[NBViewController alloc] initWithNibName:@"NBViewController_iPhone" bundle:nil] autorelease];
     } else {
-        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
+        viewController = [[[NBViewController alloc] initWithNibName:@"NBViewController_iPad" bundle:nil] autorelease];
     }
+//    FirstViewController *viewController1;
+//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+//        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
+//    } else {
+//        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
+//    }
     
-    viewController1.deviceManager = deviceManager;
+    viewController.deviceManager = deviceManager;
     [deviceManager activateInterfaces];
     
-    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:viewController1] autorelease];
+    self.navigationController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.window.rootViewController = self.navigationController;
     //    [self.window makeKeyAndVisible];
