@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		382961BF16757CBF00CC5512 /* CommsLights.xib in Resources */ = {isa = PBXBuildFile; fileRef = 382961BE16757CBF00CC5512 /* CommsLights.xib */; };
 		382961C6167589AE00CC5512 /* logo_to_print.png in Resources */ = {isa = PBXBuildFile; fileRef = 382961C4167589AE00CC5512 /* logo_to_print.png */; };
+		382961D2167596A700CC5512 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 382961D0167596A600CC5512 /* icon.png */; };
+		382961D3167596A700CC5512 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382961D1167596A600CC5512 /* icon@2x.png */; };
 		3840C16B1666EE290088AD4A /* NBLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3840C16A1666EE290088AD4A /* NBLocation.m */; };
 		38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */; };
 		38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */; };
@@ -66,6 +68,8 @@
 /* Begin PBXFileReference section */
 		382961BE16757CBF00CC5512 /* CommsLights.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommsLights.xib; sourceTree = "<group>"; };
 		382961C4167589AE00CC5512 /* logo_to_print.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_to_print.png; path = assets/logo_to_print.png; sourceTree = "<group>"; };
+		382961D0167596A600CC5512 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = assets/icon.png; sourceTree = "<group>"; };
+		382961D1167596A600CC5512 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "assets/icon@2x.png"; sourceTree = "<group>"; };
 		3840C1691666EE290088AD4A /* NBLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLocation.h; sourceTree = "<group>"; };
 		3840C16A1666EE290088AD4A /* NBLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLocation.m; sourceTree = "<group>"; };
 		38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBDeviceSettingsTableViewCell.xib; path = Settings/NBDeviceSettingsTableViewCell.xib; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 		382961C11675884200CC5512 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				382961D0167596A600CC5512 /* icon.png */,
+				382961D1167596A600CC5512 /* icon@2x.png */,
 				382961C4167589AE00CC5512 /* logo_to_print.png */,
 			);
 			name = assets;
@@ -482,6 +488,8 @@
 				38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */,
 				382961BF16757CBF00CC5512 /* CommsLights.xib in Resources */,
 				382961C6167589AE00CC5512 /* logo_to_print.png in Resources */,
+				382961D2167596A700CC5512 /* icon.png in Resources */,
+				382961D3167596A700CC5512 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,11 +627,13 @@
 		38B774AF1664430F0004F620 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: James Zaki (X7HK6WBZWD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
 				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C7CB78D9-8E07-4ABE-83D1-39B270757BE2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -631,11 +641,13 @@
 		38B774B01664430F0004F620 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: James Zaki (X7HK6WBZWD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
 				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C7CB78D9-8E07-4ABE-83D1-39B270757BE2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
