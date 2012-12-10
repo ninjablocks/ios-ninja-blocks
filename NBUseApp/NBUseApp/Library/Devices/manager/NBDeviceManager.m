@@ -163,13 +163,14 @@ static NBDeviceManager *sharedDeviceManager = nil;
     [self.delegate didReceiveAuthenticationError:self];
 }
 
+#define kDeviceManagerPollInterval      5.
 - (void) activateInterfaces
 {
     for (NBDeviceHWInterface *interface in self.interfaces)
     {
         [interface setRequestingAction:true];
     }
-    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:5.
+    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:kDeviceManagerPollInterval
                                               target:self
                                             selector:@selector(sendAllActiveDeviceData)
                                             userInfo:nil
@@ -190,13 +191,19 @@ static NBDeviceManager *sharedDeviceManager = nil;
             {
                 [interface updateReading:(NBPollingSensor*)device];
             }
+            else if (-[device.lastSend timeIntervalSinceNow] > kDeviceManagerPollInterval) //event driven device not sent recently
+            {
+                [device resetValue];
+            }
         }
     }
     
     NSMutableArray *devicesToSend = [NSMutableArray arrayWithCapacity:[[self.devices allValues] count]];
     for (NBDevice *device in [self.devices allValues])
     {
-        if (device.available && device.active)
+        if (device.available
+            && device.active
+            )
         {
             [devicesToSend addObject:device];
         }

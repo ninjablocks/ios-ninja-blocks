@@ -9,7 +9,6 @@
 #import "NBOrientation.h"
 
 #import "NBDeviceIds.h"
-#import "NBPollingSensorIntervals.h"
 
 @implementation NBOrientation
 

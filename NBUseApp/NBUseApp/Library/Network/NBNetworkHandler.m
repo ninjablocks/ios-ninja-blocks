@@ -39,7 +39,6 @@
     return self;
 }
 
-//TODO: remove. ?
 - (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray
 {
     bool awaitingSendAllResponse = (sendAllRequest != nil);
@@ -59,7 +58,7 @@
         [sendAllRequest setHTTPMethod:@"POST"];
         [sendAllRequest setValue:kContentTypeAppJson
        forHTTPHeaderField:kContentTypeName];
-        
+
         [sendAllRequest setValue:connectionData.blockToken
        forHTTPHeaderField:kNinjaTokenName];
         
@@ -71,6 +70,7 @@
         {
             deviceData = [deviceDataArray objectAtIndex:i];
             [content appendFormat:@",%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+            [deviceData setLastSend:[NSDate date]];
         }
         [content appendString:@"]"];
         NBLog(kNBLogNetwork, @"content = %@", content);
@@ -141,7 +141,8 @@
    forHTTPHeaderField:kNinjaTokenName];
     
     NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId];
-    
+    [deviceData setLastSend:[NSDate date]];
+
     NBLog(kNBLogNetwork, @"content = %@", content);
     
     [request setValue:[NSString stringWithFormat:@"%d",

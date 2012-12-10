@@ -11,6 +11,8 @@
 #import "NBDevice.h"
 #import "NBCommand.h"
 
+#define kDeviceDefaultValue @"0"
+
 @implementation NBDevice
 
 - (id) init
@@ -43,6 +45,15 @@
     return [NBDevice addressKey:self.address];
 }
 
+- (NSString*) defaultValue
+{
+    return kDeviceDefaultValue;
+}
+- (void) resetValue
+{
+    [_currentValue release];
+    _currentValue = [[NSString alloc] initWithString:[self defaultValue]];
+}
 - (void) setCurrentValue:(NSString *)currentValue
 {
     bool significantChange = [self isChangeSignificantWithValue:currentValue];

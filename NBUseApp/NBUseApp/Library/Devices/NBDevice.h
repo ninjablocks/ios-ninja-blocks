@@ -44,6 +44,9 @@ typedef struct _NBDeviceAddress {
 
 - (NSString *) addressKey;
 
+- (void) resetValue;
+- (NSString*) defaultValue;
+
 - (void) processCommand:(NBCommand*)command;
 
 
@@ -61,6 +64,8 @@ typedef struct _NBDeviceAddress {
 
 @property (readonly, nonatomic) NBDeviceAddress address;
 @property (strong, nonatomic) NSString *currentValue;
+
+@property (strong, nonatomic) NSDate *lastSend;
 
 @property (assign, nonatomic) id<NBDeviceProtocol> deviceDelegate;
 @property (assign, nonatomic) NBDeviceHWInterface *deviceHWInterface;
