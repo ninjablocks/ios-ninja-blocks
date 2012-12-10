@@ -53,9 +53,9 @@ GestureStateResult;
 
 unsigned int const pulseGestureLength = 3;
 GestureState pulseGesture[pulseGestureLength] = {
-    {noAxis, opLT, -1.4, 1}
-    , {noAxis, opGT, -0.8, 1}
-    , {noAxis, opLT, -1.4, 1}
+    {noAxis, opGT, 1.4, 1.0}
+    , {noAxis, opLT, 0.8, 1.0}
+    , {noAxis, opGT, 1.4, 1.0}
 };
 
 @implementation NBGestureInterface
