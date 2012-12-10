@@ -254,8 +254,19 @@ static NBDeviceManager *sharedDeviceManager = nil;
 }
 
 
+- (void) didSendDeviceData
+{
+    [self.dataDelegate didSendData];
+}
+- (void) didReceiveData
+{
+    [self.dataDelegate didReceiveData];
+}
+
+
 - (void) didReceiveCommand:(NBCommand*)deviceCommand
 {
+    [self.dataDelegate didReceiveCommand];
     NSString *addressKey = [NBDevice addressKey:deviceCommand.address];
     NBDevice *commandedDevice = [self.devices objectForKey:addressKey];
     NBLog(kNBLogCommands, @"Will process command %@ with device: %@", deviceCommand, commandedDevice);
