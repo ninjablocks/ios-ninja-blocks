@@ -55,7 +55,7 @@
                                                                                                    bundle:nil
                                                          ] autorelease];
     UITabBarController *tabBarViewController = [[[UITabBarController alloc] init] autorelease];
-    [tabBarViewController setViewControllers:@[deviceSettingsViewController, settingsViewController]];
+    [tabBarViewController setViewControllers:@[settingsViewController, deviceSettingsViewController]];
     [self.navigationController pushViewController:tabBarViewController
                                          animated:true
      ];
