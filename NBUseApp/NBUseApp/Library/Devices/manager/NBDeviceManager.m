@@ -34,6 +34,7 @@
     NBNetworkCommandHandler *networkCommandHandler;
     NSMutableArray *_interfaces;
     NSMutableDictionary *_devices;
+    NSTimer *devicePollTimer;
 }
 
 @end
@@ -136,9 +137,12 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 - (void) dealloc
 {
+    self.networkHandler.delegate = nil;
     self.networkHandler = nil;
     self.interfaces = nil;
     self.devices = nil;
+    self.settings = nil;
+    networkCommandHandler.delegate = nil;
     [networkCommandHandler release];
     networkCommandHandler = nil;
     self.delegate = nil;
@@ -170,11 +174,17 @@ static NBDeviceManager *sharedDeviceManager = nil;
     {
         [interface setRequestingAction:true];
     }
-    NSTimer *devicePollTimer = [NSTimer timerWithTimeInterval:kDeviceManagerPollInterval
-                                              target:self
-                                            selector:@selector(sendAllActiveDeviceData)
-                                            userInfo:nil
-                                             repeats:true
+    if (devicePollTimer != nil)
+    {
+        [devicePollTimer invalidate];
+        [devicePollTimer release];
+    }
+    devicePollTimer = [[NSTimer alloc] initWithFireDate:[NSDate date]
+                                               interval:kDeviceManagerPollInterval
+                                                 target:self
+                                               selector:@selector(sendAllActiveDeviceData)
+                                               userInfo:nil
+                                                repeats:true
                        ];
     [[NSRunLoop mainRunLoop] addTimer:devicePollTimer
                               forMode:NSDefaultRunLoopMode
@@ -243,6 +253,17 @@ static NBDeviceManager *sharedDeviceManager = nil;
 - (void) saveSettings
 {
     [self.settings saveSettings];
+}
+- (void) logout
+{
+    [devicePollTimer invalidate];
+    [devicePollTimer release];
+    devicePollTimer = nil;
+    for (NBDeviceHWInterface *interface in self.interfaces)
+    {
+        [interface setRequestingAction:false];
+    }
+    [self.delegate didLogout:self];
 }
 
 
