@@ -79,6 +79,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     
 }
 
+- (void) didLogout:(NBDeviceManager*)deviceManager
+{
+    [self showInitialisationViewController:true];
+}
+
 - (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager
 {
     UIAlertView *authAlert = [[[UIAlertView alloc] initWithTitle:@"Authentication Failure"

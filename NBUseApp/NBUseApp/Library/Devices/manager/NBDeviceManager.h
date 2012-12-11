@@ -19,6 +19,7 @@ typedef NSDictionary NBDeviceDictionary;
 @class NBDeviceManager;
 @protocol NBDeviceManagerDelegate <NSObject>
 
+- (void) didLogout:(NBDeviceManager*)deviceManager;
 - (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager;
 
 @end
@@ -54,6 +55,7 @@ typedef NSDictionary NBDeviceDictionary;
 - (void) ledData;
 
 - (void) saveSettings;
+- (void) logout;
 
 @property (strong, nonatomic) NBNetworkHandler *networkHandler;
 
