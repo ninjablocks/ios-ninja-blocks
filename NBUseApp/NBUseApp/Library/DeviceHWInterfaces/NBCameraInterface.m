@@ -91,8 +91,10 @@
         }
         else
         {
+            ;
         }
     }
+    _requestingAction = requestingAction;
 }
 
 @end

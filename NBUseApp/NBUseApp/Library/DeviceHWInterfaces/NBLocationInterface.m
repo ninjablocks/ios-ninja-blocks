@@ -108,6 +108,7 @@
             [locationManager stopUpdatingLocation];
         }
     }
+    _requestingAction = requestingAction;
 }
 
 - (bool) updateReading:(NBPollingSensor*)sensorDevice
