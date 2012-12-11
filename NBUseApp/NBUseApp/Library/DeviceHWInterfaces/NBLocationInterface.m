@@ -65,15 +65,40 @@
     [self updateDevicesOfClass:[NBHeading class] withAvailability:[CLLocationManager headingAvailable]];
 }
 
+- (void) locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading
+{
+    for (NBDevice *device in self.devices)
+    {
+        if ([device isKindOfClass:[NBHeading class]])
+        {
+            [self updateHeading:(NBHeading*)device];
+        }
+    }
+}
+- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    for (NBDevice *device in self.devices)
+    {
+        if ([device isKindOfClass:[NBLocation class]])
+        {
+            [self updateLocation:(NBLocation*)device];
+        }
+    }
+}
+
 - (void)setRequestingAction:(bool)requestingAction
 {
     if (_requestingAction != requestingAction)
     {
         if (requestingAction)
         {
+            [locationManager setDelegate:self];
             if ([CLLocationManager headingAvailable])
             {
                 [locationManager startUpdatingHeading];
+            }
+            if ([CLLocationManager locationServicesEnabled])
+            {
                 [locationManager startUpdatingLocation];
             }
         }
@@ -83,7 +108,6 @@
             [locationManager stopUpdatingLocation];
         }
     }
-    [super setRequestingAction:requestingAction];
 }
 
 - (bool) updateReading:(NBPollingSensor*)sensorDevice
@@ -106,12 +130,11 @@
 - (bool) updateHeading:(NBHeading*)headingDevice
 {
     bool result = false;
-    
     if ([CLLocationManager headingAvailable])
     {
         CLHeading *heading = locationManager.heading;
         CLLocationDirection direction = heading.trueHeading;
-        [headingDevice setCurrentValue:[NSString stringWithFormat:@"%f", direction]];
+        [headingDevice setCurrentDirection:direction];
         result = true;
     }
     return result;
@@ -120,14 +143,11 @@
 - (bool) updateLocation:(NBLocation*)locationDevice
 {
     bool result = false;
-    NSString *locationString = @"0, 0";
     if ([CLLocationManager locationServicesEnabled])
     {
-        CLLocationCoordinate2D coordinate = locationManager.location.coordinate;
-        locationString = [NSString stringWithFormat:@"%f, %f", coordinate.latitude, coordinate.longitude];
+        [locationDevice setCurrentLocation:locationManager.location];
         result = true;
     }
-    [locationDevice setCurrentValue:locationString];
     return result;
 }
 

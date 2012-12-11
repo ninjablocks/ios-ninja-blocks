@@ -33,6 +33,11 @@
             ];
 }
 
+- (NSString*)pollValue
+{
+    return @"0";
+}
+
 - (NSString*)deviceName
 {
     return @"Camera";

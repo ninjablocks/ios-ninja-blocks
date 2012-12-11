@@ -11,8 +11,6 @@
 #import "NBDevice.h"
 #import "NBCommand.h"
 
-#define kDeviceDefaultValue @"0"
-
 @implementation NBDevice
 
 - (id) init
@@ -45,9 +43,9 @@
     return [NBDevice addressKey:self.address];
 }
 
-- (NSString*) defaultValue
+- (NSString*) pollValue
 {
-    return kDeviceDefaultValue;
+    return self.currentValue;
 }
 
 - (void) setCurrentValue:(NSString *)currentValue
@@ -90,6 +88,8 @@
     [description appendFormat:@"   port: %@", self.address.port];
     
     [description appendFormat:@"   value: %@", self.currentValue];
+    [description appendFormat:@"   %@ Available, %@ Active", (self.available?@"IS":@"NOT"), (self.active?@"IS":@"NOT")];
+    [description appendFormat:@"   lastSend: %@", self.lastSend];
     return description;
 }
 

@@ -35,7 +35,6 @@ typedef struct _NBDeviceAddress {
 {
     @protected
     NSString *_currentValue;
-    bool _changedSignificantly;
 }
 
 + (NSString *) addressKey:(NBDeviceAddress)address;
@@ -44,8 +43,7 @@ typedef struct _NBDeviceAddress {
 
 - (NSString *) addressKey;
 
-- (void) resetValue;
-- (NSString*) defaultValue;
+- (NSString*) pollValue;
 
 - (void) processCommand:(NBCommand*)command;
 

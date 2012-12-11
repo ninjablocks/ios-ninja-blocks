@@ -31,9 +31,9 @@
             ];
 }
 
-- (bool) isChangeSignificantWithValue:(NSString*)value
+- (NSString*)pollValue
 {
-    return true; //any change considered significant
+    return @"0";
 }
 
 - (NSString*)deviceName

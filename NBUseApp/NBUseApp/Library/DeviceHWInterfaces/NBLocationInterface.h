@@ -10,6 +10,6 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface NBLocationInterface : NBDeviceHWInterface
+@interface NBLocationInterface : NBDeviceHWInterface <CLLocationManagerDelegate>
 
 @end

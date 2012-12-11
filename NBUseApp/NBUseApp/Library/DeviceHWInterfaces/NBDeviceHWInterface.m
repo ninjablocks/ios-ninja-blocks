@@ -35,37 +35,6 @@
     [super dealloc];
 }
 
-// NB. must be called by any subclass implementation
-// (if the multiple data command is used in lieu of
-// individual polling, this wont be necessary)
-- (void) setRequestingAction:(bool)requestingAction
-{
-    if (_requestingAction != requestingAction)
-    {
-        if (requestingAction)
-        {
-            for (NBDevice *device in self.devices)
-            {
-                if ([device isKindOfClass:[NBPollingSensor class]])
-                {
-                    [(NBPollingSensor*)device startPolling];
-                }
-            }
-        }
-        else
-        {
-            for (NBDevice *device in self.devices)
-            {
-                if ([device isKindOfClass:[NBPollingSensor class]])
-                {
-                    [(NBPollingSensor*)device stopPolling];
-                }
-            }
-        }
-        _requestingAction = requestingAction;
-    }
-}
-
 - (void) updateDevicesOfClass:(Class)deviceClass withAvailability:(bool)available
 {
     for (NBDevice *device in self.devices)
