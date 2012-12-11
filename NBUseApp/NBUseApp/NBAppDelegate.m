@@ -11,7 +11,6 @@
 #import "InitialisationViewController.h"
 #import "NBDeviceManager.h"
 
-//#import "FirstViewController.h"
 #import "NBViewController.h"
 
 #import "NBNetworkHandler.h"
@@ -69,12 +68,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     } else {
         viewController = [[[NBViewController alloc] initWithNibName:@"NBViewController_iPad" bundle:nil] autorelease];
     }
-//    FirstViewController *viewController1;
-//    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-//        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
-//    } else {
-//        viewController1 = [[[FirstViewController alloc] initWithNibName:@"FirstViewController" bundle:nil] autorelease];
-//    }
     
     viewController.deviceManager = deviceManager;
     [deviceManager activateInterfaces];
