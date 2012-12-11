@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NBSettingsViewController : UIViewController
+#import "NBDeviceManager.h"
+
+@interface NBSettingsViewController : UIViewController <NBDeviceManagerMessageDelegate>
 
 
 - (IBAction)didClickLogout:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UITextView *messageTextView;
 
 @end
