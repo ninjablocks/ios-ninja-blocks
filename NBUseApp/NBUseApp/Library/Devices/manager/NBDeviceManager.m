@@ -190,9 +190,13 @@ static NBDeviceManager *sharedDeviceManager = nil;
             && device.active
             )
         {
-            [devicesToSend addObject:device];
+            if ((device.lastSend == nil) || -[device.lastSend timeIntervalSinceNow] >= (kDeviceManagerPollInterval-0.5))
+            {// time since last send was not much earlier than poll interval
+                [devicesToSend addObject:device];
+            }
         }
     }
+    NBLog(kNBLogReadings, @"Decided to send: %@", devicesToSend);
     [self.networkHandler sendAllWithDeviceDataArray:devicesToSend];
 }
 
@@ -209,11 +213,14 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 - (void) didChangeSignificantly:(NBDevice*)device
 {
-    [self.networkHandler performSelector:@selector(reportDeviceData:)
-                                onThread:[NSThread mainThread]
-                              withObject:device
-                           waitUntilDone:false
-     ];
+    if ([device available] && [device active])
+    {
+        [self.networkHandler performSelector:@selector(reportDeviceData:)
+                                    onThread:[NSThread mainThread]
+                                  withObject:device
+                               waitUntilDone:false
+         ];
+    }
 }
 
 - (void) didChangeActiveStateForDevice:(NBDevice*)device;
