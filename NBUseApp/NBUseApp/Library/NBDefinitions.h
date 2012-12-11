@@ -13,9 +13,9 @@
 
 #define kNBLogError     1
 #define kNBLogDefault   2
-//#define kNBLogNetwork   3
-//#define kNBLogCommands  4
-//#define kNBLogVideo     5
+#define kNBLogNetwork   3
+#define kNBLogCommands  4
+#define kNBLogVideo     5
 #define kNBLogReadings  6
 #define kNBLogInit      7
 #define kNBLogLogin     8
@@ -24,9 +24,9 @@
 
 //#define kNBLogError     0
 //#define kNBLogDefault   0
-#define kNBLogNetwork   0
-#define kNBLogCommands  0
-#define kNBLogVideo     0
+//#define kNBLogNetwork   0
+//#define kNBLogCommands  0
+//#define kNBLogVideo     0
 //#define kNBLogReadings  0
 //#define kNBLogInit      0
 //#define kNBLogLogin     0

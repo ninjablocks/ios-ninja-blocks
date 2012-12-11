@@ -59,10 +59,13 @@ typedef enum {
     if (userId != nil) {
         self.userIdTextField.text = userId;
     }
-    [networkInitialiser performSelectorOnMainThread:@selector(restoreConnectionData)
-                                         withObject:nil
-                                      waitUntilDone:false
-     ];
+    if (self.autoLogin)
+    {
+        [networkInitialiser performSelectorOnMainThread:@selector(restoreConnectionData)
+                                             withObject:nil
+                                          waitUntilDone:false
+         ];
+    }
 }
 
 - (void) didReceiveMemoryWarning

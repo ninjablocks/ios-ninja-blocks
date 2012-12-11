@@ -35,7 +35,16 @@
     return ((resultNumber != nil) && [resultNumber integerValue] == kResponseResultFailure);
 }
 
++ (bool) hasAlreadyActivatedErrorWithJsonData:(NSData*)jsonResponse
+{
+    return [self hasErrorId:kResponseIdAuthError withJsonData:jsonResponse];
+}
 + (bool) hasAuthenticationErrorWithJsonData:(NSData*)jsonResponse
+{
+    return [self hasErrorId:kResponseIdAuthError withJsonData:jsonResponse];
+}
+
++ (bool) hasErrorId:(NSInteger)errorId withJsonData:(NSData*)jsonResponse
 {
     bool hasAuthenticationError = false;
     NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:jsonResponse
@@ -46,7 +55,7 @@
     if ([resultNumber integerValue] == kResponseResultFailure)
     {
         NSNumber *idNumber = [responseDictionary objectForKey:kResponseIdKey];
-        if ([idNumber integerValue] == kResponseIdAuthError)
+        if ([idNumber integerValue] == errorId)
         {
             hasAuthenticationError = true;
         }

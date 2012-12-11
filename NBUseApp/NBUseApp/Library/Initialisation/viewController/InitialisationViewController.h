@@ -19,13 +19,12 @@
 
 @interface InitialisationViewController : UIViewController <NBNetworkInitDelegate>
 
-- (void) clearUserData;
-
 - (IBAction) didClickClearUserData:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITextField *userIdTextField;
 @property (strong, nonatomic) IBOutlet UITextField *pwordTextField;
 @property (strong, nonatomic) IBOutlet UIButton *connectButton;
+@property (assign, nonatomic) bool autoLogin;
 
 //@property (strong, nonatomic) IBOutlet UIViewController *successViewController;
 @property (assign, nonatomic) id<InitialisationDelegate> delegate;

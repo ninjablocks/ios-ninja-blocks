@@ -38,7 +38,6 @@
 @implementation NBSettings
 {
     NSMutableDictionary *allSettings;
-    NSMutableDictionary *currentDeviceSetting; //active, polling interval,...
 }
 
 - (id) init
@@ -63,13 +62,20 @@
 - (void) dealloc
 {
     [self storeSettings];
+    [allSettings release];
     [super dealloc];
 }
 
 - (void) didUpdateSettingDevice:(NBDevice*)device
 {
-    currentDeviceSetting = [allSettings objectForKey:[device addressKey]];
-    if (currentDeviceSetting == nil)
+    NBLog(kNBLogSettings, @"Updating device %@, settings %@", [device addressKey], allSettings);
+    NSMutableDictionary *currentDeviceSetting = (NSMutableDictionary*)[allSettings objectForKey:[device addressKey]];
+    //FIXME: currentDeviceSettings does not remain mutable
+    if (currentDeviceSetting != nil)
+    {
+        currentDeviceSetting = [NSMutableDictionary dictionaryWithDictionary:currentDeviceSetting];
+    }
+    else
     {
         currentDeviceSetting = [NSMutableDictionary dictionary];
     }
@@ -95,7 +101,7 @@
     NBDeviceManager *deviceManager = [NBDeviceManager sharedManager];
     for (NBDevice *device in deviceManager.devices.allValues)
     {
-        currentDeviceSetting = [NSMutableDictionary dictionary];
+        NSMutableDictionary *currentDeviceSetting = [NSMutableDictionary dictionary];
         [currentDeviceSetting setObject:[NSNumber numberWithBool:device.active] forKey:kSettingsActiveKey];
         //... other device params here
         
@@ -116,7 +122,12 @@
 
 - (bool) loadSettingsFromStorage
 {
-    allSettings = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsDefaultsKey];
+    if (allSettings != nil)
+    {
+        [allSettings release];
+    }
+    NSDictionary *settingDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:kSettingsDefaultsKey];
+    allSettings = [[NSMutableDictionary alloc] initWithDictionary:settingDictionary];
     NBLog(kNBLogSettings, @"Loaded all settings: %@", allSettings);
     return (allSettings != nil);
 }
@@ -127,7 +138,7 @@
     NBLog(kNBLogSettings, @"Updating DM (%@) with settings: %@", deviceManager, allSettings);
     for (NBDevice *device in deviceManager.devices.allValues)
     {
-        currentDeviceSetting = [allSettings objectForKey:[device addressKey]];
+        NSMutableDictionary *currentDeviceSetting = [allSettings objectForKey:[device addressKey]];
         if (currentDeviceSetting != nil)
         {
             NSNumber *activeNumber = [currentDeviceSetting objectForKey:kSettingsActiveKey];

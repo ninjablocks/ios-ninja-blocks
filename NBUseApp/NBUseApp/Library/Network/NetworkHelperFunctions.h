@@ -30,6 +30,7 @@
 // interpreting json data
 + (bool) hasSuccessWithJsonData:(NSData*)jsonResponse;
 + (bool) hasErrorWithJsonData:(NSData*)jsonResponse;
++ (bool) hasAlreadyActivatedErrorWithJsonData:(NSData*)jsonResponse;
 + (bool) hasAuthenticationErrorWithJsonData:(NSData*)jsonResponse;
 
 @end

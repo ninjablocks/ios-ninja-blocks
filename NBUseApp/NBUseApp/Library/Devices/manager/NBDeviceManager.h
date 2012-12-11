@@ -42,7 +42,9 @@ typedef NSDictionary NBDeviceDictionary;
 @interface NBDeviceManager : NSObject <NBDeviceProtocol, NBNetworkCommandHandlerDelegate, NBNetworkDelegate>
 
 + (id) sharedManager;
-+ (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData;
+
+- (void) setupWithConnectionData:(NBConnectionData*)connectionData;
+- (void) reset;
 
 - (void) willEnterForeground;
 
@@ -56,6 +58,7 @@ typedef NSDictionary NBDeviceDictionary;
 
 - (void) saveSettings;
 - (void) logout;
+
 
 @property (strong, nonatomic) NBNetworkHandler *networkHandler;
 

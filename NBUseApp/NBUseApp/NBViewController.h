@@ -13,8 +13,6 @@
 @interface NBViewController : UIViewController <NBDeviceManagerDataDelegate>
 
 
-@property (strong, nonatomic) NBDeviceManager *deviceManager;
-
 @property (strong, nonatomic) IBOutlet UIView *viewComms;
 
 @property (strong, nonatomic) IBOutlet UIView *viewCommsSend;

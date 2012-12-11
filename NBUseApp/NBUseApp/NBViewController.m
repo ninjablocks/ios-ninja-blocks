@@ -18,6 +18,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self setupNavigationBar];
+    [[NBDeviceManager sharedManager] setDataDelegate:self];
     
     [[NSBundle mainBundle] loadNibNamed:@"CommsLights"
                                   owner:self
@@ -29,7 +30,11 @@
     [self.viewComms setFrame:commsFrame];
     [self.view addSubview:self.viewComms];
 }
-
+- (void) dealloc
+{
+    [[NBDeviceManager sharedManager] setDataDelegate:nil];
+    [super dealloc];
+}
 - (void) setupNavigationBar
 {
     UIBarButtonItem *settingsButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
@@ -59,14 +64,6 @@
     [self.navigationController pushViewController:tabBarViewController
                                          animated:true
      ];
-}
-
-
-- (void) setDeviceManager:(NBDeviceManager *)deviceManager
-{
-    [_deviceManager release];
-    _deviceManager = [deviceManager retain];
-    [self.deviceManager setDataDelegate:self];
 }
 
 #define kLightPulseDelay    0.2

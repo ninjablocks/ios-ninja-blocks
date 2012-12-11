@@ -13,8 +13,6 @@
 
 #import "NBViewController.h"
 
-#import "NBNetworkHandler.h"
-
 
 @implementation NBAppDelegate
 
@@ -35,11 +33,11 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    [self showInitialisationViewController:false];
+    [self showInitialisationViewControllerAutoLogin:true];
     return YES;
 }
 
-- (void) showInitialisationViewController:(bool)resetData
+- (void) showInitialisationViewControllerAutoLogin:(bool)autoLogin
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.initViewController = [[[InitialisationViewController alloc] initWithNibName:@"InitialisationViewController" bundle:nil] autorelease];
@@ -48,11 +46,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
     
     self.initViewController.delegate = self;
+    [self.initViewController setAutoLogin:autoLogin];
 
-    if (resetData)
-    {
-        [self.initViewController clearUserData];
-    }
+//    if (resetData)
+//    {
+//        [self.initViewController clearUserData];
+//    }
     
     self.window.rootViewController = self.initViewController;
     [self.window makeKeyAndVisible];
@@ -60,7 +59,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void) didFinishInitialisationWithData:(NBConnectionData*)connectionData
 {
-    NBDeviceManager *deviceManager = [NBDeviceManager sharedManagerWithConnectionData:connectionData];
+    NBDeviceManager *deviceManager = [NBDeviceManager sharedManager];
+    [deviceManager setupWithConnectionData:connectionData];
     [deviceManager setDelegate:self];
     NBViewController *viewController;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -69,7 +69,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         viewController = [[[NBViewController alloc] initWithNibName:@"NBViewController_iPad" bundle:nil] autorelease];
     }
     
-    viewController.deviceManager = deviceManager;
     [deviceManager activateInterfaces];
     
     self.navigationController = [[[UINavigationController alloc] initWithRootViewController:viewController] autorelease];
@@ -81,7 +80,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void) didLogout:(NBDeviceManager*)deviceManager
 {
-    [self showInitialisationViewController:true];
+    [deviceManager reset];
+    [self showInitialisationViewControllerAutoLogin:false];
 }
 
 - (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager
@@ -93,7 +93,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                                               otherButtonTitles:nil
                               ] autorelease];
     [authAlert show];
-    [self showInitialisationViewController:true];
+    [self showInitialisationViewControllerAutoLogin:false];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -46,18 +46,10 @@ static NBDeviceManager *sharedDeviceManager = nil;
 // May be nil. Can only create shared instance with NBConnectionData
 + (id) sharedManager
 {
-    return sharedDeviceManager;
-}
-
-+ (id) sharedManagerWithConnectionData:(NBConnectionData*)connectionData
-{
-    if (sharedDeviceManager != nil)
+    if (sharedDeviceManager == nil)
     {
-        [sharedDeviceManager release];
+        sharedDeviceManager = [[super allocWithZone:NULL] init];
     }
-    sharedDeviceManager = [[super allocWithZone:NULL] initWithConnectionData:connectionData];
-    sharedDeviceManager.settings = [[[NBSettings alloc] init] autorelease];
-
     return sharedDeviceManager;
 }
 
@@ -70,64 +62,70 @@ static NBDeviceManager *sharedDeviceManager = nil;
 {
     return self;
 }
-
 - (id)retain
 {
     return self;
 }
-
 - (NSUInteger)retainCount
-
 {
     return NSUIntegerMax;  //denotes an object that cannot be released
 }
-
 - (oneway void)release
 {
     //do nothing
 }
-
 - (id)autorelease
 {
     return self;
 }
 
+#define kDeviceCapacityInitial  7
 
-- (id) init
+- (void) setupWithConnectionData:(NBConnectionData*)connectionData
 {
-    return nil;
+    self.interfaces = [NSMutableArray array];
+    self.devices = [NSMutableDictionary dictionaryWithCapacity:kDeviceCapacityInitial];
+
+    self.networkHandler = [[[NBNetworkHandler alloc] initWithConnectionData:connectionData] autorelease];
+    [self.networkHandler setDelegate:self];
+    
+    NBAccelerometerInterface *accelerometerInterface = [[[NBAccelerometerInterface alloc] init] autorelease];
+    [self addDeviceHWInterface:accelerometerInterface];
+    
+    NBCameraInterface *cameraInterface = [[[NBCameraInterface alloc] init] autorelease];
+    [self addDeviceHWInterface:cameraInterface];
+    
+    NBLocationInterface *locationInterface = [[[NBLocationInterface alloc] init] autorelease];
+    [self addDeviceHWInterface:locationInterface];
+    
+    NBGestureInterface *gestureInterface = [[[NBGestureInterface alloc] initWithAccelerometerInterface:accelerometerInterface]
+                                            autorelease];
+    [self addDeviceHWInterface:gestureInterface];
+
+    [self initialiseInterfaces];
+    sharedDeviceManager.settings = [[[NBSettings alloc] init] autorelease];
+
+    networkCommandHandler = [[NBNetworkCommandHandler alloc] initWithConnectionData:connectionData delegate:self];
+        
 }
-
-- (id) initWithConnectionData:(NBConnectionData*)connectionData
+- (void) reset
 {
-    self = [super init];
-    if (self) {
-        _interfaces = [[NSMutableArray alloc] init];
-        _devices = [[NSMutableDictionary alloc] init];
-        
-        self.networkHandler = [[[NBNetworkHandler alloc] initWithConnectionData:connectionData] autorelease];
-        [self.networkHandler setDelegate:self];
-        
-        NBAccelerometerInterface *accelerometerInterface = [[[NBAccelerometerInterface alloc] init] autorelease];
-        [self addDeviceHWInterface:accelerometerInterface];
-        
-        NBCameraInterface *cameraInterface = [[[NBCameraInterface alloc] init] autorelease];
-        [self addDeviceHWInterface:cameraInterface];
-        
-        NBLocationInterface *locationInterface = [[[NBLocationInterface alloc] init] autorelease];
-        [self addDeviceHWInterface:locationInterface];
-        
-        NBGestureInterface *gestureInterface = [[[NBGestureInterface alloc] initWithAccelerometerInterface:accelerometerInterface]
-                                                autorelease];
-        [self addDeviceHWInterface:gestureInterface];
-        
-        
-        [self initialiseInterfaces];
-        
-        networkCommandHandler = [[NBNetworkCommandHandler alloc] initWithConnectionData:connectionData delegate:self];
-        
+    [devicePollTimer invalidate];
+    [devicePollTimer release];
+    devicePollTimer = nil;
+    for (NBDeviceHWInterface *interface in self.interfaces)
+    {
+        [interface setRequestingAction:false];
     }
-    return self;
+    networkCommandHandler.delegate = nil;
+    [networkCommandHandler release];
+    networkCommandHandler = nil;
+    self.settings = nil;
+    self.networkHandler.delegate = nil;
+    self.networkHandler = nil;
+    self.interfaces = nil;
+    self.devices = nil;
+//    self.delegate = nil;
 }
 
 - (void) willEnterForeground
@@ -137,15 +135,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 - (void) dealloc
 {
-    self.networkHandler.delegate = nil;
-    self.networkHandler = nil;
-    self.interfaces = nil;
-    self.devices = nil;
-    self.settings = nil;
-    networkCommandHandler.delegate = nil;
-    [networkCommandHandler release];
-    networkCommandHandler = nil;
-    self.delegate = nil;
+    [self reset];
     [super dealloc];
 }
 
@@ -159,11 +149,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 - (void) didReceiveAuthenticationError
 {
-    [self.networkHandler setDelegate:nil];
-    self.networkHandler = nil;
-    [networkCommandHandler setDelegate:nil];
-    [networkCommandHandler release];
-    networkCommandHandler = nil;
+    [self reset];
     [self.delegate didReceiveAuthenticationError:self];
 }
 
@@ -256,13 +242,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
 }
 - (void) logout
 {
-    [devicePollTimer invalidate];
-    [devicePollTimer release];
-    devicePollTimer = nil;
-    for (NBDeviceHWInterface *interface in self.interfaces)
-    {
-        [interface setRequestingAction:false];
-    }
+    [self reset];
     [self.delegate didLogout:self];
 }
 

@@ -16,9 +16,6 @@
 #import "NBDeviceSettingsTableViewCell.h"
 
 @interface NBDeviceSettingsViewController ()
-{
-    NBDeviceManager *deviceManager;
-}
 
 @property (strong, nonatomic) IBOutlet NBDeviceSettingsTableViewCell *deviceCell;
 
@@ -30,7 +27,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        deviceManager = [NBDeviceManager sharedManager];
     }
     return self;
 }
@@ -54,7 +50,7 @@
 
 - (void) dealloc
 {
-    [deviceManager saveSettings];
+    [[NBDeviceManager sharedManager] saveSettings];
     [super dealloc];
 }
 
@@ -63,11 +59,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [[deviceManager interfaces] count];
+    return [[[NBDeviceManager sharedManager] interfaces] count];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSArray *interfaces = deviceManager.interfaces;
+    NSArray *interfaces = [[NBDeviceManager sharedManager] interfaces];
     NBDeviceHWInterface *interface = [interfaces objectAtIndex:section];
     return interface.interfaceName;
 }
@@ -75,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NBDeviceHWInterface *interface = [[deviceManager interfaces] objectAtIndex:section];
+    NBDeviceHWInterface *interface = [[[NBDeviceManager sharedManager] interfaces] objectAtIndex:section];
     return [[interface devices] count];
 }
 
@@ -91,7 +87,7 @@
         self.deviceCell = nil;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    NBDeviceHWInterface *interface = [[deviceManager interfaces] objectAtIndex:indexPath.section];
+    NBDeviceHWInterface *interface = [[[NBDeviceManager sharedManager] interfaces] objectAtIndex:indexPath.section];
     NBDevice *device = [[interface devices] objectAtIndex:indexPath.row];
 
     [cell setDevice:device];

@@ -77,6 +77,8 @@
 #define kResponseResultSuccess  1
 #define kResponseResultFailure  0
 
-#define kResponseIdAuthError    401
+#define kResponseIdAuthError                401
+#define kResponseIdAlreadyActivatedError    409
+
 
 #endif
