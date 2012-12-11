@@ -116,6 +116,7 @@
             [motionOperationQueue release];
             motionOperationQueue = nil;
         }
+        _requestingAction = requestingAction;
     }
 }
 
