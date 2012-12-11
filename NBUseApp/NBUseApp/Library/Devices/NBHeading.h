@@ -7,9 +7,12 @@
 //
 
 #import "NBPollingSensor.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface NBHeading : NBPollingSensor
 
 - (id) initWithPort:(NSString *)port;
+
+@property (assign, nonatomic) CLLocationDirection currentDirection;
 
 @end

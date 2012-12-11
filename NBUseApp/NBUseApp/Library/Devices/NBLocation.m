@@ -9,7 +9,6 @@
 #import "NBLocation.h"
 
 #import "NBDeviceIds.h"
-#import "NBPollingSensorIntervals.h"
 
 @implementation NBLocation
 
@@ -25,9 +24,21 @@
             ];
     if (self)
     {
-        pollInterval = kPollingSensorIntervalLocation;
     }
     return self;
+}
+
+#define kSignificantDeltaDist   10
+
+- (void) setCurrentLocation:(CLLocation*)currentLocation
+{
+    bool isSignificant = ([currentLocation distanceFromLocation:_currentLocation] > 10);
+    [_currentLocation release];
+    _currentLocation = [currentLocation retain];
+    CLLocationCoordinate2D coordinate = currentLocation.coordinate;
+    [self setCurrentValue:[NSString stringWithFormat:@"%f, %f", coordinate.latitude, coordinate.longitude]
+            isSignificant:isSignificant
+     ];
 }
 
 - (NSString*)deviceName
