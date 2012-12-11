@@ -19,6 +19,7 @@
 
 @interface NBNetworkCommandHandler ()
 {
+    NSURLConnection *commandConnection;
     NSMutableURLRequest *commandRequest;
     NBConnectionData *connectionData;
     int bytesExpected;
@@ -38,6 +39,18 @@
         [self listenForCommands];
     }
     return self;
+}
+
+- (void) dealloc
+{
+    [commandConnection cancel];
+    [commandConnection release];
+    commandConnection = nil;
+    [commandRequest release];
+    commandRequest = nil;
+    [connectionData release];
+    connectionData = nil;
+    [super dealloc];
 }
 
 - (void) listenForCommands
@@ -62,10 +75,14 @@
     
     [commandRequest setValue:connectionData.blockToken
           forHTTPHeaderField:kNinjaTokenName];
-    
-    [[[NSURLConnection alloc]
-      initWithRequest:commandRequest
-      delegate:self] autorelease];
+
+    if (commandConnection != nil)
+    {
+        [commandConnection release];
+    }
+    commandConnection = [[NSURLConnection alloc]
+                         initWithRequest:commandRequest
+                         delegate:self];
 }
 
 - (void) createDevicesFromCommands:(NSDictionary*)commands
@@ -108,6 +125,11 @@
     NBLog(kNBLogNetwork, @"Finished request");
     if (commandRequest == request)
     {
+        if (commandConnection != nil)
+        {
+            [commandConnection release];
+            commandConnection = nil;
+        }
         [commandRequest release];
         commandRequest = nil;
         NBLog(kNBLogNetwork, @"Finished listening for commands.");
