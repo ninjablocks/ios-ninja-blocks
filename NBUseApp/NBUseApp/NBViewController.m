@@ -8,6 +8,7 @@
 
 #import "NBViewController.h"
 
+#import "NBSettingsViewController.h"
 #import "NBDeviceSettingsViewController.h"
 
 @implementation NBViewController
@@ -47,11 +48,15 @@
 
 - (void) didClickSettings:(id)sender
 {
-    
-    NBDeviceSettingsViewController *settingsViewController = [[[NBDeviceSettingsViewController alloc] initWithNibName:@"NBDeviceSettingsViewController"
+    NBSettingsViewController *settingsViewController = [[[NBSettingsViewController alloc] initWithNibName:@"NBSettingsViewController"
+                                                                                                  bundle:nil
+                                                         ] autorelease];
+    NBDeviceSettingsViewController *deviceSettingsViewController = [[[NBDeviceSettingsViewController alloc] initWithNibName:@"NBDeviceSettingsViewController"
                                                                                                    bundle:nil
                                                          ] autorelease];
-    [self.navigationController pushViewController:settingsViewController
+    UITabBarController *tabBarViewController = [[[UITabBarController alloc] init] autorelease];
+    [tabBarViewController setViewControllers:@[deviceSettingsViewController, settingsViewController]];
+    [self.navigationController pushViewController:tabBarViewController
                                          animated:true
      ];
 }
