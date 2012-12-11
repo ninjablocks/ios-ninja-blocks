@@ -158,10 +158,10 @@
         trialNodeId = [[NSString alloc] initWithString:deviceIdentifier]; //[[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
         NBLog(kNBLogDefault, @"Activating/registering nodeId: %@", trialNodeId);
         [self activateBlock]; //await activation
-        [self performSelector:@selector(registerBlock)
-                   withObject:nil
-                   afterDelay:1
-         ];
+//        [self performSelector:@selector(registerBlock)
+//                   withObject:nil
+//                   afterDelay:1
+//         ];
     }
 }
 
