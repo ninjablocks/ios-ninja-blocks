@@ -39,6 +39,12 @@
     return self;
 }
 
+- (NSString*) jsonifyForPollDevice:(NBDevice*)device
+{
+    return [NetworkHelperFunctions jsonifyDeviceData:device withNodeId:connectionData.nodeId isPoll:true];
+}
+
+//Poll
 - (void) sendAllWithDeviceDataArray:(NSArray*)deviceDataArray
 {
     bool awaitingSendAllResponse = (sendAllRequest != nil);
@@ -47,7 +53,6 @@
         && ([deviceDataArray count] > 0)
         )
     {
-        
         NBLog(kNBLogNetwork, @"send all data: %@", deviceDataArray);
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
                                , kBaseBlockURL, connectionData.nodeId
@@ -58,18 +63,18 @@
         [sendAllRequest setHTTPMethod:@"POST"];
         [sendAllRequest setValue:kContentTypeAppJson
        forHTTPHeaderField:kContentTypeName];
-
+        
         [sendAllRequest setValue:connectionData.blockToken
        forHTTPHeaderField:kNinjaTokenName];
         
         NSMutableString *content = [NSMutableString stringWithString:@"["];
         int i = 0;
         NBDevice *deviceData = [deviceDataArray objectAtIndex:i];
-        [content appendFormat:@"%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+        [content appendFormat:@"%@", [self jsonifyForPollDevice:deviceData]];
         for (i=1; i<[deviceDataArray count]; i++)
         {
             deviceData = [deviceDataArray objectAtIndex:i];
-            [content appendFormat:@",%@", [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId]];
+            [content appendFormat:@",%@", [self jsonifyForPollDevice:deviceData]];
             [deviceData setLastSend:[NSDate date]];
         }
         [content appendString:@"]"];
@@ -143,7 +148,7 @@
     
     NSString *content = [NetworkHelperFunctions jsonifyDeviceData:deviceData withNodeId:connectionData.nodeId];
     [deviceData setLastSend:[NSDate date]];
-
+    NBLog(kNBLogReadings, @"Sending Device: %@", deviceData);
     NBLog(kNBLogNetwork, @"content = %@", content);
     
     [request setValue:[NSString stringWithFormat:@"%d",

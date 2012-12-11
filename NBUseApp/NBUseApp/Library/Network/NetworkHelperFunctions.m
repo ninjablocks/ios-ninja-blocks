@@ -66,6 +66,10 @@
 
 + (NSString *) jsonifyDeviceData:(NBDevice*)deviceData withNodeId:(NSString*)nodeId
 {
+    return [self jsonifyDeviceData:deviceData withNodeId:nodeId isPoll:false];
+}
++ (NSString *) jsonifyDeviceData:(NBDevice*)deviceData withNodeId:(NSString*)nodeId isPoll:(bool)poll
+{
     NBDeviceAddress address = deviceData.address;
     NSString *guid = [self guidWithAddress:address nodeId:nodeId];
     NSArray *names = [NSArray arrayWithObjects:kGUIDName, kPortName, kVendorIdName, kDeviceIdName, kDataName, nil];
@@ -73,7 +77,7 @@
                        deviceData.address.port,
                        [NSNumber numberWithInt:address.vendorId],
                        [NSNumber numberWithInt:address.deviceId],
-                       deviceData.currentValue, nil];
+                       (poll?deviceData.pollValue:deviceData.currentValue), nil];
     return [self jsonifyNames:names values:values];
 }
 

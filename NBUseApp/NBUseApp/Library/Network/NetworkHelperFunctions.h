@@ -19,6 +19,7 @@
 + (NSString *) guidWithAddress:(NBDeviceAddress)deviceAddress nodeId:(NSString *)nodeId;
 
 + (NSString *) jsonifyDeviceData:(NBDevice*)deviceData withNodeId:(NSString*)nodeId;
++ (NSString *) jsonifyDeviceData:(NBDevice*)deviceData withNodeId:(NSString*)nodeId isPoll:(bool)poll;
 
 + (NSString *) jsonifyName:(NSString*)name value:(id)value;
 
