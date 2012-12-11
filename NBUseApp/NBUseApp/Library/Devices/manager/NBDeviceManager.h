@@ -33,6 +33,15 @@ typedef NSDictionary NBDeviceDictionary;
 
 @end
 
+@protocol NBDeviceManagerMessageDelegate <NSObject>
+
+- (void) didSendDevice:(NBDevice*)device;
+- (void) didSendDeviceArray:(NSArray*)devices;
+
+- (void) didReceiveCommand:(NSString*)command;
+
+@end
+
 @class NBNetworkHandler;
 
 @class NBConnectionData;
@@ -67,6 +76,7 @@ typedef NSDictionary NBDeviceDictionary;
 
 @property (assign, nonatomic) id<NBDeviceManagerDelegate> delegate;
 @property (assign, nonatomic) id<NBDeviceManagerDataDelegate> dataDelegate;
+@property (assign, nonatomic) id<NBDeviceManagerMessageDelegate> messageDelegate;
 
 @property (strong, nonatomic) NBSettings *settings;
 

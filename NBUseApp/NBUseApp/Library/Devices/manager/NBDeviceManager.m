@@ -194,6 +194,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     }
     NBLog(kNBLogReadings, @"Decided to send: %@", devicesToSend);
     [self.networkHandler sendAllWithDeviceDataArray:devicesToSend];
+    [self.messageDelegate didSendDeviceArray:devicesToSend];
 }
 
 - (void) addDeviceHWInterface:(NBDeviceHWInterface*)interface
@@ -216,6 +217,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
                                   withObject:device
                                waitUntilDone:false
          ];
+        [self.messageDelegate didSendDevice:device];
     }
 }
 
@@ -260,6 +262,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
 - (void) didReceiveCommand:(NBCommand*)deviceCommand
 {
     [self.dataDelegate didReceiveCommand];
+    [self.messageDelegate didReceiveCommand:deviceCommand.description];
     NSString *addressKey = [NBDevice addressKey:deviceCommand.address];
     NBDevice *commandedDevice = [self.devices objectForKey:addressKey];
     NBLog(kNBLogCommands, @"Will process command %@ with device: %@", deviceCommand, commandedDevice);
