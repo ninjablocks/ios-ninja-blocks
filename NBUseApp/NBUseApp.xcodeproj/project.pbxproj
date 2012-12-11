@@ -152,7 +152,6 @@
 		38B7751916646F420004F620 /* NBHeading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBHeading.m; sourceTree = "<group>"; };
 		38B7751C166472890004F620 /* NBPollingSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBPollingSensor.h; sourceTree = "<group>"; };
 		38B7751D1664728B0004F620 /* NBPollingSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBPollingSensor.m; sourceTree = "<group>"; };
-		38B7752016648F0E0004F620 /* NBPollingSensorIntervals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBPollingSensorIntervals.h; sourceTree = "<group>"; };
 		38B775211665730F0004F620 /* NBDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NBDefinitions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38B775221665BA0D0004F620 /* NBLEDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEDDevice.h; sourceTree = "<group>"; };
 		38B775231665BA100004F620 /* NBLEDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEDDevice.m; sourceTree = "<group>"; };
@@ -380,7 +379,6 @@
 		38B7751F166489B50004F620 /* PollingSensors */ = {
 			isa = PBXGroup;
 			children = (
-				38B7752016648F0E0004F620 /* NBPollingSensorIntervals.h */,
 				38B7751C166472890004F620 /* NBPollingSensor.h */,
 				38B7751D1664728B0004F620 /* NBPollingSensor.m */,
 				38B7751816646F410004F620 /* NBHeading.h */,
