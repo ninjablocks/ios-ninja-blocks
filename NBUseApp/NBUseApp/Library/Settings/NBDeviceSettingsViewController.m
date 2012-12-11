@@ -27,6 +27,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.tabBarItem.image = [UIImage imageNamed:@"deviceSettingsTab.png"];
+        self.tabBarItem.title = @"Devices";
     }
     return self;
 }

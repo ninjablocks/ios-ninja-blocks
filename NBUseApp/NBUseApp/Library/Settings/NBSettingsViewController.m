@@ -20,7 +20,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        self.tabBarItem.image = [UIImage imageNamed:@"settingsTab.png"];
+        self.tabBarItem.title = @"Messages";
     }
     return self;
 }
