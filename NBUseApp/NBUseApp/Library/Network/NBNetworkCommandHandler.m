@@ -171,14 +171,12 @@
                                                                          error:nil
                                         ];
     NBLog(kNBLogNetwork, @"received json dictionary: %@", responseDictionary);
-    //TODO: check for json errors
-    
-    if ((commandRequest == connection.currentRequest) && (responseDictionary != nil))
+    if (bytesExpected <= 0)
     {
-        [self createDevicesFromCommands:responseDictionary];
-    }
-    else if (bytesExpected <= 0)
-    {
+        if ((commandRequest == connection.currentRequest) && (responseDictionary != nil))
+        {
+            [self createDevicesFromCommands:responseDictionary];
+        }
         [self finishedRequest:connection.currentRequest];
     }
 }
