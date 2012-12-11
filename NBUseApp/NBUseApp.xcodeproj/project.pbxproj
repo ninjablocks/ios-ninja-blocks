@@ -51,16 +51,14 @@
 		38B77504166445440004F620 /* NBNetworkCommandHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774ED166445440004F620 /* NBNetworkCommandHandler.m */; };
 		38B77505166445440004F620 /* NBNetworkHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774EF166445440004F620 /* NBNetworkHandler.m */; };
 		38B77506166445440004F620 /* NetworkHelperFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774F2166445440004F620 /* NetworkHelperFunctions.m */; };
-		38B77509166446E00004F620 /* FirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38B77507166446E00004F620 /* FirstViewController.xib */; };
-		38B7750A166447A50004F620 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B774BF1664452D0004F620 /* FirstViewController.m */; };
 		38B775121664552D0004F620 /* NBLocationInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775111664552D0004F620 /* NBLocationInterface.m */; };
 		38B7751516645A270004F620 /* NBMotionInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751416645A260004F620 /* NBMotionInterface.m */; };
 		38B775171664684E0004F620 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B775161664684E0004F620 /* CoreLocation.framework */; };
 		38B7751A16646F420004F620 /* NBHeading.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751916646F420004F620 /* NBHeading.m */; };
 		38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B7751D1664728B0004F620 /* NBPollingSensor.m */; };
 		38B775241665BA140004F620 /* NBLEDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B775231665BA100004F620 /* NBLEDDevice.m */; };
-		38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */; };
-		38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */; };
+		38D16DEE16682EAE000BD7D8 /* NBDeviceSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D16DEC16682EAE000BD7D8 /* NBDeviceSettingsViewController.m */; };
+		38D16DEF16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D16DED16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib */; };
 		38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F6D21716717BC700EB00BE /* NBGestureDevice.m */; };
 		38F6D21C167196A900EB00BE /* NBGestureInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F6D21B167196A900EB00BE /* NBGestureInterface.m */; };
 /* End PBXBuildFile section */
@@ -99,8 +97,6 @@
 		38B774B51664445E0004F620 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		38B774B7166444710004F620 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		38B774B8166444710004F620 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		38B774BE1664452C0004F620 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		38B774BF1664452D0004F620 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		38B774C2166445440004F620 /* NBAccelerometerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBAccelerometerInterface.h; sourceTree = "<group>"; };
 		38B774C3166445440004F620 /* NBAccelerometerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = NBAccelerometerInterface.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38B774C4166445440004F620 /* NBCameraInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBCameraInterface.h; sourceTree = "<group>"; };
@@ -142,7 +138,6 @@
 		38B774F0166445440004F620 /* NetworkConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConstants.h; sourceTree = "<group>"; };
 		38B774F1166445440004F620 /* NetworkHelperFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelperFunctions.h; sourceTree = "<group>"; };
 		38B774F2166445440004F620 /* NetworkHelperFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelperFunctions.m; sourceTree = "<group>"; };
-		38B77508166446E00004F620 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FirstViewController.xib; sourceTree = "<group>"; };
 		38B775101664552D0004F620 /* NBLocationInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLocationInterface.h; sourceTree = "<group>"; };
 		38B775111664552D0004F620 /* NBLocationInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLocationInterface.m; sourceTree = "<group>"; };
 		38B7751316645A260004F620 /* NBMotionInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBMotionInterface.h; sourceTree = "<group>"; };
@@ -155,9 +150,9 @@
 		38B775211665730F0004F620 /* NBDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = NBDefinitions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38B775221665BA0D0004F620 /* NBLEDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLEDDevice.h; sourceTree = "<group>"; };
 		38B775231665BA100004F620 /* NBLEDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLEDDevice.m; sourceTree = "<group>"; };
-		38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettingsViewController.h; path = Settings/NBSettingsViewController.h; sourceTree = "<group>"; };
-		38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettingsViewController.m; path = Settings/NBSettingsViewController.m; sourceTree = "<group>"; };
-		38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBSettingsViewController.xib; path = Settings/NBSettingsViewController.xib; sourceTree = "<group>"; };
+		38D16DEB16682EAE000BD7D8 /* NBDeviceSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDeviceSettingsViewController.h; path = Settings/NBDeviceSettingsViewController.h; sourceTree = "<group>"; };
+		38D16DEC16682EAE000BD7D8 /* NBDeviceSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDeviceSettingsViewController.m; path = Settings/NBDeviceSettingsViewController.m; sourceTree = "<group>"; };
+		38D16DED16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBDeviceSettingsViewController.xib; path = Settings/NBDeviceSettingsViewController.xib; sourceTree = "<group>"; };
 		38F6D21616717BC600EB00BE /* NBGestureDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGestureDevice.h; path = HighLevel/NBGestureDevice.h; sourceTree = "<group>"; };
 		38F6D21716717BC700EB00BE /* NBGestureDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBGestureDevice.m; path = HighLevel/NBGestureDevice.m; sourceTree = "<group>"; };
 		38F6D21A167196A900EB00BE /* NBGestureInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBGestureInterface.h; path = HighLevel/NBGestureInterface.h; sourceTree = "<group>"; };
@@ -238,9 +233,6 @@
 				382961BE16757CBF00CC5512 /* CommsLights.xib */,
 				38B774A61664430F0004F620 /* NBViewController_iPhone.xib */,
 				38B774A91664430F0004F620 /* NBViewController_iPad.xib */,
-				38B774BE1664452C0004F620 /* FirstViewController.h */,
-				38B774BF1664452D0004F620 /* FirstViewController.m */,
-				38B77507166446E00004F620 /* FirstViewController.xib */,
 				38B774921664430F0004F620 /* Supporting Files */,
 			);
 			path = NBUseApp;
@@ -394,9 +386,9 @@
 			children = (
 				38B0C3B7167006A4005CB957 /* NBSettings.h */,
 				38B0C3B8167006A4005CB957 /* NBSettings.m */,
-				38D16DEB16682EAE000BD7D8 /* NBSettingsViewController.h */,
-				38D16DEC16682EAE000BD7D8 /* NBSettingsViewController.m */,
-				38D16DED16682EAE000BD7D8 /* NBSettingsViewController.xib */,
+				38D16DEB16682EAE000BD7D8 /* NBDeviceSettingsViewController.h */,
+				38D16DEC16682EAE000BD7D8 /* NBDeviceSettingsViewController.m */,
+				38D16DED16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib */,
 				38438A6C1668723F00B7991A /* NBDeviceSettingsTableViewCell.h */,
 				38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */,
 				38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */,
@@ -481,8 +473,7 @@
 				38B774A81664430F0004F620 /* NBViewController_iPhone.xib in Resources */,
 				38B774AB1664430F0004F620 /* NBViewController_iPad.xib in Resources */,
 				38B77500166445440004F620 /* InitialisationViewController.xib in Resources */,
-				38B77509166446E00004F620 /* FirstViewController.xib in Resources */,
-				38D16DEF16682EAE000BD7D8 /* NBSettingsViewController.xib in Resources */,
+				38D16DEF16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib in Resources */,
 				38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */,
 				382961BF16757CBF00CC5512 /* CommsLights.xib in Resources */,
 				382961C6167589AE00CC5512 /* logo_to_print.png in Resources */,
@@ -498,7 +489,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38B7750A166447A50004F620 /* FirstViewController.m in Sources */,
 				38B774981664430F0004F620 /* main.m in Sources */,
 				38B7749C1664430F0004F620 /* NBAppDelegate.m in Sources */,
 				38B774A51664430F0004F620 /* NBViewController.m in Sources */,
@@ -526,7 +516,7 @@
 				38B7751E1664728E0004F620 /* NBPollingSensor.m in Sources */,
 				38B775241665BA140004F620 /* NBLEDDevice.m in Sources */,
 				3840C16B1666EE290088AD4A /* NBLocation.m in Sources */,
-				38D16DEE16682EAE000BD7D8 /* NBSettingsViewController.m in Sources */,
+				38D16DEE16682EAE000BD7D8 /* NBDeviceSettingsViewController.m in Sources */,
 				38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */,
 				38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */,
 				38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */,
@@ -559,14 +549,6 @@
 				38B774AA1664430F0004F620 /* en */,
 			);
 			name = NBViewController_iPad.xib;
-			sourceTree = "<group>";
-		};
-		38B77507166446E00004F620 /* FirstViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				38B77508166446E00004F620 /* en */,
-			);
-			name = FirstViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

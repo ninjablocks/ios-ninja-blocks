@@ -1,12 +1,12 @@
 //
-//  NBSettingsViewController.m
+//  NBDeviceSettingsViewController.m
 //  NBUseApp
 //
 //  Created by jz on 30/11/12.
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBSettingsViewController.h"
+#import "NBDeviceSettingsViewController.h"
 
 #import "NBDeviceManager.h"
 
@@ -15,7 +15,7 @@
 
 #import "NBDeviceSettingsTableViewCell.h"
 
-@interface NBSettingsViewController ()
+@interface NBDeviceSettingsViewController ()
 {
     NBDeviceManager *deviceManager;
 }
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation NBSettingsViewController
+@implementation NBDeviceSettingsViewController
 
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

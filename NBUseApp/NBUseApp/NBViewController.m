@@ -8,7 +8,7 @@
 
 #import "NBViewController.h"
 
-#import "NBSettingsViewController.h"
+#import "NBDeviceSettingsViewController.h"
 
 @implementation NBViewController
 
@@ -47,7 +47,8 @@
 
 - (void) didClickSettings:(id)sender
 {
-    NBSettingsViewController *settingsViewController = [[[NBSettingsViewController alloc] initWithNibName:@"NBSettingsViewController"
+    
+    NBDeviceSettingsViewController *settingsViewController = [[[NBDeviceSettingsViewController alloc] initWithNibName:@"NBDeviceSettingsViewController"
                                                                                                    bundle:nil
                                                          ] autorelease];
     [self.navigationController pushViewController:settingsViewController
