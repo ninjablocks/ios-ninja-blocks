@@ -49,27 +49,21 @@
 {
     return kDeviceDefaultValue;
 }
-- (void) resetValue
-{
-    [_currentValue release];
-    _currentValue = [[NSString alloc] initWithString:[self defaultValue]];
-}
+
 - (void) setCurrentValue:(NSString *)currentValue
 {
-    bool significantChange = [self isChangeSignificantWithValue:currentValue];
+    [self setCurrentValue:currentValue isSignificant:false];
+}
+- (void) setCurrentValue:(NSString *)currentValue isSignificant:(bool)isSignficant
+{
     [_currentValue release];
     _currentValue = [currentValue retain];
-    NBLog(kNBLogReadings, @"Set %@   (%@)", NSStringFromClass([self class]), self.currentValue);
-    if (significantChange)
+    if (isSignficant)
     {
         [self.deviceDelegate didChangeSignificantly:self];
     }
 }
 
-- (bool) isChangeSignificantWithValue:(NSString*)value
-{
-    return false;
-}
 
 - (void) setActive:(bool)active
 {

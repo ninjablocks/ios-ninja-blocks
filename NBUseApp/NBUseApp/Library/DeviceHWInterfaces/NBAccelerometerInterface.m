@@ -94,7 +94,7 @@
 //TODO: remove. Testing only.
 - (void) fakeJiggle
 {
-    [accelerometerStateDevice setCurrentValue:@"1"];
+    [accelerometerStateDevice setCurrentValue:@"1" isSignificant:true];
 }
 
 - (void) setRequestingAction:(bool)requestingAction
@@ -117,7 +117,6 @@
             motionOperationQueue = nil;
         }
     }
-    [super setRequestingAction:requestingAction];
 }
 
 - (void) processAccelerometerData:(CMAccelerometerData *)data
@@ -148,7 +147,7 @@
         )
     {
         NBLog(kNBLogDefault, @"did jiggle");
-        [accelerometerStateDevice setCurrentValue:@"1"];
+        [accelerometerStateDevice setCurrentValue:@"1" isSignificant:true];
     }
 }
 
@@ -193,7 +192,7 @@
         {
             if ([device isKindOfClass:[NBOrientation class]])
             {
-                [device setCurrentValue:_orientationValueString];
+                [device setCurrentValue:_orientationValueString isSignificant:true];
             }
         }
     }

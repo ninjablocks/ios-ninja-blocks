@@ -64,6 +64,7 @@ typedef struct _NBDeviceAddress {
 
 @property (readonly, nonatomic) NBDeviceAddress address;
 @property (strong, nonatomic) NSString *currentValue;
+- (void) setCurrentValue:(NSString *)currentValue isSignificant:(bool)isSignficant;
 
 @property (strong, nonatomic) NSDate *lastSend;
 

@@ -9,7 +9,6 @@
 #import "NBHeading.h"
 
 #import "NBDeviceIds.h"
-#import "NBPollingSensorIntervals.h"
 
 @implementation NBHeading
 
@@ -25,16 +24,20 @@
             ];
     if (self)
     {
-        pollInterval = kPollingSensorIntervalHeading;
     }
     return self;
 }
 
-- (bool) isChangeSignificantWithValue:(NSString*)value
+#define kSignificantDeltaHeading    10.
+
+- (void) setCurrentDirection:(CLLocationDirection)currentDirection
 {
-    //TODO: compare currentValue to value, and return if greater than threshold
-    return false;
+    bool isSignificant = (ABS(currentDirection - _currentDirection) > kSignificantDeltaHeading);
+    _currentDirection = currentDirection;
+    [self setCurrentValue:[NSString stringWithFormat:@"%f", currentDirection] isSignificant:isSignificant];
 }
+
+
 
 - (NSString*)deviceName
 {

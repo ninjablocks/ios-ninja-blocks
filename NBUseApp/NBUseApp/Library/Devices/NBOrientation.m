@@ -24,10 +24,6 @@
             ];
 }
 
-- (bool) isChangeSignificantWithValue:(NSString*)value
-{
-    return true; //any change considered significant
-}
 
 - (NSString*)deviceName
 {

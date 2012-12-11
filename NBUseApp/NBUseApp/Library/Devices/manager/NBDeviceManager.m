@@ -183,21 +183,6 @@ static NBDeviceManager *sharedDeviceManager = nil;
 
 - (void) sendAllActiveDeviceData
 {
-    for (NBDeviceHWInterface *interface in self.interfaces)
-    {
-        for (NBDevice *device in [interface devices])
-        {
-            if ([device isKindOfClass:[NBPollingSensor class]])
-            {
-                [interface updateReading:(NBPollingSensor*)device];
-            }
-            else if (-[device.lastSend timeIntervalSinceNow] > kDeviceManagerPollInterval) //event driven device not sent recently
-            {
-                [device resetValue];
-            }
-        }
-    }
-    
     NSMutableArray *devicesToSend = [NSMutableArray arrayWithCapacity:[[self.devices allValues] count]];
     for (NBDevice *device in [self.devices allValues])
     {
@@ -286,7 +271,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     {
         if ([device isKindOfClass:[NBCamera class]])
         {
-            [device setCurrentValue:@"1"];
+            [device setCurrentValue:@"1" isSignificant:true];
         }
     }
 }
@@ -296,7 +281,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     NBDevice *ledDevice = [[NBDevice alloc] initWithAddress:(NBDeviceAddress){kVendorNinjaBlocks, kNBDIDLEDUser, @"0"}
                                                initialValue:@"0"];
     [ledDevice setDeviceDelegate:self];
-    [ledDevice setCurrentValue:@"1"];
+    [ledDevice setCurrentValue:@"1" isSignificant:true];
 }
 
 @end

@@ -263,7 +263,7 @@ GestureState pulseGesture[pulseGestureLength] = {
 {
     for (NBDevice *device in self.devices)
     {
-        [device setCurrentValue:gestureString];
+        [device setCurrentValue:gestureString isSignificant:true];
     }
 }
 

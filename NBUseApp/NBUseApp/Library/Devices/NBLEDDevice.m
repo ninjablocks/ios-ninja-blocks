@@ -54,7 +54,7 @@
                 ledValue = kLEDColourWhite;
             }
         }
-        [self setCurrentValue:ledValue];
+        [self setCurrentValue:ledValue isSignificant:true];
     }
 }
 

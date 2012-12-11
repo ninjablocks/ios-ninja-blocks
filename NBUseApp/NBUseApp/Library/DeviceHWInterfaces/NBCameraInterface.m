@@ -87,12 +87,11 @@
     {
         if (requestingAction)
         {
-            [self.ledDevice setCurrentValue:@"0"];
+            [self.ledDevice setCurrentValue:@"0" isSignificant:true];
         }
         else
         {
         }
-        [super setRequestingAction:requestingAction];
     }
 }
 
@@ -129,7 +128,7 @@
 - (void) receivedImage:(UIImage*)image
 {
     [self.camera setSnapshotData:UIImagePNGRepresentation(image)];
-    [self.camera setCurrentValue:@"1"]; //trigger update
+    [self.camera setCurrentValue:@"1" isSignificant:true]; //trigger update
 }
 
 @end

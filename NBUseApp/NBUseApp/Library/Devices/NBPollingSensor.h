@@ -10,11 +10,6 @@
 
 @interface NBPollingSensor : NBDevice
 {
-    @protected
-    NSTimeInterval pollInterval;
 }
-
-- (void) startPolling;
-- (void) stopPolling;
 
 @end
