@@ -41,13 +41,19 @@
     return self;
 }
 
-- (void) dealloc
+- (void) stopListening
 {
     [commandConnection cancel];
     [commandConnection release];
     commandConnection = nil;
     [commandRequest release];
     commandRequest = nil;
+    bytesExpected = 0;
+}
+
+- (void) dealloc
+{
+    [self stopListening];
     [connectionData release];
     connectionData = nil;
     [super dealloc];

@@ -117,6 +117,7 @@ static NBDeviceManager *sharedDeviceManager = nil;
     {
         [interface setRequestingAction:false];
     }
+    [networkCommandHandler stopListening];
     networkCommandHandler.delegate = nil;
     [networkCommandHandler release];
     networkCommandHandler = nil;

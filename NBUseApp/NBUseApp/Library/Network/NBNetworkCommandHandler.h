@@ -24,6 +24,8 @@
 - (id) initWithConnectionData:(NBConnectionData*)connectionData
                      delegate:(id<NBNetworkCommandHandlerDelegate>)delegate;
 
+- (void) stopListening;
+
 @property (assign, nonatomic) id<NBNetworkCommandHandlerDelegate> delegate;
 
 @end
