@@ -14,6 +14,8 @@
 		3840C16B1666EE290088AD4A /* NBLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3840C16A1666EE290088AD4A /* NBLocation.m */; };
 		38438A6B166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */; };
 		38438A6E1668723F00B7991A /* NBDeviceSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */; };
+		384CD4DB1676CF3C00A2A041 /* NBSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 384CD4DA1676CF3C00A2A041 /* NBSettingsViewController.m */; };
+		384CD5231676D39F00A2A041 /* NBSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 384CD5221676D39E00A2A041 /* NBSettingsViewController.xib */; };
 		38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0C3B8167006A4005CB957 /* NBSettings.m */; };
 		38B7748C1664430F0004F620 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748B1664430F0004F620 /* UIKit.framework */; };
 		38B7748E1664430F0004F620 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748D1664430F0004F620 /* Foundation.framework */; };
@@ -73,6 +75,9 @@
 		38438A6A166871AA00B7991A /* NBDeviceSettingsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBDeviceSettingsTableViewCell.xib; path = Settings/NBDeviceSettingsTableViewCell.xib; sourceTree = "<group>"; };
 		38438A6C1668723F00B7991A /* NBDeviceSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDeviceSettingsTableViewCell.h; path = Settings/NBDeviceSettingsTableViewCell.h; sourceTree = "<group>"; };
 		38438A6D1668723F00B7991A /* NBDeviceSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDeviceSettingsTableViewCell.m; path = Settings/NBDeviceSettingsTableViewCell.m; sourceTree = "<group>"; };
+		384CD4D91676CF3B00A2A041 /* NBSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettingsViewController.h; path = Settings/NBSettingsViewController.h; sourceTree = "<group>"; };
+		384CD4DA1676CF3C00A2A041 /* NBSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettingsViewController.m; path = Settings/NBSettingsViewController.m; sourceTree = "<group>"; };
+		384CD5221676D39E00A2A041 /* NBSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBSettingsViewController.xib; path = Settings/NBSettingsViewController.xib; sourceTree = "<group>"; };
 		38B0C3B7167006A4005CB957 /* NBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettings.h; path = Settings/NBSettings.h; sourceTree = "<group>"; };
 		38B0C3B8167006A4005CB957 /* NBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettings.m; path = Settings/NBSettings.m; sourceTree = "<group>"; };
 		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -386,6 +391,9 @@
 			children = (
 				38B0C3B7167006A4005CB957 /* NBSettings.h */,
 				38B0C3B8167006A4005CB957 /* NBSettings.m */,
+				384CD4D91676CF3B00A2A041 /* NBSettingsViewController.h */,
+				384CD4DA1676CF3C00A2A041 /* NBSettingsViewController.m */,
+				384CD5221676D39E00A2A041 /* NBSettingsViewController.xib */,
 				38D16DEB16682EAE000BD7D8 /* NBDeviceSettingsViewController.h */,
 				38D16DEC16682EAE000BD7D8 /* NBDeviceSettingsViewController.m */,
 				38D16DED16682EAE000BD7D8 /* NBDeviceSettingsViewController.xib */,
@@ -479,6 +487,7 @@
 				382961C6167589AE00CC5512 /* logo_to_print.png in Resources */,
 				382961D2167596A700CC5512 /* icon.png in Resources */,
 				382961D3167596A700CC5512 /* icon@2x.png in Resources */,
+				384CD5231676D39F00A2A041 /* NBSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +530,7 @@
 				38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */,
 				38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */,
 				38F6D21C167196A900EB00BE /* NBGestureInterface.m in Sources */,
+				384CD4DB1676CF3C00A2A041 /* NBSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
