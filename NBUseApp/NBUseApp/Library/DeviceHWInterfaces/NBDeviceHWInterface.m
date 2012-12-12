@@ -35,6 +35,29 @@
     [super dealloc];
 }
 
+- (void) performSelector:(SEL)selector forEachDeviceOfClass:(Class)class
+{
+    for (NBDevice *device in self.devices)
+    {
+        if ([device isKindOfClass:class])
+        {
+            [device performSelector:selector];
+        }
+    }
+}
+
+- (void) performSelector:(SEL)selector withObject:(id)object forEachDeviceOfClass:(Class)class
+{
+    for (NBDevice *device in self.devices)
+    {
+        if ([device isKindOfClass:class])
+        {
+            [device performSelector:selector withObject:object];
+        }
+    }
+}
+
+
 - (void) updateDevicesOfClass:(Class)deviceClass withAvailability:(bool)available
 {
     for (NBDevice *device in self.devices)

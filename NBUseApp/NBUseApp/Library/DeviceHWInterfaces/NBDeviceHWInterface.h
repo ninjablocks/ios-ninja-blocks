@@ -21,6 +21,8 @@
 
 - (bool) updateReading:(NBPollingSensor*)sensorDevice;
 
+- (void) performSelector:(SEL)selector forEachDeviceOfClass:(Class)class;
+- (void) performSelector:(SEL)selector withObject:(id)object forEachDeviceOfClass:(Class)class;
 
 
 @property (strong, nonatomic) NSString *interfaceName;
