@@ -24,7 +24,6 @@
 
 #import "NBDevice.h"
 #import "NBDeviceIds.h"
-#import "NBPollingSensor.h"
 #import "NBCommand.h"
 
 #import "NBCamera.h" //special handling of image data

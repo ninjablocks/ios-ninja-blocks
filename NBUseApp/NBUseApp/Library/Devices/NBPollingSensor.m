@@ -24,17 +24,5 @@
     return @"Unnamed Sensor";
 }
 
-- (void) resetValue
-{
-    [self.deviceHWInterface updateReading:self];
-}
-
-- (void) setCurrentValue:(NSString *)currentValue
-{
-    [_currentValue release];
-    _currentValue = [currentValue retain];
-    NBLog(kNBLogReadings, @"Set %@   (%@)", NSStringFromClass([self class]), self.currentValue);
-}
-
 
 @end

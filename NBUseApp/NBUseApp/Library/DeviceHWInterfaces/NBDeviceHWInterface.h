@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
-@class NBPollingSensor;
+@class NBDevice;
 @interface NBDeviceHWInterface : NSObject
 {
     @protected
@@ -19,7 +18,7 @@
 
 - (void) updateDeviceAvailabilityFromHardware;
 
-- (bool) updateReading:(NBPollingSensor*)sensorDevice;
+- (bool) updateReading:(NBDevice*)device;
 
 - (void) performSelector:(SEL)selector forEachDeviceOfClass:(Class)class;
 - (void) performSelector:(SEL)selector withObject:(id)object forEachDeviceOfClass:(Class)class;

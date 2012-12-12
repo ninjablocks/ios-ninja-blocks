@@ -19,6 +19,7 @@
 		384CD5251677EABB00A2A041 /* deviceSettingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 384CD5241677EABB00A2A041 /* deviceSettingsTab.png */; };
 		384CD52B1677EC9400A2A041 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 384CD52A1677EC9400A2A041 /* settingsTab.png */; };
 		38A58A1816780A8200044F0F /* CommsLightMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A58A1716780A8200044F0F /* CommsLightMask.png */; };
+		38A58A1C16782BB500044F0F /* NBVirtualHWInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A58A1B16782BB500044F0F /* NBVirtualHWInterface.m */; };
 		38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0C3B8167006A4005CB957 /* NBSettings.m */; };
 		38B7748C1664430F0004F620 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748B1664430F0004F620 /* UIKit.framework */; };
 		38B7748E1664430F0004F620 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748D1664430F0004F620 /* Foundation.framework */; };
@@ -84,6 +85,8 @@
 		384CD5241677EABB00A2A041 /* deviceSettingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deviceSettingsTab.png; path = assets/deviceSettingsTab.png; sourceTree = "<group>"; };
 		384CD52A1677EC9400A2A041 /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsTab.png; path = assets/settingsTab.png; sourceTree = "<group>"; };
 		38A58A1716780A8200044F0F /* CommsLightMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CommsLightMask.png; path = assets/CommsLightMask.png; sourceTree = "<group>"; };
+		38A58A1A16782BB500044F0F /* NBVirtualHWInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBVirtualHWInterface.h; path = HighLevel/NBVirtualHWInterface.h; sourceTree = "<group>"; };
+		38A58A1B16782BB500044F0F /* NBVirtualHWInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBVirtualHWInterface.m; path = HighLevel/NBVirtualHWInterface.m; sourceTree = "<group>"; };
 		38B0C3B7167006A4005CB957 /* NBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettings.h; path = Settings/NBSettings.h; sourceTree = "<group>"; };
 		38B0C3B8167006A4005CB957 /* NBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettings.m; path = Settings/NBSettings.m; sourceTree = "<group>"; };
 		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +430,8 @@
 			children = (
 				38F6D21A167196A900EB00BE /* NBGestureInterface.h */,
 				38F6D21B167196A900EB00BE /* NBGestureInterface.m */,
+				38A58A1A16782BB500044F0F /* NBVirtualHWInterface.h */,
+				38A58A1B16782BB500044F0F /* NBVirtualHWInterface.m */,
 			);
 			name = HighLevel;
 			sourceTree = "<group>";
@@ -543,6 +548,7 @@
 				38F6D21816717BC700EB00BE /* NBGestureDevice.m in Sources */,
 				38F6D21C167196A900EB00BE /* NBGestureInterface.m in Sources */,
 				384CD4DB1676CF3C00A2A041 /* NBSettingsViewController.m in Sources */,
+				38A58A1C16782BB500044F0F /* NBVirtualHWInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

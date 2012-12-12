@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 James Zaki. All rights reserved.
 //
 
-#import "NBPollingSensor.h"
+#import "NBDevice.h"
 #import <CoreLocation/CoreLocation.h>
 
-@interface NBHeading : NBPollingSensor
+@interface NBHeading : NBDevice
 
 - (id) initWithPort:(NSString *)port;
 

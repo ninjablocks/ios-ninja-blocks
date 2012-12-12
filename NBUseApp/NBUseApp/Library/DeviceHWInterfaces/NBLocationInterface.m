@@ -111,18 +111,18 @@
     _requestingAction = requestingAction;
 }
 
-- (bool) updateReading:(NBPollingSensor*)sensorDevice
+- (bool) updateReading:(NBDevice*)device
 {
     bool result = false;
-    if (sensorDevice.active)
+    if (device.active)
     {
-        if ([sensorDevice isKindOfClass:[NBHeading class]])
+        if ([device isKindOfClass:[NBHeading class]])
         {
-            result = [self updateHeading:(NBHeading*)sensorDevice];
+            result = [self updateHeading:(NBHeading*)device];
         }
-        else if ([sensorDevice isKindOfClass:[NBLocation class]])
+        else if ([device isKindOfClass:[NBLocation class]])
         {
-            result = [self updateLocation:(NBLocation*)sensorDevice];
+            result = [self updateLocation:(NBLocation*)device];
         }
     }
     return result;

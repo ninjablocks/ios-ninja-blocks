@@ -74,12 +74,12 @@
     [self updateDevicesOfClass:[NBOrientation class] withAvailability:accelerometerAvailable];
 }
 
-- (bool) updateReading:(NBPollingSensor*)sensorDevice
+- (bool) updateReading:(NBDevice*)device
 {
     bool result = false;
-    if ([sensorDevice isKindOfClass:[NBOrientation class]])
+    if ([device isKindOfClass:[NBOrientation class]])
     {
-        [self updateOrientation:(NBOrientation*)sensorDevice];
+        [self updateOrientation:(NBOrientation*)device];
         result = true;
     }
     return result;

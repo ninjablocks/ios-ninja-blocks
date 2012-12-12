@@ -10,7 +10,6 @@
 #import "NBDeviceHWInterfaceSubclass.h"
 
 #import "NBDevice.h"
-#import "NBPollingSensor.h"
 
 @implementation NBDeviceHWInterface
 
@@ -74,7 +73,7 @@
     //implement in subclass
 }
 
-- (bool) updateReading:(NBPollingSensor*)sensorDevice
+- (bool) updateReading:(NBDevice*)device
 {
     return false;
 }
