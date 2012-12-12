@@ -87,11 +87,14 @@
     {
         if (requestingAction)
         {
-            [self.ledDevice setCurrentValue:@"0" isSignificant:true];
         }
         else
         {
-            ;
+            [self.session stopRunning];
+            [self performSelector:@selector(commandValue:)
+                       withObject:kLEDColourOff
+             forEachDeviceOfClass:[NBLEDDevice class]
+             ];
         }
     }
     _requestingAction = requestingAction;
