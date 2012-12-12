@@ -13,7 +13,7 @@
 @protocol NBNetworkInitDelegate <NSObject>
 
 - (void) didFailLogin;
-- (void) didFailActivation;
+- (void) didFailActivation:(NSString*)alertMessage;
 - (void) didFailValidation;
 
 - (void) didValidateConnectionData:(NBConnectionData*)connectionData;

@@ -10,8 +10,11 @@
 
 @interface NBConnectionData : NSObject <NSCoding>
 
-- (id) initWithNodeId:(NSString*)nodeId blockToken:(NSString*)blockToken;
+- (id) initWithUserEmail:(NSString*)userEmail
+                  nodeId:(NSString*)nodeId
+           blockToken:(NSString*)blockToken;
 
+@property (readonly, nonatomic) NSString *userEmail;
 @property (readonly, nonatomic) NSString *nodeId;
 @property (readonly, nonatomic) NSString *blockToken;
 

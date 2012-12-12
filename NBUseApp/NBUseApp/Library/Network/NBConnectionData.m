@@ -12,11 +12,14 @@
 
 @implementation NBConnectionData
 
-- (id) initWithNodeId:(NSString*)nodeId blockToken:(NSString*)blockToken
+- (id) initWithUserEmail:(NSString*)userEmail
+                  nodeId:(NSString*)nodeId
+              blockToken:(NSString*)blockToken
 {
     self = [super init];
     if (self)
     {
+        _userEmail = [userEmail copy];
         _nodeId = [nodeId retain];
         _blockToken = [blockToken retain];
         NBLog(kNBLogInit, @"Initialising connection data: %@", self);
@@ -26,11 +29,13 @@
 
 - (void) dealloc
 {
+    [_userEmail release];
     [_nodeId release];
     [_blockToken release];
     [super dealloc];
 }
 
+#define kConnDataUserEmailKey   @"kConnDataUserEmailKey"
 #define kConnDataNodeIdKey      @"kConnDataNodeIdKey"
 #define kConnDataBlockTokenKey  @"kConnDataBlockTokenKey"
 
@@ -39,6 +44,7 @@
     self = [super init];
     if (self)
     {
+        _userEmail = [[aDecoder decodeObjectForKey:kConnDataUserEmailKey] retain];
         _nodeId = [[aDecoder decodeObjectForKey:kConnDataNodeIdKey] retain];
         _blockToken = [[aDecoder decodeObjectForKey:kConnDataBlockTokenKey] retain];
         NBLog(kNBLogInit, @"Decoding connection data: %@", self);
@@ -48,13 +54,18 @@
 
 - (void) encodeWithCoder:(NSCoder *)aCoder
 {
+    [aCoder encodeObject:self.userEmail forKey:kConnDataUserEmailKey];
     [aCoder encodeObject:self.nodeId forKey:kConnDataNodeIdKey];
     [aCoder encodeObject:self.blockToken forKey:kConnDataBlockTokenKey];
 }
 
 - (NSString*) description
 {
-    NSMutableString *description = [[[NSMutableString alloc] initWithFormat:@"nodeId: %@, blockToken: %@", self.nodeId, self.blockToken] autorelease];
+    NSMutableString *description = [[[NSMutableString alloc] initWithFormat:@"userEmail: %@, nodeId: %@, blockToken: %@"
+                                     , self.userEmail
+                                     , self.nodeId
+                                     , self.blockToken
+                                     ] autorelease];
     return description;
 }
 

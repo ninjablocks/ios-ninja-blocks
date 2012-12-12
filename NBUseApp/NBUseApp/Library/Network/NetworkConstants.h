@@ -27,8 +27,6 @@
 
 #define kNodeIdName @"nodeid"
 
-#define kAPIAccessTokenName @"user_access_token"
-
 
 #define kContentTypeName @"Content-Type"
 #define kContentTypeAppJson @"application/json"

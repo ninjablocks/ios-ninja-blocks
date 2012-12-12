@@ -124,9 +124,9 @@ typedef enum {
     [self retryAlertingUserWithMessage:@"Invalid username and/or password."];
 }
 
-- (void) didFailActivation
+- (void) didFailActivation:(NSString*)alertMessage
 {
-    [self retryAlertingUserWithMessage:@"Failed to activate block."];
+    [self retryAlertingUserWithMessage:alertMessage];
 }
 
 - (void) didFailValidation

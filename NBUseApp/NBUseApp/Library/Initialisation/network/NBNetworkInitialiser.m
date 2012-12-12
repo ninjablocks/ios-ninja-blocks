@@ -27,7 +27,10 @@
 - (void) registerBlock;
 - (void) activateBlock;
 
+- (void) didFailActivationAlreadyAuthenticated;
+- (void) didFailActivationAuthentication;
 - (void) didFailActivation;
+
 
 @end
 
@@ -36,8 +39,7 @@
 
 @implementation NBNetworkInitialiser
 {
-//    NSString *userId;
-
+    NSString *trialUserEmail;
     NSString *trialNodeId;
     
     NSMutableURLRequest *loginRequest;
@@ -61,6 +63,11 @@
     return self;
 }
 
+#define kInitEmailName   @"email"
+#define kInitPassName       @"password"
+#define kInitRememberName       @"rememberme"
+#define kInitRedirectName       @"redirect"
+
 - (void) loginWithUserName:(NSString*)userName password:(NSString*)password
 {
     bool awaitingLogin = (loginRequest != nil);
@@ -77,7 +84,7 @@
         [loginRequest setValue:kContentTypeAppJson
                forHTTPHeaderField:kContentTypeName];
         
-        NSString *loginData = [NetworkHelperFunctions jsonifyNames:@[@"email", @"password", @"rememberme", @"redirect"]
+        NSString *loginData = [NetworkHelperFunctions jsonifyNames:@[kInitEmailName, kInitPassName, kInitRememberName, kInitRedirectName]
                                                             values:@[userName, password, @"false", @""]
                                ];
         
@@ -114,13 +121,17 @@
 
 #define kNodeIdSeparator @"xxx"
 
-- (bool) hasDataForUdid:(NSString*)udid
+- (bool) hasDataForUser:(NSString*)email udid:(NSString*)udid
 {
     bool result = false;
-    NSString *nodeId = self.connectionData.nodeId;
-    if ((nodeId != nil) && [nodeId isEqualToString:udid])
+    NSString *userEmail = self.connectionData.userEmail;
+    if ((userEmail != nil) && [userEmail isEqualToString:email])
     {
-        result = true;
+        NSString *nodeId = self.connectionData.nodeId;
+        if ((nodeId != nil) && [nodeId isEqualToString:udid])
+        {
+            result = true;
+        }
     }
     return result;
 }
@@ -137,7 +148,7 @@
     return result;
 }
 
-- (void) didLoginSuccessfully
+- (void) didLoginSuccessfullyWithEmail:(NSString*)email
 {
     [self restoreConnectionData];
     NSString *deviceIdentifier;
@@ -152,11 +163,12 @@
     deviceIdentifier = [deviceIdentifier stringByReplacingOccurrencesOfString:@"-"
                                                                    withString:@"x"
                         ];
-    if (![self hasDataForUdid:deviceIdentifier])
+    if (![self hasDataForUser:email udid:deviceIdentifier])
     {
         self.connectionData = nil;
-        trialNodeId = [[NSString alloc] initWithString:deviceIdentifier]; //[[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
-        NBLog(kNBLogDefault, @"Activating/registering nodeId: %@", trialNodeId);
+        trialUserEmail = [email copy];
+        trialNodeId = [deviceIdentifier copy];
+        NBLog(kNBLogDefault, @"Activating/registering nodeId: %@ for user: %@", trialNodeId, trialUserEmail);
         [self activateBlock]; //await activation
 #ifdef STAGING
 #else
@@ -267,12 +279,19 @@
     if (loginRequest == connection.currentRequest)
     {
         NBLog(kNBLogLogin, @"original login request: %@", connection.originalRequest);
+        NSData *postData = connection.originalRequest.HTTPBody;
+        NSDictionary *originalDictionary = [NSJSONSerialization JSONObjectWithData:postData
+                                                                           options:NSJSONReadingAllowFragments
+                                                                             error:nil
+                                            ];
+        NSString *userEmail = [originalDictionary objectForKey:kInitEmailName];
+        
         if ([NetworkHelperFunctions hasSuccessWithJsonData:data])
         {
             //[self storeCookieFromDataDictionary:[responseDictionary objectForKey:kResponseLoginData]];
-            [self performSelector:@selector(didLoginSuccessfully)
+            [self performSelector:@selector(didLoginSuccessfullyWithEmail:)
                          onThread:[NSThread mainThread]
-                       withObject:nil
+                       withObject:userEmail
                     waitUntilDone:false
              ];
         }
@@ -288,13 +307,27 @@
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
         if ((trialNodeId != nil) && (blockToken != nil))
         {
-            self.connectionData = [[[NBConnectionData alloc] initWithNodeId:trialNodeId blockToken:blockToken] autorelease];
+            self.connectionData = [[[NBConnectionData alloc] initWithUserEmail:trialUserEmail
+                                                                        nodeId:trialNodeId
+                                                                    blockToken:blockToken
+                                    ] autorelease];
         }
         else if (resultNumber != nil)
         {
             if ([NetworkHelperFunctions hasErrorWithJsonData:data])
             {
-                [self didFailActivation];
+                if ([NetworkHelperFunctions hasAlreadyActivatedErrorWithJsonData:data])
+                {
+                    [self didFailActivationAlreadyAuthenticated];
+                }
+                else if ([NetworkHelperFunctions hasAuthenticationErrorWithJsonData:data])
+                {
+                    [self didFailActivationAuthentication];
+                }
+                else
+                {
+                    [self didFailActivation];
+                }
             }
         }
         else if (bytesExpected <= 0)
@@ -429,8 +462,17 @@
     //TODO: unregister block then re-register
     [self setConnectionData:nil];
     
-    [self.delegate didFailActivation];
+    [self.delegate didFailActivation:@"Activation Failure"];
 }
 
+- (void) didFailActivationAlreadyAuthenticated
+{
+    [self.delegate didFailActivation:@"Please unpair device from the dashboard, and try again"];
+}
+
+- (void) didFailActivationAuthentication
+{
+    [self.delegate didFailActivation:@"Problem authenticating, please login again"];
+}
 
 @end
