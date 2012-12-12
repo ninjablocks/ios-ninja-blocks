@@ -8,6 +8,9 @@
 
 #import "NBDevice.h"
 
+#define kLEDColourOff   @"000000"
+#define kLEDColourWhite @"FFFFFF"
+
 @interface NBLEDDevice : NBDevice
 
 - (id) initWithPort:(NSString *)port;

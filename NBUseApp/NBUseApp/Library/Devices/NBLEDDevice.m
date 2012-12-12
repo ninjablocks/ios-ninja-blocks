@@ -13,8 +13,6 @@
 
 #import "NBCameraInterface.h"
 
-#define kLEDColourOff   @"000000"
-#define kLEDColourWhite @"FFFFFF"
 
 
 @interface NBLEDDevice ()
@@ -37,25 +35,21 @@
     return @"LED";
 }
 
-- (void) processCommand:(NBCommand *)command
+- (void) commandValue:(NSString *)value
 {
-    NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
-    if ([dataValue isKindOfClass:[NSString class]])
+    NSString *ledValue = kLEDColourOff;
+    if ([value isEqualToString:kLEDColourOff])
     {
-        NSString *ledValue = kLEDColourOff;
-        if ([dataValue isEqualToString:kLEDColourOff])
-        {
-            [self.deviceHWInterface setCameraLEDToggle:false];
-        }
-        else
-        {
-            if ([self.deviceHWInterface setCameraLEDToggle:true])
-            {
-                ledValue = kLEDColourWhite;
-            }
-        }
-        [self setCurrentValue:ledValue isSignificant:true];
+        [self.deviceHWInterface setCameraLEDToggle:false];
     }
+    else
+    {
+        if ([self.deviceHWInterface setCameraLEDToggle:true])
+        {
+            ledValue = kLEDColourWhite;
+        }
+    }
+    [self setCurrentValue:ledValue isSignificant:true];
 }
 
 @end
