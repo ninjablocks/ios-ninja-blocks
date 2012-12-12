@@ -46,7 +46,7 @@ typedef struct _NBDeviceAddress {
 - (NSString*) pollValue;
 
 - (void) processCommand:(NBCommand*)command;
-
+- (void) commandValue:(NSString*)value;
 
 // Used in NB settings view controller for display.
 @property (strong, nonatomic) NSString *deviceName;
@@ -62,6 +62,7 @@ typedef struct _NBDeviceAddress {
 
 @property (readonly, nonatomic) NBDeviceAddress address;
 @property (strong, nonatomic) NSString *currentValue;
+- (void) setSignificantCurrentValue:(NSString*)currentValue;
 - (void) setCurrentValue:(NSString *)currentValue isSignificant:(bool)isSignficant;
 
 @property (strong, nonatomic) NSDate *lastSend;

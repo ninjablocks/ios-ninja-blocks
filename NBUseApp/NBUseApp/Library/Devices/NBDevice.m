@@ -52,6 +52,10 @@
 {
     [self setCurrentValue:currentValue isSignificant:false];
 }
+- (void) setSignificantCurrentValue:(NSString*)currentValue
+{
+    [self setCurrentValue:currentValue isSignificant:true];
+}
 - (void) setCurrentValue:(NSString *)currentValue isSignificant:(bool)isSignficant
 {
     [_currentValue release];
@@ -76,9 +80,18 @@
 
 - (void) processCommand:(NBCommand*)command
 {
-    //implement in sub class
-    NBLog(kNBLogCommands, @"processing of commands not implemented");
+    NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
+    if ([dataValue isKindOfClass:[NSString class]])
+    {
+        [self commandValue:dataValue];
+    }
 }
+- (void) commandValue:(NSString*)value
+{
+    //implement in sub class
+    NBLog(kNBLogCommands, @"commanding of value not supported");
+}
+
 
 - (NSString *) description
 {
