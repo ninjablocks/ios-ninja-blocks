@@ -37,7 +37,7 @@
 
 + (bool) hasAlreadyActivatedErrorWithJsonData:(NSData*)jsonResponse
 {
-    return [self hasErrorId:kResponseIdAuthError withJsonData:jsonResponse];
+    return [self hasErrorId:kResponseIdAlreadyActivatedError withJsonData:jsonResponse];
 }
 + (bool) hasAuthenticationErrorWithJsonData:(NSData*)jsonResponse
 {

@@ -16,6 +16,7 @@
 
 - (void) didReceiveCommand:(NBCommand*)deviceCommand;
 - (void) didReceiveAuthenticationError;
+- (void) didReceiveAlreadyAuthenticatedError;
 
 @end
 

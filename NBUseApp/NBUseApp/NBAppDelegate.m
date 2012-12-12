@@ -47,11 +47,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     self.initViewController.delegate = self;
     [self.initViewController setAutoLogin:autoLogin];
-
-//    if (resetData)
-//    {
-//        [self.initViewController clearUserData];
-//    }
     
     self.window.rootViewController = self.initViewController;
     [self.window makeKeyAndVisible];
@@ -87,7 +82,21 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager
 {
     UIAlertView *authAlert = [[[UIAlertView alloc] initWithTitle:@"Authentication Failure"
-                                                        message:@"Please login again."
+                                                         message:@"Please login again."
+                                                        delegate:nil
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil
+                               ] autorelease];
+    [authAlert show];
+    [self.initViewController clearUserData];
+    [self showInitialisationViewControllerAutoLogin:false];
+}
+
+- (void) didReceiveAlreadyAuthenticatedError:(NBDeviceManager *)deviceManager
+{
+    UIAlertView *authAlert = [[[UIAlertView alloc] initWithTitle:@"Already Registered"
+                                                        message:@"Please unpair device from \n\
+                                                                the dashboard, and try again"
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil

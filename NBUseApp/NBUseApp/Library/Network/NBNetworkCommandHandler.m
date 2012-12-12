@@ -167,6 +167,12 @@
     NBLog(kNBLogNetwork, @"didCancelAuthenticationChallenge");
     [self finishedRequest:connection.currentRequest];
 }
+
+- (void) blockAlreadyActivated
+{
+    NBLog(kNBLogInit, @"Error: already activated");
+    //TODO: communicate to delegate
+}
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     bytesExpected -= [data length];
@@ -181,7 +187,25 @@
     {
         if ((commandRequest == connection.currentRequest) && (responseDictionary != nil))
         {
-            [self createDevicesFromCommands:responseDictionary];
+            if (![NetworkHelperFunctions hasErrorWithJsonData:data])
+            {
+                [self createDevicesFromCommands:responseDictionary];
+            }
+            else
+            {
+                if ([NetworkHelperFunctions hasAlreadyActivatedErrorWithJsonData:data])
+                {
+                    [self.delegate didReceiveAlreadyAuthenticatedError];
+                }
+                else if ([NetworkHelperFunctions hasAuthenticationErrorWithJsonData:data])
+                {
+                    [self.delegate didReceiveAuthenticationError];
+                }
+                else {
+                    NBLog(kNBLogError, @"error response for url: %@", connection.originalRequest.URL);
+                    NBLog(kNBLogError, @"error response for headers: %@", connection.originalRequest.allHTTPHeaderFields);
+                }
+            }
         }
         [self finishedRequest:connection.currentRequest];
     }

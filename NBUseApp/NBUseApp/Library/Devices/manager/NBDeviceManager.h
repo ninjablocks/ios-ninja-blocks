@@ -21,6 +21,7 @@ typedef NSDictionary NBDeviceDictionary;
 
 - (void) didLogout:(NBDeviceManager*)deviceManager;
 - (void) didReceiveAuthenticationError:(NBDeviceManager*)deviceManager;
+- (void) didReceiveAlreadyAuthenticatedError:(NBDeviceManager*)deviceManager;
 
 @end
 

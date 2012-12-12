@@ -153,6 +153,11 @@ static NBDeviceManager *sharedDeviceManager = nil;
     [self reset];
     [self.delegate didReceiveAuthenticationError:self];
 }
+- (void) didReceiveAlreadyAuthenticatedError
+{
+    [self reset];
+    [self.delegate didReceiveAlreadyAuthenticatedError:self];
+}
 
 #define kDeviceManagerPollInterval      5.
 - (void) activateInterfaces

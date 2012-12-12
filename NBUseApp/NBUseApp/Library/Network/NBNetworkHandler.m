@@ -249,12 +249,6 @@
     [self finishedRequest:connection.currentRequest];
 }
 
-- (void) blockAlreadyActivated
-{
-    NBLog(kNBLogInit, @"Error: already activated");
-    //TODO: unpair then reactivate
-}
-
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     NBLog(kNBLogNetwork, @"NTW: received data");
@@ -273,10 +267,7 @@
     {
         if ([NetworkHelperFunctions hasAlreadyActivatedErrorWithJsonData:data])
         {
-            [self performSelectorOnMainThread:@selector(blockAlreadyActivated)
-                                   withObject:nil
-                                waitUntilDone:false
-             ];
+            [self.delegate didReceiveAlreadyAuthenticatedError];
         }
         else if ([NetworkHelperFunctions hasAuthenticationErrorWithJsonData:data])
         {
