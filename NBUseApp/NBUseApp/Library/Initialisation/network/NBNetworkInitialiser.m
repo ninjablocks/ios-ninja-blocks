@@ -158,10 +158,13 @@
         trialNodeId = [[NSString alloc] initWithString:deviceIdentifier]; //[[NSString alloc] initWithFormat:@"%@%@%@", userId, kNodeIdSeparator, deviceIdentifier];
         NBLog(kNBLogDefault, @"Activating/registering nodeId: %@", trialNodeId);
         [self activateBlock]; //await activation
-//        [self performSelector:@selector(registerBlock)
-//                   withObject:nil
-//                   afterDelay:1
-//         ];
+#ifdef STAGING
+#else
+        [self performSelector:@selector(registerBlock)
+                   withObject:nil
+                   afterDelay:1
+         ];
+#endif
     }
 }
 
@@ -398,8 +401,6 @@
 
 - (void) registerBlock
 {
-//    NSString *urlString = [NSString stringWithFormat:@"%@?%@=%@", kBaseBlockURL
-//                           , kAPIAccessTokenName, kAPIAccessToken];
     NSString *urlString = [NSString stringWithFormat:@"%@", kBaseBlockURL];
     registerBlockRequest = [[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL

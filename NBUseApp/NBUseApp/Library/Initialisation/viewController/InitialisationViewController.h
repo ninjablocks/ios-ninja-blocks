@@ -19,6 +19,8 @@
 
 @interface InitialisationViewController : UIViewController <NBNetworkInitDelegate>
 
+- (void) clearUserData;
+
 - (IBAction) didClickClearUserData:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UITextField *userIdTextField;
