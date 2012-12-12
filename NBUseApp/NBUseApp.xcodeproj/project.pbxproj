@@ -18,6 +18,7 @@
 		384CD5231676D39F00A2A041 /* NBSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 384CD5221676D39E00A2A041 /* NBSettingsViewController.xib */; };
 		384CD5251677EABB00A2A041 /* deviceSettingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 384CD5241677EABB00A2A041 /* deviceSettingsTab.png */; };
 		384CD52B1677EC9400A2A041 /* settingsTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 384CD52A1677EC9400A2A041 /* settingsTab.png */; };
+		38A58A1816780A8200044F0F /* CommsLightMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A58A1716780A8200044F0F /* CommsLightMask.png */; };
 		38B0C3B9167006A4005CB957 /* NBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0C3B8167006A4005CB957 /* NBSettings.m */; };
 		38B7748C1664430F0004F620 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748B1664430F0004F620 /* UIKit.framework */; };
 		38B7748E1664430F0004F620 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B7748D1664430F0004F620 /* Foundation.framework */; };
@@ -82,6 +83,7 @@
 		384CD5221676D39E00A2A041 /* NBSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NBSettingsViewController.xib; path = Settings/NBSettingsViewController.xib; sourceTree = "<group>"; };
 		384CD5241677EABB00A2A041 /* deviceSettingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deviceSettingsTab.png; path = assets/deviceSettingsTab.png; sourceTree = "<group>"; };
 		384CD52A1677EC9400A2A041 /* settingsTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsTab.png; path = assets/settingsTab.png; sourceTree = "<group>"; };
+		38A58A1716780A8200044F0F /* CommsLightMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CommsLightMask.png; path = assets/CommsLightMask.png; sourceTree = "<group>"; };
 		38B0C3B7167006A4005CB957 /* NBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettings.h; path = Settings/NBSettings.h; sourceTree = "<group>"; };
 		38B0C3B8167006A4005CB957 /* NBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettings.m; path = Settings/NBSettings.m; sourceTree = "<group>"; };
 		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +193,7 @@
 		382961C11675884200CC5512 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				38A58A1716780A8200044F0F /* CommsLightMask.png */,
 				384CD52A1677EC9400A2A041 /* settingsTab.png */,
 				384CD5241677EABB00A2A041 /* deviceSettingsTab.png */,
 				382961D0167596A600CC5512 /* icon.png */,
@@ -496,6 +499,7 @@
 				384CD5231676D39F00A2A041 /* NBSettingsViewController.xib in Resources */,
 				384CD5251677EABB00A2A041 /* deviceSettingsTab.png in Resources */,
 				384CD52B1677EC9400A2A041 /* settingsTab.png in Resources */,
+				38A58A1816780A8200044F0F /* CommsLightMask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
