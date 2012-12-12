@@ -43,18 +43,12 @@
     return @"Camera";
 }
 
-- (void) processCommand:(NBCommand *)command
+- (void) commandValue:(NSString *)value
 {
-    NSString *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
-    if ([dataValue isKindOfClass:[NSString class]] && ([dataValue isEqualToString:@"1"]))
+    if ([value isEqualToString:@"1"])
     {
         [self.deviceHWInterface getSnapshot];
     }
-//    NSNumber *dataValue = [command.commandData objectForKey:kCommandDataValueKey];
-//    if ([dataValue isKindOfClass:[NSNumber class]] && ([dataValue intValue] == 1))
-//    {
-//        [self.deviceHWInterface getSnapshot];
-//    }
 }
 
 @end
