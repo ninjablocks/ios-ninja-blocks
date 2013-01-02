@@ -24,7 +24,9 @@
 
 - (id) initWithDelegate:(id<NBNetworkInitDelegate>)delegate;
 
-- (void) loginWithUserName:(NSString*)userName password:(NSString*)password;
+- (void) loginToServer:(int)serverIndex
+          withUserName:(NSString*)userName
+              password:(NSString*)password;
 
 - (bool) restoreConnectionData;
 

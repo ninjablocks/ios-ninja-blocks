@@ -71,7 +71,7 @@
 - (void) makeCommandRequest
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/commands"
-                           , kBaseBlockURL, connectionData.nodeId
+                           , connectionData.baseBlockURL, connectionData.nodeId
                            ];
     NBLog(kNBLogDefault, @"%@ \\n   Listening ...", urlString);
     commandRequest = [[NSMutableURLRequest alloc]

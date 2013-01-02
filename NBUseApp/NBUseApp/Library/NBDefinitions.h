@@ -18,7 +18,7 @@
 //#define kNBLogVideo     5
 #define kNBLogReadings  6
 //#define kNBLogInit      7
-//#define kNBLogLogin     8
+#define kNBLogLogin     8
 //#define kNBLogSettings  9
 //#define kNBLogGestures  10
 
@@ -29,7 +29,7 @@
 #define kNBLogVideo     0
 //#define kNBLogReadings  0
 #define kNBLogInit      0
-#define kNBLogLogin     0
+//#define kNBLogLogin     0
 #define kNBLogSettings  0
 #define kNBLogGestures  0
 

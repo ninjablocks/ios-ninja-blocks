@@ -100,8 +100,9 @@ typedef enum {
     [[NSUserDefaults standardUserDefaults] setObject:userId forKey:NBDefaultsUserIdKey];
     currentState = stateRetrievingConnectionData;
     
-    [networkInitialiser loginWithUserName:userId
-                                 password:self.pwordTextField.text
+    [networkInitialiser loginToServer:self.serverSegmentedControl.selectedSegmentIndex
+                         withUserName:userId
+                             password:self.pwordTextField.text
      ];
 }
 

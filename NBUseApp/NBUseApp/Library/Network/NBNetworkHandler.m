@@ -55,7 +55,7 @@
     {
         NBLog(kNBLogNetwork, @"send all data: %@", deviceDataArray);
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
-                               , kBaseBlockURL, connectionData.nodeId
+                               , connectionData.baseBlockURL, connectionData.nodeId
                                ];
         sendAllRequest = [[NSMutableURLRequest alloc]
                              initWithURL:[NSURL URLWithString:urlString]];
@@ -98,7 +98,7 @@
 {
     NBLog(kNBLogNetwork, @"Report data: %@", deviceData);
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
-                           , kBaseBlockURL, connectionData.nodeId
+                           , connectionData.baseBlockURL, connectionData.nodeId
                            ];
     NBLog(kNBLogNetwork, @"url = %@", urlString);
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
@@ -132,7 +132,7 @@
 {
     NBLog(kNBLogNetwork, @"Report data: %@", deviceData);
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
-                           , kBaseBlockURL, connectionData.nodeId
+                           , connectionData.baseBlockURL, connectionData.nodeId
                            ];
     NBLog(kNBLogNetwork, @"url = %@", urlString);
     NSMutableURLRequest *request = [[[NSMutableURLRequest alloc]
@@ -180,7 +180,7 @@
                       ];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/snapshot"
-                           , kBaseCameraURL, guid
+                           , connectionData.baseCameraURL, guid
                            ];
     NBLog(kNBLogNetwork, @"SendSnapshot: (datalength = %d)", cameraDevice.snapshotData.length);
     NBLog(kNBLogNetwork, @"%@", urlString);

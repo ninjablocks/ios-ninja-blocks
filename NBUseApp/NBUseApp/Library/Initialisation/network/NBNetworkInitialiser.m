@@ -34,11 +34,17 @@
 
 @end
 
+@interface NBNetworkInitialiser ()
+
+@property (assign, nonatomic) int serverIndex;
+
+@end
 
 #define kDefaultsConnectionData @"kDefaultsConnectionDataKey"
 
 @implementation NBNetworkInitialiser
 {
+    
     NSString *trialUserEmail;
     NSString *trialNodeId;
     
@@ -68,13 +74,16 @@
 #define kInitRememberName       @"rememberme"
 #define kInitRedirectName       @"redirect"
 
-- (void) loginWithUserName:(NSString*)userName password:(NSString*)password
+- (void) loginToServer:(int)serverIndex
+          withUserName:(NSString*)userName
+              password:(NSString*)password
 {
     bool awaitingLogin = (loginRequest != nil);
     if (!awaitingLogin)
     {
+        self.serverIndex = serverIndex;
         NBLog(kNBLogLogin, @"BEFORE: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
-        NSString *urlString = kLoginURL;
+        NSString *urlString = [NBConnectionData loginURLForServerIndex:self.serverIndex];
         
         loginRequest = [[NSMutableURLRequest alloc]
                            initWithURL:[NSURL
@@ -121,11 +130,14 @@
 
 #define kNodeIdSeparator @"xxx"
 
-- (bool) hasDataForUser:(NSString*)email udid:(NSString*)udid
+- (bool) hasDataOnServerForUser:(NSString*)email udid:(NSString*)udid
 {
     bool result = false;
     NSString *userEmail = self.connectionData.userEmail;
-    if ((userEmail != nil) && [userEmail isEqualToString:email])
+    if ((self.serverIndex == self.connectionData.serverIndex.intValue)
+        && (userEmail != nil)
+        && [userEmail isEqualToString:email]
+        )
     {
         NSString *nodeId = self.connectionData.nodeId;
         if ((nodeId != nil) && [nodeId isEqualToString:udid])
@@ -163,7 +175,7 @@
     deviceIdentifier = [deviceIdentifier stringByReplacingOccurrencesOfString:@"-"
                                                                    withString:@"x"
                         ];
-    if (![self hasDataForUser:email udid:deviceIdentifier])
+    if (![self hasDataOnServerForUser:email udid:deviceIdentifier])
     {
         self.connectionData = nil;
         trialUserEmail = [email copy];
@@ -239,16 +251,18 @@
 {
     if (loginRequest == connection.currentRequest)
     {
-        NBLog(kNBLogLogin, @"INIT: received login response: %@", response);
+        NBLog(kNBLogLogin, @"INIT: received login response");
     }
     else if (registerBlockRequest == connection.currentRequest)
     {
-        NBLog(kNBLogLogin, @"INIT: received register response: %@", response.URL);
+        NBLog(kNBLogLogin, @"INIT: received register response");
     }
     else if (validationRequest == connection.currentRequest)
     {
-        NBLog(kNBLogLogin, @"INIT: received validation response: %@", response.URL);
+        NBLog(kNBLogLogin, @"INIT: received validation response");
     }
+    NBLog(kNBLogLogin, @"Response: %@, ResponseURL: %@", response, response.URL);
+
     bytesExpected = [response expectedContentLength];
     if (bytesExpected == 0)
     {
@@ -307,9 +321,10 @@
         NSString *blockToken = [responseDictionary objectForKey:kBlockTokenKey];
         if ((trialNodeId != nil) && (blockToken != nil))
         {
-            self.connectionData = [[[NBConnectionData alloc] initWithUserEmail:trialUserEmail
-                                                                        nodeId:trialNodeId
-                                                                    blockToken:blockToken
+            self.connectionData = [[[NBConnectionData alloc] initWithServerIndex:self.serverIndex
+                                                                       userEmail:trialUserEmail
+                                                                          nodeId:trialNodeId
+                                                                      blockToken:blockToken
                                     ] autorelease];
         }
         else if (resultNumber != nil)
@@ -372,7 +387,7 @@
     if (!awaitingValidation)
     {
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/data"
-                               , kBaseBlockURL, self.connectionData.nodeId
+                               , self.connectionData.baseBlockURL, self.connectionData.nodeId
                                ];
         NBLog(kNBLogNetwork, @"url = %@", urlString);
         validationRequest = [[[NSMutableURLRequest alloc]
@@ -418,7 +433,7 @@
     if (!awaitingActivation)
     {
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/activate"
-                               , kBaseBlockURL, trialNodeId];
+                               , [NBConnectionData baseBlockURLForServerIndex:self.serverIndex], trialNodeId];
         
         activateRequest = [[NSMutableURLRequest alloc]
                            initWithURL:[NSURL
@@ -434,7 +449,7 @@
 
 - (void) registerBlock
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@", kBaseBlockURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@", [NBConnectionData baseBlockURLForServerIndex:self.serverIndex]];
     registerBlockRequest = [[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL
                                                   URLWithString:urlString]];

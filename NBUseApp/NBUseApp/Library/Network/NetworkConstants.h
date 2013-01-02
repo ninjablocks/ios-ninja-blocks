@@ -9,19 +9,18 @@
 #ifndef nbTest_NetworkConstants_h
 #define nbTest_NetworkConstants_h
 
-#define STAGING
 
-#ifdef STAGING
-#define kBaseURL    @"https://staging.ninja.is"
-#define kLoginURL   @"https://staging.ninja.is/signin"
-#define kBaseBlockURL   @"https://staging-api.ninja.is/rest/v0/block"
-#define kBaseCameraURL  @"https://staging-stream.ninja.is/rest/v0/camera"
-#else
-#define kBaseURL    @"https://a.ninja.is"
-#define kLoginURL   @"https://a.ninja.is/signin"
-#define kBaseBlockURL @"https://api.ninja.is/rest/v0/block"
-#define kBaseCameraURL @"https://stream.ninja.is/rest/v0/camera"
-#endif
+#define kLoginURLProduction        @"https://a.ninja.is/signin"
+#define kBaseBlockURLProduction    @"https://api.ninja.is/rest/v0/block"
+#define kBaseCameraURLProduction   @"https://stream.ninja.is/rest/v0/camera"
+
+#define kLoginURLStaging         @"https://staging.ninja.is/signin"
+#define kBaseBlockURLStaging     @"https://staging-api.ninja.is/rest/v0/block"
+#define kBaseCameraURLStaging    @"https://staging-stream.ninja.is/rest/v0/camera"
+
+#define kLoginURLLocal      @"http://localhost:3000/signin"
+#define kBaseBlockURLLocal  @"http://localhost:3000/rest/v0/block"
+#define kBaseCameraURLLocal @"http://localhost:3003/rest/v0/camera"
 
 #define kNinjaTokenName @"X-Ninja-Token"
 

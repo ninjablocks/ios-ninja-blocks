@@ -23,6 +23,7 @@
 
 - (IBAction) didClickClearUserData:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UISegmentedControl *serverSegmentedControl;
 @property (strong, nonatomic) IBOutlet UITextField *userIdTextField;
 @property (strong, nonatomic) IBOutlet UITextField *pwordTextField;
 @property (strong, nonatomic) IBOutlet UIButton *connectButton;

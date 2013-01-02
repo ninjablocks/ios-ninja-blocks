@@ -89,14 +89,14 @@
 		38A58A1B16782BB500044F0F /* NBVirtualHWInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBVirtualHWInterface.m; path = HighLevel/NBVirtualHWInterface.m; sourceTree = "<group>"; };
 		38B0C3B7167006A4005CB957 /* NBSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBSettings.h; path = Settings/NBSettings.h; sourceTree = "<group>"; };
 		38B0C3B8167006A4005CB957 /* NBSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBSettings.m; path = Settings/NBSettings.m; sourceTree = "<group>"; };
-		38B774871664430F0004F620 /* NBUseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NBUseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38B774871664430F0004F620 /* ninjablock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ninjablock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38B7748B1664430F0004F620 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		38B7748D1664430F0004F620 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		38B7748F1664430F0004F620 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		38B774931664430F0004F620 /* NBUseApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NBUseApp-Info.plist"; sourceTree = "<group>"; };
+		38B774931664430F0004F620 /* ninjablock-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ninjablock-Info.plist"; sourceTree = "<group>"; };
 		38B774951664430F0004F620 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		38B774971664430F0004F620 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		38B774991664430F0004F620 /* NBUseApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NBUseApp-Prefix.pch"; sourceTree = "<group>"; };
+		38B774991664430F0004F620 /* ninjablock-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ninjablock-Prefix.pch"; sourceTree = "<group>"; };
 		38B7749A1664430F0004F620 /* NBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBAppDelegate.h; sourceTree = "<group>"; };
 		38B7749B1664430F0004F620 /* NBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NBAppDelegate.m; sourceTree = "<group>"; };
 		38B7749D1664430F0004F620 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		38B774881664430F0004F620 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				38B774871664430F0004F620 /* NBUseApp.app */,
+				38B774871664430F0004F620 /* ninjablock.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -259,10 +259,10 @@
 			isa = PBXGroup;
 			children = (
 				382961C11675884200CC5512 /* assets */,
-				38B774931664430F0004F620 /* NBUseApp-Info.plist */,
+				38B774931664430F0004F620 /* ninjablock-Info.plist */,
 				38B774941664430F0004F620 /* InfoPlist.strings */,
 				38B774971664430F0004F620 /* main.m */,
-				38B774991664430F0004F620 /* NBUseApp-Prefix.pch */,
+				38B774991664430F0004F620 /* ninjablock-Prefix.pch */,
 				38B7749D1664430F0004F620 /* Default.png */,
 				38B7749F1664430F0004F620 /* Default@2x.png */,
 				38B774A11664430F0004F620 /* Default-568h@2x.png */,
@@ -439,9 +439,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		38B774861664430F0004F620 /* NBUseApp */ = {
+		38B774861664430F0004F620 /* ninjablock */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 38B774AE1664430F0004F620 /* Build configuration list for PBXNativeTarget "NBUseApp" */;
+			buildConfigurationList = 38B774AE1664430F0004F620 /* Build configuration list for PBXNativeTarget "ninjablock" */;
 			buildPhases = (
 				38B774831664430F0004F620 /* Sources */,
 				38B774841664430F0004F620 /* Frameworks */,
@@ -451,9 +451,9 @@
 			);
 			dependencies = (
 			);
-			name = NBUseApp;
+			name = ninjablock;
 			productName = NBUseApp;
-			productReference = 38B774871664430F0004F620 /* NBUseApp.app */;
+			productReference = 38B774871664430F0004F620 /* ninjablock.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -466,7 +466,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "James Zaki";
 			};
-			buildConfigurationList = 38B774811664430F0004F620 /* Build configuration list for PBXProject "NBUseApp" */;
+			buildConfigurationList = 38B774811664430F0004F620 /* Build configuration list for PBXProject "ninjablock" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -478,7 +478,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				38B774861664430F0004F620 /* NBUseApp */,
+				38B774861664430F0004F620 /* ninjablock */,
 			);
 		};
 /* End PBXProject section */
@@ -590,6 +590,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -603,8 +604,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -618,14 +620,16 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -635,13 +639,15 @@
 		38B774AF1664430F0004F620 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: James Zaki (X7HK6WBZWD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
-				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
+				GCC_PREFIX_HEADER = "NBUseApp/ninjablock-Prefix.pch";
+				INFOPLIST_FILE = "NBUseApp/ninjablock-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C7CB78D9-8E07-4ABE-83D1-39B270757BE2";
+				PRODUCT_NAME = ninjablock;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -649,13 +655,15 @@
 		38B774B01664430F0004F620 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: James Zaki (X7HK6WBZWD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "NBUseApp/NBUseApp-Prefix.pch";
-				INFOPLIST_FILE = "NBUseApp/NBUseApp-Info.plist";
+				GCC_PREFIX_HEADER = "NBUseApp/ninjablock-Prefix.pch";
+				INFOPLIST_FILE = "NBUseApp/ninjablock-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C7CB78D9-8E07-4ABE-83D1-39B270757BE2";
+				PRODUCT_NAME = ninjablock;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -663,7 +671,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		38B774811664430F0004F620 /* Build configuration list for PBXProject "NBUseApp" */ = {
+		38B774811664430F0004F620 /* Build configuration list for PBXProject "ninjablock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				38B774AC1664430F0004F620 /* Debug */,
@@ -672,7 +680,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		38B774AE1664430F0004F620 /* Build configuration list for PBXNativeTarget "NBUseApp" */ = {
+		38B774AE1664430F0004F620 /* Build configuration list for PBXNativeTarget "ninjablock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				38B774AF1664430F0004F620 /* Debug */,
