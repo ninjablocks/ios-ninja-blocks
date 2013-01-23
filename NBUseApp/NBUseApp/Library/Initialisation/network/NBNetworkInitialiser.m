@@ -173,8 +173,9 @@
         deviceIdentifier = [[UIDevice currentDevice] uniqueIdentifier];
     }
     deviceIdentifier = [deviceIdentifier stringByReplacingOccurrencesOfString:@"-"
-                                                                   withString:@"x"
+                                                                   withString:@"X"
                         ];
+    deviceIdentifier = [deviceIdentifier uppercaseString];
     if (![self hasDataOnServerForUser:email udid:deviceIdentifier])
     {
         self.connectionData = nil;
