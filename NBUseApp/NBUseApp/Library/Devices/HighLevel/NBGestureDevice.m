@@ -32,7 +32,7 @@
 
 - (NSString*)deviceName
 {
-    return @"Gestures";
+    return @"Basic Gestures";
 }
 
 @end

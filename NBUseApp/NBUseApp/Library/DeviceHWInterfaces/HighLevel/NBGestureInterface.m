@@ -78,6 +78,8 @@ GestureState pulseGesture[pulseGestureLength] = {
     self = [super init];
     if (self)
     {
+        self.interfaceName = @"Gestures";
+
         accelerometerInterface = [interface retain];
         [accelerometerInterface setDelegate:self];
         gestureState = 0;
