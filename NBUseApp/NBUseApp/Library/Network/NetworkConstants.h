@@ -18,9 +18,9 @@
 #define kBaseBlockURLStaging     @"https://staging-api.ninja.is/rest/v0/block"
 #define kBaseCameraURLStaging    @"https://staging-stream.ninja.is/rest/v0/camera"
 
-#define kLoginURLLocal      @"http://localhost:3000/signin"
-#define kBaseBlockURLLocal  @"http://localhost:3000/rest/v0/block"
-#define kBaseCameraURLLocal @"http://localhost:3003/rest/v0/camera"
+#define kLoginURLLocal      @"http://%@:3000/signin"
+#define kBaseBlockURLLocal  @"http://%@:3000/rest/v0/block"
+#define kBaseCameraURLLocal @"http://%@:3003/rest/v0/camera"
 
 #define kNinjaTokenName @"X-Ninja-Token"
 

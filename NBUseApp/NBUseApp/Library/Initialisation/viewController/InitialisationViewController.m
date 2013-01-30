@@ -80,6 +80,18 @@ typedef enum {
     [self clearConnectionData];
 }
 
+#define kServerIndexLocal 2
+
+- (IBAction)didChangeServerSegment:(id)sender
+{
+    bool ipHidden = true;
+    if (self.serverSegmentedControl.selectedSegmentIndex == kServerIndexLocal) {
+        ipHidden = false;
+    }
+    self.ipAddressLabel.hidden = ipHidden;
+    self.ipAddressTextField.hidden = ipHidden;
+}
+
 - (IBAction) didClickClearUserData:(id)sender
 {
     [self clearUserData];
@@ -101,6 +113,7 @@ typedef enum {
     currentState = stateRetrievingConnectionData;
     
     [networkInitialiser loginToServer:self.serverSegmentedControl.selectedSegmentIndex
+                       localIPAddress:self.ipAddressTextField.text
                          withUserName:userId
                              password:self.pwordTextField.text
      ];

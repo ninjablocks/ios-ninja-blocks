@@ -25,6 +25,7 @@
 - (id) initWithDelegate:(id<NBNetworkInitDelegate>)delegate;
 
 - (void) loginToServer:(int)serverIndex
+        localIPAddress:(NSString*)localIPAddress
           withUserName:(NSString*)userName
               password:(NSString*)password;
 
@@ -33,5 +34,6 @@
 
 @property (assign, nonatomic) id<NBNetworkInitDelegate, NSObject> delegate;
 @property (strong, nonatomic) NBConnectionData *connectionData;
+
 
 @end

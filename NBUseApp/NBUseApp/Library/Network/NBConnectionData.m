@@ -15,6 +15,13 @@
 
 + (NSString*) loginURLForServerIndex:(int)serverIndex
 {
+    return [self loginURLForServerIndex:serverIndex
+                         localIPAddress:@""
+            ];
+}
++ (NSString*) loginURLForServerIndex:(int)serverIndex
+                      localIPAddress:(NSString*)localIPAddress
+{
     NSString *loginURL = nil;
     switch (serverIndex) {
         case kServerIndexProduction:
@@ -23,8 +30,8 @@
         case kServerIndexStaging:
             loginURL = kLoginURLStaging;
             break;
-        case kServerIndexLocalHost:
-            loginURL = kLoginURLLocal;
+        case kServerIndexLocal:
+            loginURL = [NSString stringWithFormat:kLoginURLLocal, localIPAddress];
             break;
         default:
             break;
@@ -34,6 +41,13 @@
 
 + (NSString*) baseBlockURLForServerIndex:(int)serverIndex
 {
+    return [self baseBlockURLForServerIndex:serverIndex
+                             localIPAddress:@""
+            ];
+}
++ (NSString*) baseBlockURLForServerIndex:(int)serverIndex
+                          localIPAddress:(NSString*)localIPAddress
+{
     NSString *baseBlockURL = nil;
     switch (serverIndex) {
         case kServerIndexProduction:
@@ -42,8 +56,8 @@
         case kServerIndexStaging:
             baseBlockURL = kBaseBlockURLStaging;
             break;
-        case kServerIndexLocalHost:
-            baseBlockURL = kBaseBlockURLLocal;
+        case kServerIndexLocal:
+            baseBlockURL = [NSString stringWithFormat:kBaseBlockURLLocal, localIPAddress];
             break;
         default:
             break;
@@ -52,6 +66,7 @@
 }
 
 - (id) initWithServerIndex:(int)serverIndex
+            localIPAddress:(NSString*)localIPAddress
                  userEmail:(NSString*)userEmail
                     nodeId:(NSString*)nodeId
                 blockToken:(NSString*)blockToken
@@ -59,6 +74,7 @@
     self = [super init];
     if (self)
     {
+        _localIPAddress = [localIPAddress copy];
         [self configureURLsWithServerIndex:serverIndex];
         _userEmail = [userEmail copy];
         _nodeId = [nodeId retain];
@@ -72,16 +88,16 @@
 {
     switch (serverIndex) {
         case kServerIndexProduction:
-            _baseBlockURL = [[NSString alloc] initWithString:@"https://api.ninja.is/rest/v0/block"];
-            _baseCameraURL = [[NSString alloc] initWithString:@"https://stream.ninja.is/rest/v0/camera"];
+            _baseBlockURL = [[NSString alloc] initWithString:kBaseBlockURLProduction];
+            _baseCameraURL = [[NSString alloc] initWithString:kBaseCameraURLProduction];
             break;
         case kServerIndexStaging:
-            _baseBlockURL = [[NSString alloc] initWithString:@"https://staging-api.ninja.is/rest/v0/block"];
-            _baseCameraURL = [[NSString alloc] initWithString:@"https://staging-stream.ninja.is/rest/v0/camera"];
+            _baseBlockURL = [[NSString alloc] initWithString:kBaseBlockURLStaging];
+            _baseCameraURL = [[NSString alloc] initWithString:kBaseCameraURLStaging];
             break;
-        case kServerIndexLocalHost:
-            _baseBlockURL = [[NSString alloc] initWithString:@"http://localhost:3000/rest/v0/block"];
-            _baseCameraURL = [[NSString alloc] initWithString:@"http://localhost:3003/rest/v0/camera"];
+        case kServerIndexLocal:
+            _baseBlockURL = [[NSString alloc] initWithFormat:kBaseBlockURLLocal, self.localIPAddress];
+            _baseCameraURL = [[NSString alloc] initWithFormat:kBaseCameraURLLocal, self.localIPAddress];
             break;
         default:
             break;

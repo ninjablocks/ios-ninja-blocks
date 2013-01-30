@@ -37,7 +37,7 @@
 @interface NBNetworkInitialiser ()
 
 @property (assign, nonatomic) int serverIndex;
-
+@property (strong, nonatomic) NSString *localIPAddress;
 @end
 
 #define kDefaultsConnectionData @"kDefaultsConnectionDataKey"
@@ -75,15 +75,19 @@
 #define kInitRedirectName       @"redirect"
 
 - (void) loginToServer:(int)serverIndex
+        localIPAddress:(NSString*)localIPAddress
           withUserName:(NSString*)userName
               password:(NSString*)password
 {
     bool awaitingLogin = (loginRequest != nil);
     if (!awaitingLogin)
     {
+        self.localIPAddress = localIPAddress;
         self.serverIndex = serverIndex;
         NBLog(kNBLogLogin, @"BEFORE: cookies = %@", [NSHTTPCookieStorage sharedHTTPCookieStorage]);
-        NSString *urlString = [NBConnectionData loginURLForServerIndex:self.serverIndex];
+        NSString *urlString = [NBConnectionData loginURLForServerIndex:self.serverIndex
+                                                        localIPAddress:self.localIPAddress
+                               ];
         
         loginRequest = [[NSMutableURLRequest alloc]
                            initWithURL:[NSURL
@@ -323,6 +327,7 @@
         if ((trialNodeId != nil) && (blockToken != nil))
         {
             self.connectionData = [[[NBConnectionData alloc] initWithServerIndex:self.serverIndex
+                                                                  localIPAddress:self.localIPAddress
                                                                        userEmail:trialUserEmail
                                                                           nodeId:trialNodeId
                                                                       blockToken:blockToken
@@ -434,7 +439,7 @@
     if (!awaitingActivation)
     {
         NSString *urlString = [NSString stringWithFormat:@"%@/%@/activate"
-                               , [NBConnectionData baseBlockURLForServerIndex:self.serverIndex], trialNodeId];
+                               , [NBConnectionData baseBlockURLForServerIndex:self.serverIndex localIPAddress:self.localIPAddress], trialNodeId];
         
         activateRequest = [[NSMutableURLRequest alloc]
                            initWithURL:[NSURL
@@ -450,7 +455,7 @@
 
 - (void) registerBlock
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@", [NBConnectionData baseBlockURLForServerIndex:self.serverIndex]];
+    NSString *urlString = [NSString stringWithFormat:@"%@", [NBConnectionData baseBlockURLForServerIndex:self.serverIndex localIPAddress:self.localIPAddress]];
     registerBlockRequest = [[NSMutableURLRequest alloc]
                                      initWithURL:[NSURL
                                                   URLWithString:urlString]];
